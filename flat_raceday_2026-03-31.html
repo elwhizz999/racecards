@@ -12,7 +12,7 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
-    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 10; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 10; }
     header h1 { font-size: 1.1rem; color: var(--flat-accent); }
     header .date { color: var(--muted); font-size: 0.85rem; }
     nav a { background: var(--surface); color: var(--accent); padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; border: 1px solid var(--border); white-space: nowrap; transition: all 0.15s; }
@@ -20,7 +20,7 @@
     nav a.nav-active { background: var(--flat-accent); color: #0f172a; border-color: var(--flat-accent); font-weight: 700; }
     nav a.nav-hidden { display: none; }
     main { padding: 24px; max-width: 100%; }
-    .race-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; overflow: hidden; scroll-margin-top: 200px; }
+    .race-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; overflow: hidden; scroll-margin-top: 130px; }
     .race-header { padding: 16px 20px; border-bottom: 1px solid var(--border); }
     .race-header h2 { font-size: 1.1rem; color: var(--flat-accent); }
     .race-time { color: var(--muted); font-weight: 400; margin-left: 8px; }
@@ -147,11 +147,11 @@
     .tj-jockey  .tj-iv.iv-ok   { background: #3b1f06; color: #fcd34d; }
     .tj-jockey  .tj-iv.iv-poor { background: #1e293b; color: #64748b; }
     /* Course filter */
-    .course-filter { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 24px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 57px; z-index: 10; }
+    .course-filter { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 24px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 44px; z-index: 10; }
     .cf-btn { display: inline-block; text-decoration: none; background: var(--bg); color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; white-space: nowrap; transition: all 0.15s; -webkit-tap-highlight-color: rgba(56,189,248,0.3); }
     .cf-btn:hover { border-color: var(--flat-accent); color: var(--flat-accent); }
     .cf-btn.cf-active { background: var(--flat-accent); color: #0f172a; border-color: var(--flat-accent); font-weight: 700; }
-    nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 24px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 103px; z-index: 9; }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 8px 24px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 82px; z-index: 9; }
     .race-hidden { display: none !important; }
     /* Claude export */
     .claude-export { margin: 24px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
@@ -188,9 +188,11 @@
       .bb-row { font-size: 0.75rem; }
       .claude-export pre { font-size: 0.65rem; padding: 8px; }
       .weights { font-size: 0.65rem; padding: 4px 10px; }
-      header { position: sticky; top: 0; z-index: 11; }
-      .course-filter { padding: 8px; top: auto; position: relative; z-index: 9; }
-      .cf-btn { font-size: 0.75rem; padding: 8px 12px; min-height: 36px; touch-action: manipulation; }
+      header { position: sticky; top: 0; z-index: 11; padding: 8px 12px; }
+      .course-filter { padding: 6px 8px; top: auto; position: relative; z-index: 9; }
+      .cf-btn { font-size: 0.75rem; padding: 6px 10px; min-height: 32px; touch-action: manipulation; }
+      nav { top: 40px; padding: 6px 8px; gap: 6px; }
+      .race-card { scroll-margin-top: 85px; }
     }
   </style>
 </head>
@@ -240,7 +242,7 @@
           <span class="bb-row-badges"></span>
            <span class="bb-draw">Stall 2</span>
           <a href="#race-1449" class="bb-row-race">Wolverhampton (AW) 8:00</a>
-          <span class="bb-row-stats"><span class="bb-stat">Fair <strong>5.17</strong></span><span class="bb-stat">Mkt <strong style="color:#a78bfa">15.00</strong></span><span class="bb-stat bb-stat-edge" style="color:#22c55e">Edge <strong>+11pp</strong></span><span class="bb-stat" style="color:#60a5fa"><strong>1.00pt</strong></span></span>
+          <span class="bb-row-stats"><span class="bb-stat">Fair <strong>5.16</strong></span><span class="bb-stat">Mkt <strong style="color:#a78bfa">15.00</strong></span><span class="bb-stat bb-stat-edge" style="color:#22c55e">Edge <strong>+13pp</strong></span><span class="bb-stat" style="color:#60a5fa"><strong>1.00pt</strong></span></span>
         </div></div></details>
   <main>
     
@@ -251,7 +253,7 @@
             <p class="race-name">Bet £10 Get £40 With BetMGM Maiden Fillies' Stakes (GBB Race)</p>
             <p class="race-meta">5:30 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 5f &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 4 &nbsp;|&nbsp; 3yo+ &nbsp;|&nbsp; 6 runners &nbsp;|&nbsp; £5,400</p>
           </div>
-          <div class="race-summary">📊 A competitive race — <strong>Overbudget</strong> edges the rankings but the margins are tight (score 59.9). Key dangers: <em>Skip To Victory</em>, <em>Ring Of Diamonds</em> (course form), <em>Star Marian</em> (course form). No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Button It</em> (model fair odds 10.72).</div>
+          <div class="race-summary">📊 A competitive race — <strong>Overbudget</strong> edges the rankings but the margins are tight (score 60.1). Key dangers: <em>Skip To Victory</em>, <em>Ring Of Diamonds</em> (course form), <em>Star Marian</em> (course form). No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Button It</em> (model fair odds 10.64).</div>
           
           <div class="table-wrap">
           <table>
@@ -268,7 +270,7 @@
             <tbody>
               
             <tr>
-              <td class="rank" style="color:#facc15">1</td>
+              <td class="rank" style="color:#86efac">1</td>
               <td class="horse">Overbudget   <span class="badge badge-gs-fast" title="Fast breaker from the stalls">⚡GS</span></td>
               <td><span class="badge badge-draw-neutral">2</span></td>
               <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Mehmas / Iffraaj </span></td>
@@ -279,9 +281,9 @@
               <td class="num">85</td>
               <td class="num">-</td>
               <td class="form">22-</td>
-              <td class="num" style="color:#facc15;font-weight:600">59.9</td>
-              <td class="num" style="color:#67e8f9">28.6%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">3.50</td>
+              <td class="num" style="color:#86efac;font-weight:600">60.1</td>
+              <td class="num" style="color:#67e8f9">28.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">3.51</td>
               <td class="num" style="color:#a78bfa">2.88</td>
               <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-6.2pp</td>
             </tr>
@@ -300,11 +302,11 @@
               <td class="num">89</td>
               <td class="num">66</td>
               <td class="form">523</td>
-              <td class="num" style="color:#facc15;font-weight:600">59.1</td>
+              <td class="num" style="color:#facc15;font-weight:600">59.3</td>
               <td class="num" style="color:#67e8f9">27.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">3.66</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">3.65</td>
               <td class="num" style="color:#a78bfa">2.20</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-18.1pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-18.0pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 All three runs over 5f at Southwell; 40-1 when beaten a head second time out and was third 18 days ago when she led early but faded late on; looks sure to put up another bold show.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Main danger.</strong> Rated around the field average (RPR 89, TS 66); comfortably handles this class; on an improving trajectory, fit and race-ready; market price confirms model confidence.</span></td></tr>
@@ -321,9 +323,9 @@
               <td class="num">58</td>
               <td class="num">24</td>
               <td class="form">6</td>
-              <td class="num" style="color:#f97316;font-weight:600">44.6</td>
+              <td class="num" style="color:#f97316;font-weight:600">44.8</td>
               <td class="num" style="color:#67e8f9">12.6%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">7.92</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">7.94</td>
               <td class="num" style="color:#a78bfa">7.50</td>
               <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-0.7pp</td>
             </tr>
@@ -342,14 +344,14 @@
               <td class="num">70</td>
               <td class="num">34</td>
               <td class="form">65355-</td>
-              <td class="num" style="color:#f97316;font-weight:600">42.2</td>
+              <td class="num" style="color:#f97316;font-weight:600">42.4</td>
               <td class="num" style="color:#67e8f9">11.1%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">9.01</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">9.04</td>
               <td class="num" style="color:#a78bfa">17.00</td>
               <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+5.2pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 The most experienced of these after five defeats but others have achieved much better form.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; comfortably handles this class; modest recent form, on a declining curve, may need this run for fitness; going may not suit; good course record.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; comfortably handles this class; modest recent form, on a declining curve, may need this run for fitness; going may not suit; good course record, top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#f97316">5</td>
@@ -363,11 +365,11 @@
               <td class="num">62</td>
               <td class="num">-</td>
               <td class="form">6</td>
-              <td class="num" style="color:#f97316;font-weight:600">42.1</td>
+              <td class="num" style="color:#f97316;font-weight:600">42.3</td>
               <td class="num" style="color:#67e8f9">11.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">9.05</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">9.09</td>
               <td class="num" style="color:#a78bfa">17.00</td>
-              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+5.2pp</td>
+              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+5.1pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Never sighted with a chance when beaten about 8l at Chelmsford (7f) and she's dropped to a much shorter trip here with a hood added.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form.</span></td></tr>
@@ -384,9 +386,9 @@
               <td class="num">52</td>
               <td class="num">36</td>
               <td class="form">6</td>
-              <td class="num" style="color:#f97316;font-weight:600">38.9</td>
-              <td class="num" style="color:#67e8f9">9.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">10.72</td>
+              <td class="num" style="color:#f97316;font-weight:600">39.3</td>
+              <td class="num" style="color:#67e8f9">9.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">10.64</td>
               <td class="num" style="color:#a78bfa">51.00</td>
               <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+7.4pp</td>
             </tr>
@@ -405,7 +407,7 @@
             <p class="race-name">BetMGM Supports Safer Gambling Fillies' Restricted Novice Stakes (Bands B, C and D) (GBB Race)</p>
             <p class="race-meta">6:00 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 1m &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 4 &nbsp;|&nbsp; 3-5yo &nbsp;|&nbsp; 4 runners &nbsp;|&nbsp; £5,400</p>
           </div>
-          <div class="race-summary">📊 <strong>Lizzana</strong> heads the model rankings with a clear margin (score 70.2, model probability 48.2%). Key dangers: <em>Ticker Tape</em>, <em>Sayidah Aleen</em>, <em>Ammoony</em>.</div>
+          <div class="race-summary">📊 <strong>Lizzana</strong> heads the model rankings with a clear margin (score 70.6, model probability 48.2%). Key dangers: <em>Ticker Tape</em>, <em>Sayidah Aleen</em>, <em>Ammoony</em>.</div>
           
           <div class="table-wrap">
           <table>
@@ -433,9 +435,9 @@
               <td class="num">96</td>
               <td class="num">83</td>
               <td class="form">21-</td>
-              <td class="num" style="color:#86efac;font-weight:600">70.2</td>
+              <td class="num" style="color:#86efac;font-weight:600">70.6</td>
               <td class="num" style="color:#67e8f9">48.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">2.08</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">2.07</td>
               <td class="num" style="color:#a78bfa">1.73</td>
               <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-9.6pp</td>
             </tr>
@@ -454,11 +456,11 @@
               <td class="num">-</td>
               <td class="num">-</td>
               <td class="form">-</td>
-              <td class="num" style="color:#facc15;font-weight:600">52.3</td>
-              <td class="num" style="color:#67e8f9">18.8%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.31</td>
+              <td class="num" style="color:#facc15;font-weight:600">52.4</td>
+              <td class="num" style="color:#67e8f9">18.6%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.37</td>
               <td class="num" style="color:#a78bfa">4.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-6.2pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-6.4pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 11th foal; Time Test half-sister to six winners including Courage Mon Ami (1m4f-2m4f including AW/Group 1 Gold Cup; RPR 120), Lion's Pride (1m3f/1m4f including AW/Listed; 119) and Danielle (1m2f including Listed; 113); dam 1m4f winner (90), sister to 1m4f Group 2 winner Bronze Cannon; from top stable, she is very much one to note.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Main danger.</strong> Rated around the field average; in-form trainer (John & Thady Gosden); market price confirms model confidence.</span></td></tr>
@@ -475,14 +477,14 @@
               <td class="num">-</td>
               <td class="num">-</td>
               <td class="form">-</td>
-              <td class="num" style="color:#facc15;font-weight:600">50.8</td>
-              <td class="num" style="color:#67e8f9">17.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.74</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.0</td>
+              <td class="num" style="color:#67e8f9">17.3%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.78</td>
               <td class="num" style="color:#a78bfa">8.50</td>
-              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+5.6pp</td>
+              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+5.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 42,000euros yearling by Ten Sovereigns; ninth foal; half-sister to four winners including Gifts Of Gold (1m1f-1m7f including AW; RPR 114), Dusky Queen (7f including Listed; 110) and Achnaha (8.6f/1m3f; 98); dam unraced half-sister to 7f 2yo Group 3 winner Albabilia, out of 1m6f winner; late foal but market support would be significant from stable which had a top day last Saturday.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average; in-form trainer (Jack Channon).</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average; in-form trainer (Jack Channon), top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">4</td>
@@ -496,14 +498,14 @@
               <td class="num">77</td>
               <td class="num">-</td>
               <td class="form">54-</td>
-              <td class="num" style="color:#facc15;font-weight:600">48.8</td>
-              <td class="num" style="color:#67e8f9">15.6%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">6.41</td>
+              <td class="num" style="color:#facc15;font-weight:600">49.3</td>
+              <td class="num" style="color:#67e8f9">15.8%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">6.32</td>
               <td class="num" style="color:#a78bfa">7.50</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+2.3pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+2.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Showed promise when staying on at Leicester over 7f and 1m last autumn, eventually snapping at the leaders' heels on second occasion; looks set for better as 3yo but may be up against it on this AW/seasonal debut.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; comfortably handles this class; modest recent form, may need this run for fitness.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; comfortably handles this class; modest recent form, may need this run for fitness; top jockey booked.</span></td></tr>
             
             </tbody>
           </table>
@@ -517,7 +519,7 @@
             <p class="race-name">Always Gamble Responsibly At BetMGM Handicap</p>
             <p class="race-meta">6:30 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 7f &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 5 &nbsp;|&nbsp; 4yo+ &nbsp;|&nbsp; 12 runners &nbsp;|&nbsp; £3,716</p>
           </div>
-          <div class="race-summary">📊 <strong>Farasi Lane</strong> leads the model rankings in a competitive race (score 60.0, model probability 25.3%). Key dangers: <em>Pearly Squirrel</em> (course form), <em>Habrdi</em> (course form), <em>Chifa</em> (course form). Draw factor: Middle draws are favoured at Wolverhampton (AW) over this trip (strength 3/5). No confirmed front-runners — pace may be modest, favouring those who race prominently.</div>
+          <div class="race-summary">📊 <strong>Farasi Lane</strong> leads the model rankings in a competitive race (score 60.2, model probability 25.3%). Key dangers: <em>Pearly Squirrel</em> (course form), <em>Habrdi</em> (course form), <em>Chifa</em> (course form). Draw factor: Middle draws are favoured at Wolverhampton (AW) over this trip (strength 3/5). No confirmed front-runners — pace may be modest, favouring those who race prominently.</div>
           <div class="pace-strip">  <span class="ps-label">Pace:</span>    <span class="ps-iv" style="color:#15803d">Race conditions slightly suit ▶ Prominents <span class="ps-iv-num">(IV 1.32)</span></span>    <span class="ps-draw">📐 Draw: Middle favoured (str 3/5)</span>  <span class="ps-verdict">No confirmed pace-setters — expect a tactical affair, favouring those who race prominently — middle draws favoured, pace scenario less decisive than stall position</span></div>
           <div class="table-wrap">
           <table>
@@ -545,14 +547,14 @@
               <td class="num">87</td>
               <td class="num">73</td>
               <td class="form">63-261</td>
-              <td class="num" style="color:#86efac;font-weight:600">60.0</td>
+              <td class="num" style="color:#86efac;font-weight:600">60.2</td>
               <td class="num" style="color:#67e8f9">25.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">3.95</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">3.96</td>
               <td class="num" style="color:#a78bfa">2.10</td>
               <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-22.3pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Ended a losing run with a comfortable success over 8.6f here last week (sent off a strong favourite); a 4lb penalty still leaves him on a dangerous mark and he is the one to beat back down in trip.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Model's top pick.</strong> Rated around the field average (RPR 87, TS 73); fit and race-ready; good course record; market price confirms model confidence.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Model's top pick.</strong> Rated around the field average (RPR 87, TS 73); fit and race-ready; good course record, top jockey booked; market price confirms model confidence.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">2</td>
@@ -566,9 +568,9 @@
               <td class="num">87</td>
               <td class="num">71</td>
               <td class="form">28-051</td>
-              <td class="num" style="color:#facc15;font-weight:600">52.3</td>
-              <td class="num" style="color:#67e8f9">10.8%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">9.24</td>
+              <td class="num" style="color:#facc15;font-weight:600">52.6</td>
+              <td class="num" style="color:#67e8f9">10.9%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">9.20</td>
               <td class="num" style="color:#a78bfa">12.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+2.5pp</td>
             </tr>
@@ -587,11 +589,11 @@
               <td class="num">88</td>
               <td class="num">76</td>
               <td class="form">-43914</td>
-              <td class="num" style="color:#facc15;font-weight:600">51.5</td>
-              <td class="num" style="color:#67e8f9">9.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">10.09</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.6</td>
+              <td class="num" style="color:#67e8f9">9.8%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">10.23</td>
               <td class="num" style="color:#a78bfa">8.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-2.6pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-2.7pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Comfortably saw off five rivals in a Class 6 handicap over C&D 18 days ago; similar form when fourth, beaten 2l, off this mark at Southwell ten days ago; drawn wide but likely to be dropped in early and this could be run to suit; not ruled out.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>In contention.</strong> Rated around the field average (RPR 88, TS 76); on an improving trajectory, fit and race-ready; well-handicapped at the weights; good course record.</span></td></tr>
@@ -608,9 +610,9 @@
               <td class="num">84</td>
               <td class="num">69</td>
               <td class="form">21-190</td>
-              <td class="num" style="color:#facc15;font-weight:600">50.8</td>
-              <td class="num" style="color:#67e8f9">9.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">10.91</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.0</td>
+              <td class="num" style="color:#67e8f9">9.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">10.96</td>
               <td class="num" style="color:#a78bfa">29.00</td>
               <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+5.7pp</td>
             </tr>
@@ -629,11 +631,11 @@
               <td class="num">87</td>
               <td class="num">74</td>
               <td class="form">129-72</td>
-              <td class="num" style="color:#facc15;font-weight:600">50.6</td>
-              <td class="num" style="color:#67e8f9">9.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">11.07</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.0</td>
+              <td class="num" style="color:#67e8f9">9.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">11.02</td>
               <td class="num" style="color:#a78bfa">10.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.0pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-0.9pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 One win (C&D) and three second-place finishes in six AW starts since October; front-running second, beaten a nose, over 8.6f here four weeks ago; in the mix again.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 87, TS 74); on a declining curve, fit and race-ready; good course record.</span></td></tr>
@@ -650,14 +652,14 @@
               <td class="num">86</td>
               <td class="num">64</td>
               <td class="form">1-6376</td>
-              <td class="num" style="color:#facc15;font-weight:600">48.5</td>
-              <td class="num" style="color:#67e8f9">7.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">13.91</td>
+              <td class="num" style="color:#facc15;font-weight:600">49.1</td>
+              <td class="num" style="color:#67e8f9">7.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">13.50</td>
               <td class="num" style="color:#a78bfa">8.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-5.3pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-5.1pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Made all to win a 7f handicap at Lingfield in December, his most recent outing in Class 5 company; some fair efforts in Class 4 events since but the widest stall won't be easy to overcome.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 86, TS 64); poorly drawn in stall 12.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 86, TS 64); poorly drawn in stall 12; top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">7</td>
@@ -671,9 +673,9 @@
               <td class="num">87</td>
               <td class="num">57</td>
               <td class="form">-67360</td>
-              <td class="num" style="color:#facc15;font-weight:600">47.1</td>
+              <td class="num" style="color:#facc15;font-weight:600">47.5</td>
               <td class="num" style="color:#67e8f9">6.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">16.26</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">16.09</td>
               <td class="num" style="color:#a78bfa">11.00</td>
               <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-2.9pp</td>
             </tr>
@@ -692,11 +694,11 @@
               <td class="num">86</td>
               <td class="num">78</td>
               <td class="form">011000</td>
-              <td class="num" style="color:#facc15;font-weight:600">46.2</td>
-              <td class="num" style="color:#67e8f9">5.6%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">17.86</td>
+              <td class="num" style="color:#facc15;font-weight:600">46.4</td>
+              <td class="num" style="color:#67e8f9">5.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">18.25</td>
               <td class="num" style="color:#a78bfa">41.00</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+3.2pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+3.0pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 11-time course winner, including three since December; only 1lb higher than for the latest win but he has struggled on his last three starts.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 86, TS 78); modest recent form, on a declining curve, fit and race-ready; well-handicapped at the weights; good course record; market doesn't agree — proceed with caution.</span></td></tr>
@@ -713,14 +715,14 @@
               <td class="num">86</td>
               <td class="num">44</td>
               <td class="form">41657-</td>
-              <td class="num" style="color:#facc15;font-weight:600">45.5</td>
-              <td class="num" style="color:#67e8f9">5.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">19.28</td>
+              <td class="num" style="color:#facc15;font-weight:600">45.7</td>
+              <td class="num" style="color:#67e8f9">5.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">19.62</td>
               <td class="num" style="color:#a78bfa">19.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-0.1pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-0.2pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Made all for an easy win at Musselburgh last August (7f, good; Class 6); unplaced in three runs since and he returns from a 146-day absence in a race featuring other pace influences.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 86, TS 44); modest recent form, on a declining curve, may need this run for fitness; poorly drawn in stall 1, going may not suit, well-handicapped at the weights; good course record.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 86, TS 44); modest recent form, on a declining curve, may need this run for fitness; poorly drawn in stall 1, going may not suit, well-handicapped at the weights; good course record, top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">10</td>
@@ -734,9 +736,9 @@
               <td class="num">86</td>
               <td class="num">58</td>
               <td class="form">610-69</td>
-              <td class="num" style="color:#facc15;font-weight:600">45.2</td>
-              <td class="num" style="color:#67e8f9">5.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">20.03</td>
+              <td class="num" style="color:#facc15;font-weight:600">45.7</td>
+              <td class="num" style="color:#67e8f9">5.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">19.76</td>
               <td class="num" style="color:#a78bfa">41.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+2.6pp</td>
             </tr>
@@ -755,11 +757,11 @@
               <td class="num">85</td>
               <td class="num">29</td>
               <td class="form">0097-7</td>
-              <td class="num" style="color:#f97316;font-weight:600">44.0</td>
-              <td class="num" style="color:#67e8f9">4.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">22.87</td>
+              <td class="num" style="color:#f97316;font-weight:600">44.3</td>
+              <td class="num" style="color:#67e8f9">4.3%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">23.08</td>
               <td class="num" style="color:#a78bfa">13.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.3pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.4pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Runner-up in Group 2 company on his second start (when with Hugo Palmer); tumbled down the weights in 2025 and this month's return to action didn't hint that he was ready to take advantage; eyeshield now added; betting should guide.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, fit and race-ready; going may not suit, well-handicapped at the weights; good course record, in-form trainer (Tony Culhane & Stella Barclay).</span></td></tr>
@@ -776,9 +778,9 @@
               <td class="num">84</td>
               <td class="num">65</td>
               <td class="form">-53900</td>
-              <td class="num" style="color:#f97316;font-weight:600">38.0</td>
+              <td class="num" style="color:#f97316;font-weight:600">38.5</td>
               <td class="num" style="color:#67e8f9">2.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">44.00</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">43.76</td>
               <td class="num" style="color:#a78bfa">67.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.8pp</td>
             </tr>
@@ -797,7 +799,7 @@
             <p class="race-name">Midnite Are Upping The Betting Game Selling Handicap</p>
             <p class="race-meta">7:00 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 1m1f &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 6 &nbsp;|&nbsp; 4yo+ &nbsp;|&nbsp; 11 runners &nbsp;|&nbsp; £3,140</p>
           </div>
-          <div class="race-summary">📊 <strong>Danehill Star</strong> heads the model rankings with a clear margin (score 58.7, model probability 34.2%). Key dangers: <em>Marinakis</em> (course form), <em>Man Is King</em> (course form), <em>Wyvern</em>. No confirmed front-runners — pace may be modest, favouring those who race prominently.</div>
+          <div class="race-summary">📊 <strong>Danehill Star</strong> heads the model rankings with a clear margin (score 59.3, model probability 34.5%). Key dangers: <em>Marinakis</em> (course form), <em>Man Is King</em> (course form), <em>Wyvern</em>. No confirmed front-runners — pace may be modest, favouring those who race prominently.</div>
           <div class="pace-strip">  <span class="ps-label">Pace:</span>    <span class="ps-iv" style="color:#15803d">Race conditions slightly suit ▶ Prominents <span class="ps-iv-num">(IV 1.18)</span></span>      <span class="ps-verdict">No confirmed pace-setters — expect a tactical affair, favouring those who race prominently</span></div>
           <div class="table-wrap">
           <table>
@@ -825,14 +827,14 @@
               <td class="num">72</td>
               <td class="num">59</td>
               <td class="form">391522</td>
-              <td class="num" style="color:#facc15;font-weight:600">58.7</td>
-              <td class="num" style="color:#67e8f9">34.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">2.92</td>
+              <td class="num" style="color:#facc15;font-weight:600">59.3</td>
+              <td class="num" style="color:#67e8f9">34.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">2.90</td>
               <td class="num" style="color:#a78bfa">2.63</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.8pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.6pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 In good heart at present and landed his fifth AW win at Lingfield (1m2f) last month; second on his last two starts and holds obvious claims with Billy Loughnane on board for the first time.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Model's top pick.</strong> Modest ratings for this level; on an improving trajectory; going conditions are ideal; good course record; market price confirms model confidence.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Model's top pick.</strong> Modest ratings for this level; on an improving trajectory; going conditions are ideal; good course record, top jockey booked; market price confirms model confidence.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">2</td>
@@ -846,9 +848,9 @@
               <td class="num">71</td>
               <td class="num">59</td>
               <td class="form">-91533</td>
-              <td class="num" style="color:#facc15;font-weight:600">50.1</td>
+              <td class="num" style="color:#facc15;font-weight:600">50.5</td>
               <td class="num" style="color:#67e8f9">14.1%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">7.07</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">7.11</td>
               <td class="num" style="color:#a78bfa">9.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+3.0pp</td>
             </tr>
@@ -867,11 +869,11 @@
               <td class="num">70</td>
               <td class="num">55</td>
               <td class="form">193327</td>
-              <td class="num" style="color:#facc15;font-weight:600">47.8</td>
-              <td class="num" style="color:#67e8f9">11.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">8.95</td>
+              <td class="num" style="color:#facc15;font-weight:600">48.1</td>
+              <td class="num" style="color:#67e8f9">11.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">9.05</td>
               <td class="num" style="color:#a78bfa">9.50</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.6pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Made all when breaking duck in 1m2f classified event at Chelmsford last month on yard debut; has run well in defeat in two starts over the extended 1m1f here since and this lesser test may well suit (some of his best form has been at 1m); tongue tied on last two outings but not today.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>In contention.</strong> Modest ratings for this level; good course record.</span></td></tr>
@@ -888,9 +890,9 @@
               <td class="num">71</td>
               <td class="num">62</td>
               <td class="form">478838</td>
-              <td class="num" style="color:#f97316;font-weight:600">42.8</td>
+              <td class="num" style="color:#f97316;font-weight:600">43.1</td>
               <td class="num" style="color:#67e8f9">6.7%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">15.04</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">14.96</td>
               <td class="num" style="color:#a78bfa">17.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.8pp</td>
             </tr>
@@ -909,11 +911,11 @@
               <td class="num">70</td>
               <td class="num">54</td>
               <td class="form">3560P-</td>
-              <td class="num" style="color:#f97316;font-weight:600">41.6</td>
+              <td class="num" style="color:#f97316;font-weight:600">41.8</td>
               <td class="num" style="color:#67e8f9">5.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">16.88</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">17.08</td>
               <td class="num" style="color:#a78bfa">7.50</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-7.4pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-7.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Fair third on handicap debut at Kempton (1m, AW) last May but out of sorts when tailed off and pulled up on final two starts on heavy last term; watching brief advised.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, may need this run for fitness.</span></td></tr>
@@ -930,11 +932,11 @@
               <td class="num">67</td>
               <td class="num">65</td>
               <td class="form">4-2740</td>
-              <td class="num" style="color:#f97316;font-weight:600">40.6</td>
-              <td class="num" style="color:#67e8f9">5.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">18.68</td>
+              <td class="num" style="color:#f97316;font-weight:600">41.1</td>
+              <td class="num" style="color:#67e8f9">5.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">18.26</td>
               <td class="num" style="color:#a78bfa">26.00</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.5pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.6pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Has shown glimpses of form but has yet to get off the mark; last of 11 here (8.5f) two weeks ago; headgear worn on last two starts is removed and he steps up in trip.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve, fit and race-ready; going may not suit; good course record; market doesn't agree — proceed with caution.</span></td></tr>
@@ -951,11 +953,11 @@
               <td class="num">68</td>
               <td class="num">34</td>
               <td class="form">7-7474</td>
-              <td class="num" style="color:#f97316;font-weight:600">39.7</td>
-              <td class="num" style="color:#67e8f9">4.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">20.51</td>
+              <td class="num" style="color:#f97316;font-weight:600">39.8</td>
+              <td class="num" style="color:#67e8f9">4.8%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">20.89</td>
               <td class="num" style="color:#a78bfa">17.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.0pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.1pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Last of four wins came on final start for Adrian Wintle in a classified at Ffos Las (1m2f, good) last August; yet to be placed from seven starts for current yard.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve, fit and race-ready; going may not suit, well-handicapped at the weights.</span></td></tr>
@@ -972,9 +974,9 @@
               <td class="num">66</td>
               <td class="num">41</td>
               <td class="form">455-8</td>
-              <td class="num" style="color:#f97316;font-weight:600">39.5</td>
+              <td class="num" style="color:#f97316;font-weight:600">39.8</td>
               <td class="num" style="color:#67e8f9">4.8%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">20.98</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">21.00</td>
               <td class="num" style="color:#a78bfa">17.00</td>
               <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.1pp</td>
             </tr>
@@ -993,11 +995,11 @@
               <td class="num">66</td>
               <td class="num">48</td>
               <td class="form">046-87</td>
-              <td class="num" style="color:#f97316;font-weight:600">39.4</td>
+              <td class="num" style="color:#f97316;font-weight:600">39.5</td>
               <td class="num" style="color:#67e8f9">4.7%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">21.18</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">21.47</td>
               <td class="num" style="color:#a78bfa">8.50</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-7.0pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-7.1pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Won three over C&D and once on turf when trained by Mark Rimell; has not been in the same form since and blinkers now replace cheekpieces; down to a career-low mark but doesn't look ready to take advantage.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on an improving trajectory; going may not suit.</span></td></tr>
@@ -1014,9 +1016,9 @@
               <td class="num">66</td>
               <td class="num">46</td>
               <td class="form">8679-5</td>
-              <td class="num" style="color:#f97316;font-weight:600">38.4</td>
+              <td class="num" style="color:#f97316;font-weight:600">38.6</td>
               <td class="num" style="color:#67e8f9">4.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">23.59</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">23.55</td>
               <td class="num" style="color:#a78bfa">41.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.8pp</td>
             </tr>
@@ -1035,11 +1037,11 @@
               <td class="num">71</td>
               <td class="num">51</td>
               <td class="form">58-908</td>
-              <td class="num" style="color:#f97316;font-weight:600">37.5</td>
-              <td class="num" style="color:#67e8f9">3.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">25.66</td>
+              <td class="num" style="color:#f97316;font-weight:600">37.9</td>
+              <td class="num" style="color:#67e8f9">4.0%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">25.30</td>
               <td class="num" style="color:#a78bfa">13.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.8pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.7pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 1-22 and has been out of sorts this year, ruining his chance with slow starts; has left Michael Attwater since finishing last of eight at Chelmsford (1m2f) 19 days ago; swaps a visor for cheekpieces on his first start for a new yard.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve, fit and race-ready; going may not suit.</span></td></tr>
@@ -1056,7 +1058,7 @@
             <p class="race-name">Daily Profit Boosts At betmgm.co.uk Handicap</p>
             <p class="race-meta">7:30 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 5f &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 4 &nbsp;|&nbsp; 3yo &nbsp;|&nbsp; 8 runners &nbsp;|&nbsp; £4,972</p>
           </div>
-          <div class="race-summary">📊 A competitive race — <strong>Simplify</strong> edges the rankings but the margins are tight (score 57.8). Key dangers: <em>Dark Angel Star</em>, <em>Kolkata Knight</em>, <em>The Lost Sock</em>. No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Simplify</em> (model fair odds 4.56).</div>
+          <div class="race-summary">📊 A competitive race — <strong>Simplify</strong> edges the rankings but the margins are tight (score 58.0). Key dangers: <em>Dark Angel Star</em>, <em>Kolkata Knight</em>, <em>The Lost Sock</em>. No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Simplify</em> (model fair odds 4.63).</div>
           <div class="pace-strip">  <span class="ps-label">Pace:</span>    <span class="ps-iv" style="color:#b45309">Race conditions suit ⚡ Front Runners <span class="ps-iv-num">(IV 1.68)</span></span>      <span class="ps-verdict">No confirmed pace-setters — expect a tactical affair, favouring those who race prominently</span></div>
           <div class="table-wrap">
           <table>
@@ -1084,11 +1086,11 @@
               <td class="num">87</td>
               <td class="num">-</td>
               <td class="form">0221-</td>
-              <td class="num" style="color:#facc15;font-weight:600">57.8</td>
-              <td class="num" style="color:#67e8f9">21.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">4.56</td>
+              <td class="num" style="color:#facc15;font-weight:600">58.0</td>
+              <td class="num" style="color:#67e8f9">21.6%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">4.63</td>
               <td class="num" style="color:#a78bfa">11.00</td>
-              <td class="num" style="color:#22c55e;font-weight:600" title="VALUE — model significantly above market">+12.9pp</td>
+              <td class="num" style="color:#22c55e;font-weight:600" title="VALUE — model significantly above market">+12.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Showed improved form to get off the mark at Thirsk (6f, good) last September; stable in red-hot form at present and she must be of interest on AW/handicap debut.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Model's top pick.</strong> Rated around the field average (RPR 87); strong recent form, on an improving trajectory, may need this run for fitness; fast breaker from the stalls; in-form trainer (Andrew Balding).</span></td></tr>
@@ -1105,14 +1107,14 @@
               <td class="num">83</td>
               <td class="num">72</td>
               <td class="form">4312-</td>
-              <td class="num" style="color:#facc15;font-weight:600">56.5</td>
-              <td class="num" style="color:#67e8f9">18.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.49</td>
+              <td class="num" style="color:#facc15;font-weight:600">56.7</td>
+              <td class="num" style="color:#67e8f9">18.0%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.57</td>
               <td class="num" style="color:#a78bfa">7.50</td>
-              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+4.9pp</td>
+              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+4.6pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Landed a Newcastle novice (5f) on her third attempt last September on her AW debut before finishing second on her nursery debut at Chelmsford (5f) the following month; off since but must come into contention if she is ready to roll.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Main danger.</strong> Modest ratings for this level; strong recent form, on an improving trajectory, may need this run for fitness; fast breaker from the stalls; in-form trainer (James Tate).</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Main danger.</strong> Modest ratings for this level; strong recent form, on an improving trajectory, may need this run for fitness; fast breaker from the stalls; in-form trainer (James Tate), top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">3</td>
@@ -1126,11 +1128,11 @@
               <td class="num">90</td>
               <td class="num">-</td>
               <td class="form">10541-</td>
-              <td class="num" style="color:#facc15;font-weight:600">56.2</td>
-              <td class="num" style="color:#67e8f9">17.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.74</td>
+              <td class="num" style="color:#facc15;font-weight:600">56.6</td>
+              <td class="num" style="color:#67e8f9">17.6%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.68</td>
               <td class="num" style="color:#a78bfa">2.63</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-20.6pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-20.4pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Won for the second time, following wind surgery, in a nursery at Haydock (5f, good to soft) in September; has been gelded since and makes AW debut; any market move should be noted.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 90); may need this run for fitness; fast breaker from the stalls; market price confirms model confidence.</span></td></tr>
@@ -1147,14 +1149,14 @@
               <td class="num">88</td>
               <td class="num">39</td>
               <td class="form">321-8</td>
-              <td class="num" style="color:#facc15;font-weight:600">56.0</td>
-              <td class="num" style="color:#67e8f9">16.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.92</td>
+              <td class="num" style="color:#facc15;font-weight:600">56.5</td>
+              <td class="num" style="color:#67e8f9">17.3%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.78</td>
               <td class="num" style="color:#a78bfa">4.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-8.1pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-7.7pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Got off the mark on his third attempt in a Catterick maiden (5f good) last August; gelded subsequently and raced too freely when last of eight on his AW/handicap debut at Kempton (6f; 11-8) this month; in good hands and may be worth another chance.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 88, TS 39); on a declining curve, fit and race-ready; in-form trainer (Roger Varian); market price confirms model confidence.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 88, TS 39); on a declining curve, fit and race-ready; in-form trainer (Roger Varian), top jockey booked; market price confirms model confidence.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">5</td>
@@ -1168,9 +1170,9 @@
               <td class="num">86</td>
               <td class="num">37</td>
               <td class="form">81299-</td>
-              <td class="num" style="color:#facc15;font-weight:600">51.2</td>
-              <td class="num" style="color:#67e8f9">8.5%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">11.83</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.4</td>
+              <td class="num" style="color:#67e8f9">8.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">11.85</td>
               <td class="num" style="color:#a78bfa">26.00</td>
               <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+4.6pp</td>
             </tr>
@@ -1189,11 +1191,11 @@
               <td class="num">88</td>
               <td class="num">52</td>
               <td class="form">0149-7</td>
-              <td class="num" style="color:#facc15;font-weight:600">50.8</td>
-              <td class="num" style="color:#67e8f9">8.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">12.49</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.1</td>
+              <td class="num" style="color:#67e8f9">8.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">12.39</td>
               <td class="num" style="color:#a78bfa">13.00</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.3pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.4pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Second of two wins last year came in a nursery at Chelmsford (5f, AW) last August off 2lb lower; considerately handled when seventh of nine on her first outing for five months over C&D two weeks ago and should be sharper.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Rated around the field average (RPR 88, TS 52); modest recent form, on a declining curve, fit and race-ready; going conditions are ideal; good course record.</span></td></tr>
@@ -1210,9 +1212,9 @@
               <td class="num">89</td>
               <td class="num">74</td>
               <td class="form">14036-</td>
-              <td class="num" style="color:#facc15;font-weight:600">48.6</td>
+              <td class="num" style="color:#facc15;font-weight:600">48.8</td>
               <td class="num" style="color:#67e8f9">5.8%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">17.28</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">17.26</td>
               <td class="num" style="color:#a78bfa">12.00</td>
               <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-2.5pp</td>
             </tr>
@@ -1231,11 +1233,11 @@
               <td class="num">83</td>
               <td class="num">72</td>
               <td class="form">158-46</td>
-              <td class="num" style="color:#f97316;font-weight:600">44.6</td>
-              <td class="num" style="color:#67e8f9">3.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">30.69</td>
+              <td class="num" style="color:#f97316;font-weight:600">44.8</td>
+              <td class="num" style="color:#67e8f9">3.2%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">30.84</td>
               <td class="num" style="color:#a78bfa">13.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-4.4pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-4.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Won a maiden for Archie Watson at Ripon (5f, good) last June; her two runs over C&D for her current trainer this year suggest she needs to come down the weights before finding another opening.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, fit and race-ready; going may not suit, fast breaker from the stalls; good course record.</span></td></tr>
@@ -1252,7 +1254,7 @@
             <p class="race-name">Midnite, Building The Future Of Betting Handicap</p>
             <p class="race-meta">8:00 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 1m6f &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 6 &nbsp;|&nbsp; 4yo+ &nbsp;|&nbsp; 10 runners &nbsp;|&nbsp; £3,140</p>
           </div>
-          <div class="race-summary">📊 A competitive race — <strong>Havachoc</strong> edges the rankings but the margins are tight (score 52.5). Key dangers: <em>Tuba</em> (course form), <em>Knight Of Magic</em> (course form), <em>Billy Bathgate</em> (course form). No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Havachoc</em> (model fair odds 5.17).</div>
+          <div class="race-summary">📊 A competitive race — <strong>Havachoc</strong> edges the rankings but the margins are tight (score 52.8). Key dangers: <em>Tuba</em> (course form), <em>Knight Of Magic</em> (course form), <em>Billy Bathgate</em> (course form). No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Havachoc</em> (model fair odds 5.16).</div>
           <div class="pace-strip">  <span class="ps-label">Pace:</span>    <span class="ps-iv" style="color:#0369a1">Race conditions slightly suit ◆ Mid-Divisions <span class="ps-iv-num">(IV 1.19)</span></span>      <span class="ps-verdict">No confirmed pace-setters — expect a tactical affair, favouring those who race prominently</span></div>
           <div class="table-wrap">
           <table>
@@ -1280,9 +1282,9 @@
               <td class="num">71</td>
               <td class="num">52</td>
               <td class="form">611144</td>
-              <td class="num" style="color:#facc15;font-weight:600">52.5</td>
-              <td class="num" style="color:#67e8f9">19.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.17</td>
+              <td class="num" style="color:#facc15;font-weight:600">52.8</td>
+              <td class="num" style="color:#67e8f9">19.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.16</td>
               <td class="num" style="color:#a78bfa">15.00</td>
               <td class="num" style="color:#22c55e;font-weight:600" title="VALUE — model significantly above market">+12.7pp</td>
             </tr>
@@ -1301,11 +1303,11 @@
               <td class="num">73</td>
               <td class="num">51</td>
               <td class="form">1-3252</td>
-              <td class="num" style="color:#facc15;font-weight:600">52.4</td>
-              <td class="num" style="color:#67e8f9">19.1%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">5.23</td>
+              <td class="num" style="color:#facc15;font-weight:600">52.6</td>
+              <td class="num" style="color:#67e8f9">18.9%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">5.30</td>
               <td class="num" style="color:#a78bfa">3.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-14.2pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-14.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Versatile tactically; off the mark over 2m here in December and ran well in three of four starts since; the exception was 1m6f but he's one to consider.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Main danger.</strong> Modest ratings for this level; fit and race-ready; good course record; market price confirms model confidence.</span></td></tr>
@@ -1322,9 +1324,9 @@
               <td class="num">71</td>
               <td class="num">59</td>
               <td class="form">151545</td>
-              <td class="num" style="color:#facc15;font-weight:600">50.7</td>
+              <td class="num" style="color:#facc15;font-weight:600">51.0</td>
               <td class="num" style="color:#67e8f9">15.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">6.60</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">6.58</td>
               <td class="num" style="color:#a78bfa">6.50</td>
               <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-0.2pp</td>
             </tr>
@@ -1343,17 +1345,38 @@
               <td class="num">72</td>
               <td class="num">50</td>
               <td class="form">244343</td>
-              <td class="num" style="color:#facc15;font-weight:600">48.9</td>
-              <td class="num" style="color:#67e8f9">11.9%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">8.39</td>
+              <td class="num" style="color:#facc15;font-weight:600">49.2</td>
+              <td class="num" style="color:#67e8f9">12.0%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">8.34</td>
               <td class="num" style="color:#a78bfa">12.00</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+3.6pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+3.7pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 10yo whose easily most successful season was 2025, with four wins; the latest was at this track (2m) in December and he's held his form, including over C&D, so has each-way claims once again.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; fit and race-ready; good course record, in-form trainer (Ewan Whillans).</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#facc15">5</td>
+              <td class="horse">V Power   </td>
+              <td><span class="badge badge-draw-neutral">3</span></td>
+              <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Protectionist / Acclamation </span></td>
+              <td class="num"></td>
+              <td class="wt-cell">9-8 <span class="wt-off-top">(-3)</span></td>
+              <td>Billy Loughnane</td>
+              <td>Thomas Faulkner</td>
+              <td class="num">73</td>
+              <td class="num">19</td>
+              <td class="form">408-18</td>
+              <td class="num" style="color:#facc15;font-weight:600">46.2</td>
+              <td class="num" style="color:#67e8f9">8.0%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">12.45</td>
+              <td class="num" style="color:#a78bfa">6.00</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-8.6pp</td>
+            </tr>
+            <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Got up late on when claimer ridden over C&D (2lb higher today) in January, opening his account at 16th attempt; ran poorly at Newcastle (2m) ten days later but he is inconsistent and Billy Loughnane is booked this time.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve; good course record, top jockey booked.</span></td></tr>
+            
+            <tr>
+              <td class="rank" style="color:#facc15">6</td>
               <td class="horse">Fashionelle   </td>
               <td><span class="badge badge-draw-neutral">7</span></td>
               <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Champs Elysees / Fantastic Light </span></td>
@@ -1365,34 +1388,13 @@
               <td class="num">57</td>
               <td class="form">02723-</td>
               <td class="num" style="color:#facc15;font-weight:600">46.1</td>
-              <td class="num" style="color:#67e8f9">8.1%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">12.33</td>
+              <td class="num" style="color:#67e8f9">7.9%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">12.64</td>
               <td class="num" style="color:#a78bfa">15.00</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.4pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.2pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 0-11 in Flat handicaps but bang there on three of her last four starts (2m here and Southwell 1m6f); that puts her firmly in the picture but there is a bit to prove after 131 days off.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; may need this run for fitness; good course record.</span></td></tr>
-            
-            <tr>
-              <td class="rank" style="color:#facc15">6</td>
-              <td class="horse">V Power   </td>
-              <td><span class="badge badge-draw-neutral">3</span></td>
-              <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Protectionist / Acclamation </span></td>
-              <td class="num"></td>
-              <td class="wt-cell">9-8 <span class="wt-off-top">(-3)</span></td>
-              <td>Billy Loughnane</td>
-              <td>Thomas Faulkner</td>
-              <td class="num">73</td>
-              <td class="num">19</td>
-              <td class="form">408-18</td>
-              <td class="num" style="color:#facc15;font-weight:600">45.6</td>
-              <td class="num" style="color:#67e8f9">7.7%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">13.05</td>
-              <td class="num" style="color:#a78bfa">6.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-9.0pp</td>
-            </tr>
-            <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Got up late on when claimer ridden over C&D (2lb higher today) in January, opening his account at 16th attempt; ran poorly at Newcastle (2m) ten days later but he is inconsistent and Billy Loughnane is booked this time.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve; good course record.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#f97316">7</td>
@@ -1406,9 +1408,9 @@
               <td class="num">70</td>
               <td class="num">59</td>
               <td class="form">896-18</td>
-              <td class="num" style="color:#f97316;font-weight:600">44.4</td>
-              <td class="num" style="color:#67e8f9">6.5%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">15.49</td>
+              <td class="num" style="color:#f97316;font-weight:600">44.5</td>
+              <td class="num" style="color:#67e8f9">6.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">15.59</td>
               <td class="num" style="color:#a78bfa">21.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.7pp</td>
             </tr>
@@ -1427,14 +1429,14 @@
               <td class="num">72</td>
               <td class="num">52</td>
               <td class="form">4546-5</td>
-              <td class="num" style="color:#f97316;font-weight:600">43.2</td>
+              <td class="num" style="color:#f97316;font-weight:600">43.3</td>
               <td class="num" style="color:#67e8f9">5.5%</td>
               <td class="num" style="color:#67e8f9;font-weight:600">18.23</td>
               <td class="num" style="color:#a78bfa">6.50</td>
               <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-9.9pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Among the favourites all five starts (1m-1m2f) for Ralph Beckett but didn't progress; 7,000gns purchase before creditable fifth of eight in handicap at Southwell (1m4f, AW; third-time cheekpieces) three weeks ago, which he needs to build on but there was encouragement for this longer trip.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, fit and race-ready; going may not suit.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, fit and race-ready; going may not suit; top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#f97316">9</td>
@@ -1448,9 +1450,9 @@
               <td class="num">71</td>
               <td class="num">61</td>
               <td class="form">7-0456</td>
-              <td class="num" style="color:#f97316;font-weight:600">41.1</td>
-              <td class="num" style="color:#67e8f9">4.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">23.98</td>
+              <td class="num" style="color:#f97316;font-weight:600">41.2</td>
+              <td class="num" style="color:#67e8f9">4.1%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">24.26</td>
               <td class="num" style="color:#a78bfa">19.00</td>
               <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.1pp</td>
             </tr>
@@ -1469,9 +1471,9 @@
               <td class="num">72</td>
               <td class="num">63</td>
               <td class="form">167-89</td>
-              <td class="num" style="color:#f97316;font-weight:600">37.6</td>
+              <td class="num" style="color:#f97316;font-weight:600">37.7</td>
               <td class="num" style="color:#67e8f9">2.6%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">38.50</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">38.40</td>
               <td class="num" style="color:#a78bfa">21.00</td>
               <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-2.2pp</td>
             </tr>
@@ -1490,7 +1492,7 @@
             <p class="race-name">Read Meg Nicholls' Blog At betmgm.co.uk Handicap</p>
             <p class="race-meta">8:30 &nbsp;|&nbsp; AW &nbsp;|&nbsp; 6f &nbsp;|&nbsp; Going: Standard &nbsp;|&nbsp; Class 6 &nbsp;|&nbsp; 3yo &nbsp;|&nbsp; 10 runners &nbsp;|&nbsp; £3,140</p>
           </div>
-          <div class="race-summary">📊 A competitive race — <strong>A Lott Of Kane</strong> edges the rankings but the margins are tight (score 44.8). Key dangers: <em>Telling Time</em> (course form, value per model), <em>Grand Echo</em> (course form, value per model), <em>Jane Of The Jungle</em> (course form). No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Telling Time</em> (model fair odds 6.54), <em>Grand Echo</em> (model fair odds 7.32).</div>
+          <div class="race-summary">📊 A competitive race — <strong>A Lott Of Kane</strong> edges the rankings but the margins are tight (score 45.2). Key dangers: <em>Telling Time</em> (course form, value per model), <em>Grand Echo</em> (course form, value per model), <em>Jane Of The Jungle</em> (course form). No confirmed front-runners — pace may be modest, favouring those who race prominently. Model identifies value in: <em>Telling Time</em> (model fair odds 6.88), <em>Grand Echo</em> (model fair odds 7.50).</div>
           <div class="pace-strip">  <span class="ps-label">Pace:</span>    <span class="ps-iv" style="color:#b45309">Race conditions slightly suit ⚡ Front Runners <span class="ps-iv-num">(IV 1.36)</span></span>      <span class="ps-verdict">No confirmed pace-setters — expect a tactical affair, favouring those who race prominently</span></div>
           <div class="table-wrap">
           <table>
@@ -1507,7 +1509,7 @@
             <tbody>
               
             <tr>
-              <td class="rank" style="color:#f97316">1</td>
+              <td class="rank" style="color:#facc15">1</td>
               <td class="horse">A Lott Of Kane   </td>
               <td><span class="badge badge-draw-neutral">5</span></td>
               <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Cotai Glory / Kendargent </span></td>
@@ -1518,11 +1520,11 @@
               <td class="num">59</td>
               <td class="num">51</td>
               <td class="form">74-392</td>
-              <td class="num" style="color:#f97316;font-weight:600">44.8</td>
-              <td class="num" style="color:#67e8f9">21.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">4.77</td>
+              <td class="num" style="color:#facc15;font-weight:600">45.2</td>
+              <td class="num" style="color:#67e8f9">21.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">4.67</td>
               <td class="num" style="color:#a78bfa">3.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-12.4pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-11.9pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Yet to get his head in front but has run well on three occasions since switching to handicaps, latest when second of nine at Chelmsford (6f) last Thursday; a replication of that form should see him go close.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>Model's top pick.</strong> Modest ratings for this level; modest recent form; going may not suit; good course record; market price confirms model confidence.</span></td></tr>
@@ -1540,8 +1542,8 @@
               <td class="num">-</td>
               <td class="form">03-982</td>
               <td class="num" style="color:#f97316;font-weight:600">42.9</td>
-              <td class="num" style="color:#67e8f9">15.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">6.54</td>
+              <td class="num" style="color:#67e8f9">14.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">6.88</td>
               <td class="num" style="color:#a78bfa">-</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="No market odds available">-</td>
             </tr>
@@ -1560,11 +1562,11 @@
               <td class="num">61</td>
               <td class="num">40</td>
               <td class="form">0-0528</td>
-              <td class="num" style="color:#f97316;font-weight:600">42.2</td>
-              <td class="num" style="color:#67e8f9">13.7%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">7.32</td>
+              <td class="num" style="color:#f97316;font-weight:600">42.4</td>
+              <td class="num" style="color:#67e8f9">13.3%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">7.50</td>
               <td class="num" style="color:#a78bfa">17.00</td>
-              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+7.8pp</td>
+              <td class="num" style="color:#86efac;font-weight:600" title="SLIGHT VALUE — model above market">+7.5pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Attempted to make all when beaten a neck at Kempton (7f) last month; not in the same form at Chelmsford since and drops back in trip here.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 <strong>In contention.</strong> Modest ratings for this level; modest recent form, fit and race-ready; going may not suit; good course record.</span></td></tr>
@@ -1581,11 +1583,11 @@
               <td class="num">63</td>
               <td class="num">58</td>
               <td class="form">680-52</td>
-              <td class="num" style="color:#f97316;font-weight:600">41.0</td>
-              <td class="num" style="color:#67e8f9">11.2%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">8.93</td>
+              <td class="num" style="color:#f97316;font-weight:600">41.2</td>
+              <td class="num" style="color:#67e8f9">10.9%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">9.13</td>
               <td class="num" style="color:#a78bfa">4.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-13.8pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-14.1pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 0-5 for Jamie Osborne last year but went close when beaten a neck at Southwell (5f) last Thursday for new yard; steps back up in trip and must come into consideration.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve; going may not suit; good course record; market price confirms model confidence.</span></td></tr>
@@ -1602,14 +1604,14 @@
               <td class="num">60</td>
               <td class="num">62</td>
               <td class="form">2853-0</td>
-              <td class="num" style="color:#f97316;font-weight:600">40.4</td>
-              <td class="num" style="color:#67e8f9">10.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">10.01</td>
+              <td class="num" style="color:#f97316;font-weight:600">41.0</td>
+              <td class="num" style="color:#67e8f9">10.7%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">9.33</td>
               <td class="num" style="color:#a78bfa">9.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.1pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-0.4pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Placed a few times for Jennie Candlish but last of ten at Southwell (6f) in January on final run for that yard; refused to enter stalls and withdrawn from intended stable debut at Newcastle this month (9-2 at the time) when all headgear was removed (same today); might be best watched.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve; good course record.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve; good course record, top jockey booked.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#f97316">6</td>
@@ -1623,11 +1625,11 @@
               <td class="num">60</td>
               <td class="num">48</td>
               <td class="form">6-3530</td>
-              <td class="num" style="color:#f97316;font-weight:600">38.5</td>
-              <td class="num" style="color:#67e8f9">7.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">13.59</td>
+              <td class="num" style="color:#f97316;font-weight:600">38.9</td>
+              <td class="num" style="color:#67e8f9">7.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">13.36</td>
               <td class="num" style="color:#a78bfa">9.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.8pp</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="OVERPRICED — market below model">-3.6pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Third on a couple of starts but reared as the stalls opened and lost all chance last time; drops back in trip and should not be far away.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve, fit and race-ready; going may not suit; good course record.</span></td></tr>
@@ -1644,11 +1646,11 @@
               <td class="num">52</td>
               <td class="num">-</td>
               <td class="form">056-</td>
-              <td class="num" style="color:#f97316;font-weight:600">37.7</td>
-              <td class="num" style="color:#67e8f9">6.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">15.70</td>
+              <td class="num" style="color:#f97316;font-weight:600">38.0</td>
+              <td class="num" style="color:#67e8f9">6.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">15.32</td>
               <td class="num" style="color:#a78bfa">6.00</td>
-              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-10.3pp</td>
+              <td class="num" style="color:#ef4444;font-weight:600" title="OVERPRICED — market below model">-10.1pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Down the field on all three starts last term; makes AW/handicap debut and improvement required.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; stepping up in class; modest recent form, on an improving trajectory, may need this run for fitness.</span></td></tr>
@@ -1665,9 +1667,9 @@
               <td class="num">59</td>
               <td class="num">41</td>
               <td class="form">459-68</td>
-              <td class="num" style="color:#f97316;font-weight:600">36.6</td>
-              <td class="num" style="color:#67e8f9">5.3%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">18.89</td>
+              <td class="num" style="color:#f97316;font-weight:600">36.7</td>
+              <td class="num" style="color:#67e8f9">5.2%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">19.19</td>
               <td class="num" style="color:#a78bfa">26.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+1.4pp</td>
             </tr>
@@ -1676,6 +1678,27 @@
             
             <tr>
               <td class="rank" style="color:#f97316">9</td>
+              <td class="horse">Mon Petit Frere   </td>
+              <td><span class="badge badge-draw-neutral">2</span></td>
+              <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Supremacy / Oratorio </span></td>
+              <td class="num"></td>
+              <td class="wt-cell">9-0 <span class="wt-off-top">(-9)</span></td>
+              <td>Luke Morris</td>
+              <td>Joseph Parr</td>
+              <td class="num">50</td>
+              <td class="num">43</td>
+              <td class="form">76-654</td>
+              <td class="num" style="color:#f97316;font-weight:600">34.2</td>
+              <td class="num" style="color:#67e8f9">3.5%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">28.97</td>
+              <td class="num" style="color:#a78bfa">21.00</td>
+              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.3pp</td>
+            </tr>
+            <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Yet to show he can win races; first-time cheekpieces go on and he needs significant improvement.</span></td></tr>
+            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; stepping up in class; modest recent form; going may not suit; good course record.</span></td></tr>
+            
+            <tr>
+              <td class="rank" style="color:#f97316">10</td>
               <td class="horse">Backfire   </td>
               <td><span class="badge badge-draw-neutral">8</span></td>
               <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Aclaim / Falco </span></td>
@@ -1687,34 +1710,13 @@
               <td class="num">45</td>
               <td class="form">66-057</td>
               <td class="num" style="color:#f97316;font-weight:600">34.0</td>
-              <td class="num" style="color:#67e8f9">3.5%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">29.00</td>
+              <td class="num" style="color:#67e8f9">3.4%</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">29.70</td>
               <td class="num" style="color:#a78bfa">34.00</td>
-              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.5pp</td>
+              <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.4pp</td>
             </tr>
             <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Yet to be placed from six starts and difficult to recommend.</span></td></tr>
             <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; modest recent form, on a declining curve, fit and race-ready; going may not suit; market doesn't agree — proceed with caution.</span></td></tr>
-            
-            <tr>
-              <td class="rank" style="color:#f97316">10</td>
-              <td class="horse">Mon Petit Frere   </td>
-              <td><span class="badge badge-draw-neutral">2</span></td>
-              <td class="sire-cell"><span class="sire-text" title="Sire / Dam-sire">Supremacy / Oratorio </span></td>
-              <td class="num"></td>
-              <td class="wt-cell">9-0 <span class="wt-off-top">(-9)</span></td>
-              <td>Luke Morris</td>
-              <td>Joseph Parr</td>
-              <td class="num">50</td>
-              <td class="num">43</td>
-              <td class="form">76-654</td>
-              <td class="num" style="color:#f97316;font-weight:600">34.0</td>
-              <td class="num" style="color:#67e8f9">3.4%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">29.40</td>
-              <td class="num" style="color:#a78bfa">21.00</td>
-              <td class="num" style="color:#f97316;font-weight:600" title="FAIR — model roughly aligned">-1.4pp</td>
-            </tr>
-            <tr class="spotlight-row"><td colspan="16"><span class="spotlight">📰 Yet to show he can win races; first-time cheekpieces go on and he needs significant improvement.</span></td></tr>
-            <tr class="writeup-row"><td colspan="16"><span class="writeup">🧠 Modest ratings for this level; stepping up in class; modest recent form; going may not suit; good course record.</span></td></tr>
             
             <tr>
               <td class="rank" style="color:#f97316">11</td>
@@ -1728,9 +1730,9 @@
               <td class="num">44</td>
               <td class="num">31</td>
               <td class="form">0757</td>
-              <td class="num" style="color:#f97316;font-weight:600">33.3</td>
+              <td class="num" style="color:#f97316;font-weight:600">33.4</td>
               <td class="num" style="color:#67e8f9">3.0%</td>
-              <td class="num" style="color:#67e8f9;font-weight:600">33.01</td>
+              <td class="num" style="color:#67e8f9;font-weight:600">33.18</td>
               <td class="num" style="color:#a78bfa">34.00</td>
               <td class="num" style="color:#94a3b8;font-weight:600" title="FAIR — model roughly aligned">+0.1pp</td>
             </tr>
@@ -1770,9 +1772,9 @@
         "dam_sire": "Iffraaj",
         "stall": 2,
         "weight": "9-2",
-        "score": "59.9",
-        "model_pct": "28.6%",
-        "fair_odds": "3.50",
+        "score": "60.1",
+        "model_pct": "28.5%",
+        "fair_odds": "3.51",
         "best_dec": "2.88",
         "edge": "-6.2pp",
         "run_style": "",
@@ -1792,11 +1794,11 @@
         "dam_sire": "Foxwedge",
         "stall": 4,
         "weight": "9-2",
-        "score": "59.1",
+        "score": "59.3",
         "model_pct": "27.4%",
-        "fair_odds": "3.66",
+        "fair_odds": "3.65",
         "best_dec": "2.20",
-        "edge": "-18.1pp",
+        "edge": "-18.0pp",
         "run_style": "",
         "cd": "",
         "spotlight": "All three runs over 5f at Southwell; 40-1 when beaten a head second time out and was third 18 days ago when she led early but faded late on; looks sure to put up another bold show."
@@ -1814,9 +1816,9 @@
         "dam_sire": "Dubawi",
         "stall": 5,
         "weight": "9-2",
-        "score": "44.6",
+        "score": "44.8",
         "model_pct": "12.6%",
-        "fair_odds": "7.92",
+        "fair_odds": "7.94",
         "best_dec": "7.50",
         "edge": "-0.7pp",
         "run_style": "",
@@ -1836,9 +1838,9 @@
         "dam_sire": "Stimulation",
         "stall": 3,
         "weight": "9-2",
-        "score": "42.2",
+        "score": "42.4",
         "model_pct": "11.1%",
-        "fair_odds": "9.01",
+        "fair_odds": "9.04",
         "best_dec": "17.00",
         "edge": "+5.2pp",
         "run_style": "",
@@ -1858,11 +1860,11 @@
         "dam_sire": "Canford Cliffs",
         "stall": 1,
         "weight": "9-2",
-        "score": "42.1",
+        "score": "42.3",
         "model_pct": "11.0%",
-        "fair_odds": "9.05",
+        "fair_odds": "9.09",
         "best_dec": "17.00",
-        "edge": "+5.2pp",
+        "edge": "+5.1pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Never sighted with a chance when beaten about 8l at Chelmsford (7f) and she's dropped to a much shorter trip here with a hood added."
@@ -1880,9 +1882,9 @@
         "dam_sire": "Acclamation",
         "stall": 6,
         "weight": "9-2",
-        "score": "38.9",
-        "model_pct": "9.3%",
-        "fair_odds": "10.72",
+        "score": "39.3",
+        "model_pct": "9.4%",
+        "fair_odds": "10.64",
         "best_dec": "51.00",
         "edge": "+7.4pp",
         "run_style": "",
@@ -1916,9 +1918,9 @@
         "dam_sire": "Shamardal",
         "stall": 2,
         "weight": "9-2",
-        "score": "70.2",
+        "score": "70.6",
         "model_pct": "48.2%",
-        "fair_odds": "2.08",
+        "fair_odds": "2.07",
         "best_dec": "1.73",
         "edge": "-9.6pp",
         "run_style": "",
@@ -1938,11 +1940,11 @@
         "dam_sire": "Lemon Drop Kid",
         "stall": 3,
         "weight": "8-11",
-        "score": "52.3",
-        "model_pct": "18.8%",
-        "fair_odds": "5.31",
+        "score": "52.4",
+        "model_pct": "18.6%",
+        "fair_odds": "5.37",
         "best_dec": "4.00",
-        "edge": "-6.2pp",
+        "edge": "-6.4pp",
         "run_style": "",
         "cd": "",
         "spotlight": "11th foal; Time Test half-sister to six winners including Courage Mon Ami (1m4f-2m4f including AW/Group 1 Gold Cup; RPR 120), Lion's Pride (1m3f/1m4f including AW/Listed; 119) and Danielle (1m2f including Listed; 113); dam 1m4f winner (90), sister to 1m4f Group 2 winner Bronze Cannon; from top stable, she is very much one to note."
@@ -1960,11 +1962,11 @@
         "dam_sire": "Refuse To Bend",
         "stall": 4,
         "weight": "8-11",
-        "score": "50.8",
-        "model_pct": "17.4%",
-        "fair_odds": "5.74",
+        "score": "51.0",
+        "model_pct": "17.3%",
+        "fair_odds": "5.78",
         "best_dec": "8.50",
-        "edge": "+5.6pp",
+        "edge": "+5.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "42,000euros yearling by Ten Sovereigns; ninth foal; half-sister to four winners including Gifts Of Gold (1m1f-1m7f including AW; RPR 114), Dusky Queen (7f including Listed; 110) and Achnaha (8.6f/1m3f; 98); dam unraced half-sister to 7f 2yo Group 3 winner Albabilia, out of 1m6f winner; late foal but market support would be significant from stable which had a top day last Saturday."
@@ -1982,11 +1984,11 @@
         "dam_sire": "Shakespearean",
         "stall": 1,
         "weight": "8-13",
-        "score": "48.8",
-        "model_pct": "15.6%",
-        "fair_odds": "6.41",
+        "score": "49.3",
+        "model_pct": "15.8%",
+        "fair_odds": "6.32",
         "best_dec": "7.50",
-        "edge": "+2.3pp",
+        "edge": "+2.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Showed promise when staying on at Leicester over 7f and 1m last autumn, eventually snapping at the leaders' heels on second occasion; looks set for better as 3yo but may be up against it on this AW/seasonal debut."
@@ -2018,9 +2020,9 @@
         "dam_sire": "Oasis Dream",
         "stall": 6,
         "weight": "9-13",
-        "score": "60.0",
+        "score": "60.2",
         "model_pct": "25.3%",
-        "fair_odds": "3.95",
+        "fair_odds": "3.96",
         "best_dec": "2.10",
         "edge": "-22.3pp",
         "run_style": "",
@@ -2040,9 +2042,9 @@
         "dam_sire": "Azamour",
         "stall": 5,
         "weight": "8-11",
-        "score": "52.3",
-        "model_pct": "10.8%",
-        "fair_odds": "9.24",
+        "score": "52.6",
+        "model_pct": "10.9%",
+        "fair_odds": "9.20",
         "best_dec": "12.00",
         "edge": "+2.5pp",
         "run_style": "",
@@ -2062,11 +2064,11 @@
         "dam_sire": "Galileo",
         "stall": 11,
         "weight": "8-12",
-        "score": "51.5",
-        "model_pct": "9.9%",
-        "fair_odds": "10.09",
+        "score": "51.6",
+        "model_pct": "9.8%",
+        "fair_odds": "10.23",
         "best_dec": "8.00",
-        "edge": "-2.6pp",
+        "edge": "-2.7pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Comfortably saw off five rivals in a Class 6 handicap over C&D 18 days ago; similar form when fourth, beaten 2l, off this mark at Southwell ten days ago; drawn wide but likely to be dropped in early and this could be run to suit; not ruled out."
@@ -2084,9 +2086,9 @@
         "dam_sire": "Royal Academy",
         "stall": 10,
         "weight": "9-5",
-        "score": "50.8",
-        "model_pct": "9.2%",
-        "fair_odds": "10.91",
+        "score": "51.0",
+        "model_pct": "9.1%",
+        "fair_odds": "10.96",
         "best_dec": "29.00",
         "edge": "+5.7pp",
         "run_style": "",
@@ -2106,11 +2108,11 @@
         "dam_sire": "Verglas",
         "stall": 3,
         "weight": "9-9",
-        "score": "50.6",
-        "model_pct": "9.0%",
-        "fair_odds": "11.07",
+        "score": "51.0",
+        "model_pct": "9.1%",
+        "fair_odds": "11.02",
         "best_dec": "10.00",
-        "edge": "-1.0pp",
+        "edge": "-0.9pp",
         "run_style": "",
         "cd": "",
         "spotlight": "One win (C&D) and three second-place finishes in six AW starts since October; front-running second, beaten a nose, over 8.6f here four weeks ago; in the mix again."
@@ -2128,11 +2130,11 @@
         "dam_sire": "Machiavellian",
         "stall": 12,
         "weight": "9-9",
-        "score": "48.5",
-        "model_pct": "7.2%",
-        "fair_odds": "13.91",
+        "score": "49.1",
+        "model_pct": "7.4%",
+        "fair_odds": "13.50",
         "best_dec": "8.00",
-        "edge": "-5.3pp",
+        "edge": "-5.1pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Made all to win a 7f handicap at Lingfield in December, his most recent outing in Class 5 company; some fair efforts in Class 4 events since but the widest stall won't be easy to overcome."
@@ -2150,9 +2152,9 @@
         "dam_sire": "Dutch Art",
         "stall": 7,
         "weight": "9-4",
-        "score": "47.1",
+        "score": "47.5",
         "model_pct": "6.2%",
-        "fair_odds": "16.26",
+        "fair_odds": "16.09",
         "best_dec": "11.00",
         "edge": "-2.9pp",
         "run_style": "",
@@ -2172,11 +2174,11 @@
         "dam_sire": "Silver Deputy",
         "stall": 4,
         "weight": "8-13",
-        "score": "46.2",
-        "model_pct": "5.6%",
-        "fair_odds": "17.86",
+        "score": "46.4",
+        "model_pct": "5.5%",
+        "fair_odds": "18.25",
         "best_dec": "41.00",
-        "edge": "+3.2pp",
+        "edge": "+3.0pp",
         "run_style": "",
         "cd": "",
         "spotlight": "11-time course winner, including three since December; only 1lb higher than for the latest win but he has struggled on his last three starts."
@@ -2194,11 +2196,11 @@
         "dam_sire": "Fastnet Rock",
         "stall": 1,
         "weight": "9-0",
-        "score": "45.5",
-        "model_pct": "5.2%",
-        "fair_odds": "19.28",
+        "score": "45.7",
+        "model_pct": "5.1%",
+        "fair_odds": "19.62",
         "best_dec": "19.00",
-        "edge": "-0.1pp",
+        "edge": "-0.2pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Made all for an easy win at Musselburgh last August (7f, good; Class 6); unplaced in three runs since and he returns from a 146-day absence in a race featuring other pace influences."
@@ -2216,9 +2218,9 @@
         "dam_sire": "Dark Angel",
         "stall": 9,
         "weight": "9-7",
-        "score": "45.2",
-        "model_pct": "5.0%",
-        "fair_odds": "20.03",
+        "score": "45.7",
+        "model_pct": "5.1%",
+        "fair_odds": "19.76",
         "best_dec": "41.00",
         "edge": "+2.6pp",
         "run_style": "",
@@ -2238,11 +2240,11 @@
         "dam_sire": "Galileo",
         "stall": 8,
         "weight": "8-13",
-        "score": "44.0",
-        "model_pct": "4.4%",
-        "fair_odds": "22.87",
+        "score": "44.3",
+        "model_pct": "4.3%",
+        "fair_odds": "23.08",
         "best_dec": "13.00",
-        "edge": "-3.3pp",
+        "edge": "-3.4pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Runner-up in Group 2 company on his second start (when with Hugo Palmer); tumbled down the weights in 2025 and this month's return to action didn't hint that he was ready to take advantage; eyeshield now added; betting should guide."
@@ -2260,9 +2262,9 @@
         "dam_sire": "Rip Van Winkle",
         "stall": 2,
         "weight": "8-12",
-        "score": "38.0",
+        "score": "38.5",
         "model_pct": "2.3%",
-        "fair_odds": "44.00",
+        "fair_odds": "43.76",
         "best_dec": "67.00",
         "edge": "+0.8pp",
         "run_style": "",
@@ -2296,11 +2298,11 @@
         "dam_sire": "Fastnet Rock",
         "stall": 10,
         "weight": "9-7",
-        "score": "58.7",
-        "model_pct": "34.2%",
-        "fair_odds": "2.92",
+        "score": "59.3",
+        "model_pct": "34.5%",
+        "fair_odds": "2.90",
         "best_dec": "2.63",
-        "edge": "-3.8pp",
+        "edge": "-3.6pp",
         "run_style": "",
         "cd": "",
         "spotlight": "In good heart at present and landed his fifth AW win at Lingfield (1m2f) last month; second on his last two starts and holds obvious claims with Billy Loughnane on board for the first time."
@@ -2318,9 +2320,9 @@
         "dam_sire": "Tamayuz",
         "stall": 6,
         "weight": "8-12",
-        "score": "50.1",
+        "score": "50.5",
         "model_pct": "14.1%",
-        "fair_odds": "7.07",
+        "fair_odds": "7.11",
         "best_dec": "9.00",
         "edge": "+3.0pp",
         "run_style": "",
@@ -2340,11 +2342,11 @@
         "dam_sire": "Acclamation",
         "stall": 9,
         "weight": "8-13",
-        "score": "47.8",
-        "model_pct": "11.2%",
-        "fair_odds": "8.95",
+        "score": "48.1",
+        "model_pct": "11.1%",
+        "fair_odds": "9.05",
         "best_dec": "9.50",
-        "edge": "+0.6pp",
+        "edge": "+0.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Made all when breaking duck in 1m2f classified event at Chelmsford last month on yard debut; has run well in defeat in two starts over the extended 1m1f here since and this lesser test may well suit (some of his best form has been at 1m); tongue tied on last two outings but not today."
@@ -2362,9 +2364,9 @@
         "dam_sire": "Iffraaj",
         "stall": 7,
         "weight": "9-4",
-        "score": "42.8",
+        "score": "43.1",
         "model_pct": "6.7%",
-        "fair_odds": "15.04",
+        "fair_odds": "14.96",
         "best_dec": "17.00",
         "edge": "+0.8pp",
         "run_style": "",
@@ -2384,11 +2386,11 @@
         "dam_sire": "Le Havre",
         "stall": 5,
         "weight": "9-9",
-        "score": "41.6",
+        "score": "41.8",
         "model_pct": "5.9%",
-        "fair_odds": "16.88",
+        "fair_odds": "17.08",
         "best_dec": "7.50",
-        "edge": "-7.4pp",
+        "edge": "-7.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Fair third on handicap debut at Kempton (1m, AW) last May but out of sorts when tailed off and pulled up on final two starts on heavy last term; watching brief advised."
@@ -2406,11 +2408,11 @@
         "dam_sire": "Declaration Of War",
         "stall": 4,
         "weight": "9-3",
-        "score": "40.6",
-        "model_pct": "5.3%",
-        "fair_odds": "18.68",
+        "score": "41.1",
+        "model_pct": "5.5%",
+        "fair_odds": "18.26",
         "best_dec": "26.00",
-        "edge": "+1.5pp",
+        "edge": "+1.6pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Has shown glimpses of form but has yet to get off the mark; last of 11 here (8.5f) two weeks ago; headgear worn on last two starts is removed and he steps up in trip."
@@ -2428,11 +2430,11 @@
         "dam_sire": "Oasis Dream",
         "stall": 8,
         "weight": "8-9",
-        "score": "39.7",
-        "model_pct": "4.9%",
-        "fair_odds": "20.51",
+        "score": "39.8",
+        "model_pct": "4.8%",
+        "fair_odds": "20.89",
         "best_dec": "17.00",
-        "edge": "-1.0pp",
+        "edge": "-1.1pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Last of four wins came on final start for Adrian Wintle in a classified at Ffos Las (1m2f, good) last August; yet to be placed from seven starts for current yard."
@@ -2450,9 +2452,9 @@
         "dam_sire": "Lando",
         "stall": 11,
         "weight": "9-5",
-        "score": "39.5",
+        "score": "39.8",
         "model_pct": "4.8%",
-        "fair_odds": "20.98",
+        "fair_odds": "21.00",
         "best_dec": "17.00",
         "edge": "-1.1pp",
         "run_style": "",
@@ -2472,11 +2474,11 @@
         "dam_sire": "Nayef",
         "stall": 2,
         "weight": "9-5",
-        "score": "39.4",
+        "score": "39.5",
         "model_pct": "4.7%",
-        "fair_odds": "21.18",
+        "fair_odds": "21.47",
         "best_dec": "8.50",
-        "edge": "-7.0pp",
+        "edge": "-7.1pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Won three over C&D and once on turf when trained by Mark Rimell; has not been in the same form since and blinkers now replace cheekpieces; down to a career-low mark but doesn't look ready to take advantage."
@@ -2494,9 +2496,9 @@
         "dam_sire": "Rock Of Gibraltar",
         "stall": 3,
         "weight": "9-7",
-        "score": "38.4",
+        "score": "38.6",
         "model_pct": "4.2%",
-        "fair_odds": "23.59",
+        "fair_odds": "23.55",
         "best_dec": "41.00",
         "edge": "+1.8pp",
         "run_style": "",
@@ -2516,11 +2518,11 @@
         "dam_sire": "Galileo",
         "stall": 1,
         "weight": "9-0",
-        "score": "37.5",
-        "model_pct": "3.9%",
-        "fair_odds": "25.66",
+        "score": "37.9",
+        "model_pct": "4.0%",
+        "fair_odds": "25.30",
         "best_dec": "13.00",
-        "edge": "-3.8pp",
+        "edge": "-3.7pp",
         "run_style": "",
         "cd": "",
         "spotlight": "1-22 and has been out of sorts this year, ruining his chance with slow starts; has left Michael Attwater since finishing last of eight at Chelmsford (1m2f) 19 days ago; swaps a visor for cheekpieces on his first start for a new yard."
@@ -2552,11 +2554,11 @@
         "dam_sire": "Red Clubs",
         "stall": 8,
         "weight": "9-4",
-        "score": "57.8",
-        "model_pct": "21.9%",
-        "fair_odds": "4.56",
+        "score": "58.0",
+        "model_pct": "21.6%",
+        "fair_odds": "4.63",
         "best_dec": "11.00",
-        "edge": "+12.9pp",
+        "edge": "+12.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Showed improved form to get off the mark at Thirsk (6f, good) last September; stable in red-hot form at present and she must be of interest on AW/handicap debut."
@@ -2574,11 +2576,11 @@
         "dam_sire": "Pastoral Pursuits",
         "stall": 4,
         "weight": "9-3",
-        "score": "56.5",
-        "model_pct": "18.2%",
-        "fair_odds": "5.49",
+        "score": "56.7",
+        "model_pct": "18.0%",
+        "fair_odds": "5.57",
         "best_dec": "7.50",
-        "edge": "+4.9pp",
+        "edge": "+4.6pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Landed a Newcastle novice (5f) on her third attempt last September on her AW debut before finishing second on her nursery debut at Chelmsford (5f) the following month; off since but must come into contention if she is ready to roll."
@@ -2596,11 +2598,11 @@
         "dam_sire": "Dark Angel",
         "stall": 3,
         "weight": "9-9",
-        "score": "56.2",
-        "model_pct": "17.4%",
-        "fair_odds": "5.74",
+        "score": "56.6",
+        "model_pct": "17.6%",
+        "fair_odds": "5.68",
         "best_dec": "2.63",
-        "edge": "-20.6pp",
+        "edge": "-20.4pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Won for the second time, following wind surgery, in a nursery at Haydock (5f, good to soft) in September; has been gelded since and makes AW debut; any market move should be noted."
@@ -2618,11 +2620,11 @@
         "dam_sire": "Dutch Art",
         "stall": 2,
         "weight": "9-7",
-        "score": "56.0",
-        "model_pct": "16.9%",
-        "fair_odds": "5.92",
+        "score": "56.5",
+        "model_pct": "17.3%",
+        "fair_odds": "5.78",
         "best_dec": "4.00",
-        "edge": "-8.1pp",
+        "edge": "-7.7pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Got off the mark on his third attempt in a Catterick maiden (5f good) last August; gelded subsequently and raced too freely when last of eight on his AW/handicap debut at Kempton (6f; 11-8) this month; in good hands and may be worth another chance."
@@ -2640,9 +2642,9 @@
         "dam_sire": "Bungle Inthejungle",
         "stall": 5,
         "weight": "8-12",
-        "score": "51.2",
-        "model_pct": "8.5%",
-        "fair_odds": "11.83",
+        "score": "51.4",
+        "model_pct": "8.4%",
+        "fair_odds": "11.85",
         "best_dec": "26.00",
         "edge": "+4.6pp",
         "run_style": "",
@@ -2662,11 +2664,11 @@
         "dam_sire": "Exceed And Excel",
         "stall": 6,
         "weight": "8-12",
-        "score": "50.8",
-        "model_pct": "8.0%",
-        "fair_odds": "12.49",
+        "score": "51.1",
+        "model_pct": "8.1%",
+        "fair_odds": "12.39",
         "best_dec": "13.00",
-        "edge": "+0.3pp",
+        "edge": "+0.4pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Second of two wins last year came in a nursery at Chelmsford (5f, AW) last August off 2lb lower; considerately handled when seventh of nine on her first outing for five months over C&D two weeks ago and should be sharper."
@@ -2684,9 +2686,9 @@
         "dam_sire": "Dark Angel",
         "stall": 7,
         "weight": "8-10",
-        "score": "48.6",
+        "score": "48.8",
         "model_pct": "5.8%",
-        "fair_odds": "17.28",
+        "fair_odds": "17.26",
         "best_dec": "12.00",
         "edge": "-2.5pp",
         "run_style": "",
@@ -2706,11 +2708,11 @@
         "dam_sire": "Dansili",
         "stall": 1,
         "weight": "8-13",
-        "score": "44.6",
-        "model_pct": "3.3%",
-        "fair_odds": "30.69",
+        "score": "44.8",
+        "model_pct": "3.2%",
+        "fair_odds": "30.84",
         "best_dec": "13.00",
-        "edge": "-4.4pp",
+        "edge": "-4.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Won a maiden for Archie Watson at Ripon (5f, good) last June; her two runs over C&D for her current trainer this year suggest she needs to come down the weights before finding another opening."
@@ -2742,9 +2744,9 @@
         "dam_sire": "Mastercraftsman",
         "stall": 2,
         "weight": "9-7",
-        "score": "52.5",
-        "model_pct": "19.3%",
-        "fair_odds": "5.17",
+        "score": "52.8",
+        "model_pct": "19.4%",
+        "fair_odds": "5.16",
         "best_dec": "15.00",
         "edge": "+12.7pp",
         "run_style": "",
@@ -2764,11 +2766,11 @@
         "dam_sire": "Dansili",
         "stall": 6,
         "weight": "9-10",
-        "score": "52.4",
-        "model_pct": "19.1%",
-        "fair_odds": "5.23",
+        "score": "52.6",
+        "model_pct": "18.9%",
+        "fair_odds": "5.30",
         "best_dec": "3.00",
-        "edge": "-14.2pp",
+        "edge": "-14.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Versatile tactically; off the mark over 2m here in December and ran well in three of four starts since; the exception was 1m6f but he's one to consider."
@@ -2786,9 +2788,9 @@
         "dam_sire": "Montjeu",
         "stall": 4,
         "weight": "9-2",
-        "score": "50.7",
+        "score": "51.0",
         "model_pct": "15.2%",
-        "fair_odds": "6.60",
+        "fair_odds": "6.58",
         "best_dec": "6.50",
         "edge": "-0.2pp",
         "run_style": "",
@@ -2808,17 +2810,39 @@
         "dam_sire": "Danehill",
         "stall": 8,
         "weight": "9-4",
-        "score": "48.9",
-        "model_pct": "11.9%",
-        "fair_odds": "8.39",
+        "score": "49.2",
+        "model_pct": "12.0%",
+        "fair_odds": "8.34",
         "best_dec": "12.00",
-        "edge": "+3.6pp",
+        "edge": "+3.7pp",
         "run_style": "",
         "cd": "",
         "spotlight": "10yo whose easily most successful season was 2025, with four wins; the latest was at this track (2m) in December and he's held his form, including over C&D, so has each-way claims once again."
       },
       {
         "rank": 5,
+        "horse": "V Power",
+        "jockey": "Billy Loughnane",
+        "trainer": "Thomas Faulkner",
+        "ts": "19",
+        "rpr": "73",
+        "or": "59",
+        "form": "408-18",
+        "sire": "Protectionist",
+        "dam_sire": "Acclamation",
+        "stall": 3,
+        "weight": "9-8",
+        "score": "46.2",
+        "model_pct": "8.0%",
+        "fair_odds": "12.45",
+        "best_dec": "6.00",
+        "edge": "-8.6pp",
+        "run_style": "",
+        "cd": "",
+        "spotlight": "Got up late on when claimer ridden over C&D (2lb higher today) in January, opening his account at 16th attempt; ran poorly at Newcastle (2m) ten days later but he is inconsistent and Billy Loughnane is booked this time."
+      },
+      {
+        "rank": 6,
         "horse": "Fashionelle",
         "jockey": "William Cox",
         "trainer": "Tony Forbes",
@@ -2831,35 +2855,13 @@
         "stall": 7,
         "weight": "9-6",
         "score": "46.1",
-        "model_pct": "8.1%",
-        "fair_odds": "12.33",
+        "model_pct": "7.9%",
+        "fair_odds": "12.64",
         "best_dec": "15.00",
-        "edge": "+1.4pp",
+        "edge": "+1.2pp",
         "run_style": "",
         "cd": "",
         "spotlight": "0-11 in Flat handicaps but bang there on three of her last four starts (2m here and Southwell 1m6f); that puts her firmly in the picture but there is a bit to prove after 131 days off."
-      },
-      {
-        "rank": 6,
-        "horse": "V Power",
-        "jockey": "Billy Loughnane",
-        "trainer": "Thomas Faulkner",
-        "ts": "19",
-        "rpr": "73",
-        "or": "59",
-        "form": "408-18",
-        "sire": "Protectionist",
-        "dam_sire": "Acclamation",
-        "stall": 3,
-        "weight": "9-8",
-        "score": "45.6",
-        "model_pct": "7.7%",
-        "fair_odds": "13.05",
-        "best_dec": "6.00",
-        "edge": "-9.0pp",
-        "run_style": "",
-        "cd": "",
-        "spotlight": "Got up late on when claimer ridden over C&D (2lb higher today) in January, opening his account at 16th attempt; ran poorly at Newcastle (2m) ten days later but he is inconsistent and Billy Loughnane is booked this time."
       },
       {
         "rank": 7,
@@ -2874,9 +2876,9 @@
         "dam_sire": "Helmet",
         "stall": 10,
         "weight": "9-2",
-        "score": "44.4",
-        "model_pct": "6.5%",
-        "fair_odds": "15.49",
+        "score": "44.5",
+        "model_pct": "6.4%",
+        "fair_odds": "15.59",
         "best_dec": "21.00",
         "edge": "+1.7pp",
         "run_style": "",
@@ -2896,7 +2898,7 @@
         "dam_sire": "Shamardal",
         "stall": 1,
         "weight": "9-11",
-        "score": "43.2",
+        "score": "43.3",
         "model_pct": "5.5%",
         "fair_odds": "18.23",
         "best_dec": "6.50",
@@ -2918,9 +2920,9 @@
         "dam_sire": "Rock Of Gibraltar",
         "stall": 9,
         "weight": "9-8",
-        "score": "41.1",
-        "model_pct": "4.2%",
-        "fair_odds": "23.98",
+        "score": "41.2",
+        "model_pct": "4.1%",
+        "fair_odds": "24.26",
         "best_dec": "19.00",
         "edge": "-1.1pp",
         "run_style": "",
@@ -2940,9 +2942,9 @@
         "dam_sire": "New Approach",
         "stall": 5,
         "weight": "9-10",
-        "score": "37.6",
+        "score": "37.7",
         "model_pct": "2.6%",
-        "fair_odds": "38.50",
+        "fair_odds": "38.40",
         "best_dec": "21.00",
         "edge": "-2.2pp",
         "run_style": "",
@@ -2976,11 +2978,11 @@
         "dam_sire": "Kendargent",
         "stall": 5,
         "weight": "9-0",
-        "score": "44.8",
-        "model_pct": "21.0%",
-        "fair_odds": "4.77",
+        "score": "45.2",
+        "model_pct": "21.4%",
+        "fair_odds": "4.67",
         "best_dec": "3.00",
-        "edge": "-12.4pp",
+        "edge": "-11.9pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Yet to get his head in front but has run well on three occasions since switching to handicaps, latest when second of nine at Chelmsford (6f) last Thursday; a replication of that form should see him go close."
@@ -2999,8 +3001,8 @@
         "stall": 11,
         "weight": "9-7",
         "score": "42.9",
-        "model_pct": "15.3%",
-        "fair_odds": "6.54",
+        "model_pct": "14.5%",
+        "fair_odds": "6.88",
         "best_dec": "-",
         "edge": "-",
         "run_style": "",
@@ -3020,11 +3022,11 @@
         "dam_sire": "Acclamation",
         "stall": 4,
         "weight": "9-7",
-        "score": "42.2",
-        "model_pct": "13.7%",
-        "fair_odds": "7.32",
+        "score": "42.4",
+        "model_pct": "13.3%",
+        "fair_odds": "7.50",
         "best_dec": "17.00",
-        "edge": "+7.8pp",
+        "edge": "+7.5pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Attempted to make all when beaten a neck at Kempton (7f) last month; not in the same form at Chelmsford since and drops back in trip here."
@@ -3042,11 +3044,11 @@
         "dam_sire": "Born To Sea",
         "stall": 3,
         "weight": "9-9",
-        "score": "41.0",
-        "model_pct": "11.2%",
-        "fair_odds": "8.93",
+        "score": "41.2",
+        "model_pct": "10.9%",
+        "fair_odds": "9.13",
         "best_dec": "4.00",
-        "edge": "-13.8pp",
+        "edge": "-14.1pp",
         "run_style": "",
         "cd": "",
         "spotlight": "0-5 for Jamie Osborne last year but went close when beaten a neck at Southwell (5f) last Thursday for new yard; steps back up in trip and must come into consideration."
@@ -3064,11 +3066,11 @@
         "dam_sire": "Charm Spirit",
         "stall": 1,
         "weight": "9-5",
-        "score": "40.4",
-        "model_pct": "10.0%",
-        "fair_odds": "10.01",
+        "score": "41.0",
+        "model_pct": "10.7%",
+        "fair_odds": "9.33",
         "best_dec": "9.00",
-        "edge": "-1.1pp",
+        "edge": "-0.4pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Placed a few times for Jennie Candlish but last of ten at Southwell (6f) in January on final run for that yard; refused to enter stalls and withdrawn from intended stable debut at Newcastle this month (9-2 at the time) when all headgear was removed (same today); might be best watched."
@@ -3086,11 +3088,11 @@
         "dam_sire": "Makfi",
         "stall": 10,
         "weight": "9-7",
-        "score": "38.5",
-        "model_pct": "7.4%",
-        "fair_odds": "13.59",
+        "score": "38.9",
+        "model_pct": "7.5%",
+        "fair_odds": "13.36",
         "best_dec": "9.00",
-        "edge": "-3.8pp",
+        "edge": "-3.6pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Third on a couple of starts but reared as the stalls opened and lost all chance last time; drops back in trip and should not be far away."
@@ -3108,11 +3110,11 @@
         "dam_sire": "Refuse To Bend",
         "stall": 6,
         "weight": "9-9",
-        "score": "37.7",
-        "model_pct": "6.4%",
-        "fair_odds": "15.70",
+        "score": "38.0",
+        "model_pct": "6.5%",
+        "fair_odds": "15.32",
         "best_dec": "6.00",
-        "edge": "-10.3pp",
+        "edge": "-10.1pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Down the field on all three starts last term; makes AW/handicap debut and improvement required."
@@ -3130,9 +3132,9 @@
         "dam_sire": "Rock Of Gibraltar",
         "stall": 9,
         "weight": "9-9",
-        "score": "36.6",
-        "model_pct": "5.3%",
-        "fair_odds": "18.89",
+        "score": "36.7",
+        "model_pct": "5.2%",
+        "fair_odds": "19.19",
         "best_dec": "26.00",
         "edge": "+1.4pp",
         "run_style": "",
@@ -3141,6 +3143,28 @@
       },
       {
         "rank": 9,
+        "horse": "Mon Petit Frere",
+        "jockey": "Luke Morris",
+        "trainer": "Joseph Parr",
+        "ts": "43",
+        "rpr": "50",
+        "or": "45",
+        "form": "76-654",
+        "sire": "Supremacy",
+        "dam_sire": "Oratorio",
+        "stall": 2,
+        "weight": "9-0",
+        "score": "34.2",
+        "model_pct": "3.5%",
+        "fair_odds": "28.97",
+        "best_dec": "21.00",
+        "edge": "-1.3pp",
+        "run_style": "",
+        "cd": "",
+        "spotlight": "Yet to show he can win races; first-time cheekpieces go on and he needs significant improvement."
+      },
+      {
+        "rank": 10,
         "horse": "Backfire",
         "jockey": "Mikkel Mortensen(5)",
         "trainer": "Scott Dixon",
@@ -3153,35 +3177,13 @@
         "stall": 8,
         "weight": "9-0",
         "score": "34.0",
-        "model_pct": "3.5%",
-        "fair_odds": "29.00",
+        "model_pct": "3.4%",
+        "fair_odds": "29.70",
         "best_dec": "34.00",
-        "edge": "+0.5pp",
+        "edge": "+0.4pp",
         "run_style": "",
         "cd": "",
         "spotlight": "Yet to be placed from six starts and difficult to recommend."
-      },
-      {
-        "rank": 10,
-        "horse": "Mon Petit Frere",
-        "jockey": "Luke Morris",
-        "trainer": "Joseph Parr",
-        "ts": "43",
-        "rpr": "50",
-        "or": "45",
-        "form": "76-654",
-        "sire": "Supremacy",
-        "dam_sire": "Oratorio",
-        "stall": 2,
-        "weight": "9-0",
-        "score": "34.0",
-        "model_pct": "3.4%",
-        "fair_odds": "29.40",
-        "best_dec": "21.00",
-        "edge": "-1.4pp",
-        "run_style": "",
-        "cd": "",
-        "spotlight": "Yet to show he can win races; first-time cheekpieces go on and he needs significant improvement."
       },
       {
         "rank": 11,
@@ -3196,9 +3198,9 @@
         "dam_sire": "Authorized",
         "stall": 7,
         "weight": "9-0",
-        "score": "33.3",
+        "score": "33.4",
         "model_pct": "3.0%",
-        "fair_odds": "33.01",
+        "fair_odds": "33.18",
         "best_dec": "34.00",
         "edge": "+0.1pp",
         "run_style": "",
