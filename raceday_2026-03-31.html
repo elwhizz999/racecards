@@ -11,7 +11,7 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
-    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 10; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; align-items: center; gap: 16px; }
     header h1 { font-size: 1.1rem; color: var(--accent); }
     header .date { color: var(--muted); font-size: 0.85rem; }
     nav a { background: var(--surface); color: var(--accent); padding: 4px 10px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; border: 1px solid var(--border); white-space: nowrap; transition: all 0.15s; }
@@ -19,7 +19,7 @@
     nav a.nav-active { background: var(--accent); color: #0f172a; border-color: var(--accent); font-weight: 700; }
     nav a.nav-hidden { display: none; }
     main { padding: 24px; max-width: 100%; }
-    .race-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; overflow: hidden; scroll-margin-top: 130px; }
+    .race-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; overflow: hidden; }
     .race-header { padding: 16px 20px; border-bottom: 1px solid var(--border); }
     .race-header h2 { font-size: 1.1rem; color: var(--accent); }
     .race-time { color: var(--muted); font-weight: 400; margin-left: 8px; }
@@ -137,11 +137,11 @@
     .claude-export button { margin: 8px 16px 16px; padding: 8px 16px; background: var(--accent); color: #0f172a; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; }
     .weights { color: var(--muted); font-size: 0.75rem; padding: 8px 24px 16px; }
     .updated { color: var(--muted); font-size: 0.75rem; padding: 4px 24px; }
-    .course-filter { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 24px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 44px; z-index: 10; }
+    .course-filter { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 24px; background: var(--surface); border-bottom: 1px solid var(--border); }
     .cf-btn { display: inline-block; text-decoration: none; background: var(--bg); color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; white-space: nowrap; transition: all 0.15s; -webkit-tap-highlight-color: rgba(56,189,248,0.3); }
     .cf-btn:hover { border-color: var(--accent); color: var(--accent); }
     .cf-btn.cf-active { background: var(--accent); color: #0f172a; border-color: var(--accent); font-weight: 700; }
-    nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 8px 24px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 82px; z-index: 9; }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 8px 24px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
     .race-hidden { display: none !important; }
     /* ── Track Pace Briefings ─────────────────────────────────────── */
     .track-pace { padding: 10px 24px 6px; }
@@ -235,7 +235,7 @@
       header { padding: 10px 12px; gap: 8px; flex-wrap: wrap; }
       header h1 { font-size: 0.95rem; }
       main { padding: 8px; }
-      .race-card { border-radius: 4px; margin-bottom: 16px; scroll-margin-top: 85px; }
+      .race-card { border-radius: 4px; margin-bottom: 16px; }
       .race-header { padding: 10px 12px; }
       .race-header h2 { font-size: 0.95rem; }
       .race-meta { font-size: 0.72rem; }
@@ -257,10 +257,10 @@
       .bb-row { font-size: 0.75rem; }
       .claude-export pre { font-size: 0.65rem; padding: 8px; }
       .weights { font-size: 0.65rem; padding: 4px 10px; }
-      header { position: sticky; top: 0; z-index: 11; padding: 8px 12px; }
-      .course-filter { padding: 6px 8px; top: auto; position: relative; z-index: 9; }
+      header { padding: 8px 12px; }
+      .course-filter { padding: 6px 8px; }
       .cf-btn { font-size: 0.75rem; padding: 6px 10px; min-height: 32px; touch-action: manipulation; }
-      nav { top: 40px; padding: 6px 8px; gap: 6px; }
+      nav { padding: 6px 8px; gap: 6px; }
       .tp-container { padding: 8px 10px; }
       .pb-narrative { font-size: 0.72rem; }
       .aq-container { padding: 8px 10px; }
@@ -8755,6 +8755,20 @@
                          .find(b => b.textContent.trim() === course);
         if (btn) filterCourse(course, btn);
       }
+    })();
+
+    // Dynamic scroll-margin-top based on actual nav height
+    (function setScrollMargins() {
+      const nav = document.getElementById('race-nav');
+      if (!nav) return;
+      const update = () => {
+        const margin = nav.offsetHeight + 8;
+        document.querySelectorAll('.race-card').forEach(c => {
+          c.style.scrollMarginTop = margin + 'px';
+        });
+      };
+      update();
+      window.addEventListener('resize', update);
     })();
 
     setTimeout(() => location.reload(), 60000);
