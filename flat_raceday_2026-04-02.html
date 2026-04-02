@@ -154,6 +154,13 @@
     nav { display: flex; gap: 8px; flex-wrap: wrap; padding: 8px 24px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
     .race-hidden { display: none !important; }
     /* Claude export */
+    /* Breeding panel */
+    .breeding-panel { margin: 0; border-top: 1px solid var(--border); }
+    .bp-title { padding: 10px 16px; cursor: pointer; color: #22d3ee; font-weight: 600; font-size: 0.85rem; }
+    .bp-summary { color: var(--muted); font-weight: 400; font-size: 0.78rem; margin-left: 8px; }
+    .bp-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    .bp-table th { padding: 4px 8px; text-align: left; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    .bp-table td { padding: 4px 8px; border-bottom: 1px solid #1e293b; }
     .claude-export { margin: 24px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
     .claude-export summary { padding: 12px 16px; cursor: pointer; color: var(--accent); font-weight: 600; }
     .claude-export pre { padding: 16px; overflow-x: auto; font-size: 0.75rem; color: var(--muted); max-height: 400px; overflow-y: auto; }
@@ -428,6 +435,97 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Dolmalan (Ire) (FR), Dodge City (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Seneque (Ire) (FR), Victoire Magique (Gb) (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Seneque (Ire) (FR)</td>
+                <td style="color:#94a3b8">ZARAK</td>
+                <td style="color:#94a3b8">GLENEAGLES</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.78</td>
+                <td style="text-align:right">-0.08</td>
+                <td style="color:#64748b;font-size:0.75rem">1-6-7-10-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Victoire Magique (Gb) (FR)</td>
+                <td style="color:#94a3b8">VICTOR LUDORUM</td>
+                <td style="color:#94a3b8">RIP VAN WINKLE</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.71</td>
+                <td style="text-align:right">-0.21</td>
+                <td style="color:#64748b;font-size:0.75rem">0-4-12-7-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">3</td>
+                <td style="font-weight:600">Artilleur (FR)</td>
+                <td style="color:#94a3b8">SIYOUNI</td>
+                <td style="color:#94a3b8">SEA THE STARS</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.57</td>
+                <td style="text-align:right">+0.22</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-12-1-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">4</td>
+                <td style="font-weight:600">Dolmalan (Ire) (FR)</td>
+                <td style="color:#94a3b8">ZARAK</td>
+                <td style="color:#94a3b8">ROCK OF GIBRALTAR</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">2.20</td>
+                <td style="text-align:right">+0.38</td>
+                <td style="color:#64748b;font-size:0.75rem">0-10-2-4-0</td>
+                <td>Classic</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">5</td>
+                <td style="font-weight:600">Dodge City (FR)</td>
+                <td style="color:#94a3b8">VICTOR LUDORUM</td>
+                <td style="color:#94a3b8">SIYOUNI</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">2.00</td>
+                <td style="text-align:right">+0.33</td>
+                <td style="color:#64748b;font-size:0.75rem">0-6-12-0-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">6</td>
+                <td style="font-weight:600">Mature (FR)</td>
+                <td style="color:#94a3b8">ZARAK</td>
+                <td style="color:#94a3b8">LOPE DE VEGA</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">0-7-8-7-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Zoar (FR)</td>
+                <td style="color:#94a3b8">MOTIVATOR</td>
+                <td style="color:#94a3b8">ELUSIVE CITY</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.15</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">5-3-14-6-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1512" data-course="Chantilly">
@@ -589,6 +687,86 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Wootton Centurion (Ire) (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Lord Clover (IRE), Wadi (GB), Zade (GB)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Lord Clover (IRE)</td>
+                <td style="color:#94a3b8">SIYOUNI</td>
+                <td style="color:#94a3b8">FRANKEL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.25</td>
+                <td style="text-align:right">+0.11</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-10-3-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Wadi (GB)</td>
+                <td style="color:#94a3b8">EARTHLIGHT</td>
+                <td style="color:#94a3b8">KINGMAMBO</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.13</td>
+                <td style="text-align:right">+0.18</td>
+                <td style="color:#64748b;font-size:0.75rem">4-5-18-7-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Zade (GB)</td>
+                <td style="color:#94a3b8">PINATUBO</td>
+                <td style="color:#94a3b8">MASTERCRAFTSMAN</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.20</td>
+                <td style="text-align:right">+0.18</td>
+                <td style="color:#64748b;font-size:0.75rem">2-4-12-4-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">4</td>
+                <td style="font-weight:600">Wootton Centurion (Ire) (FR)</td>
+                <td style="color:#94a3b8">WOOTTON BASSETT</td>
+                <td style="color:#94a3b8">MORE THAN READY</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.82</td>
+                <td style="color:#64748b;font-size:0.75rem">7-5-9-1-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Etchebaster (FR)</td>
+                <td style="color:#94a3b8">BLUE POINT</td>
+                <td style="color:#94a3b8">MAKFI</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.40</td>
+                <td style="text-align:right">+0.11</td>
+                <td style="color:#64748b;font-size:0.75rem">0-6-9-2-1</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">White Shark (FR)</td>
+                <td style="color:#94a3b8">KENDARGENT</td>
+                <td style="color:#94a3b8">AUSSIE RULES</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.13</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-4-2-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1513" data-course="Chantilly">
@@ -794,6 +972,108 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Child Of Vision (Ire) (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Houville (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">1</td>
+                <td style="font-weight:600">Honey Pearl (FR)</td>
+                <td style="color:#94a3b8">LUCKY TEAM</td>
+                <td style="color:#94a3b8">ARCH</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">2.33</td>
+                <td style="text-align:right">+0.30</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-4-0-1</td>
+                <td>Classic</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">2</td>
+                <td style="font-weight:600">Child Of Vision (Ire) (FR)</td>
+                <td style="color:#94a3b8">SIYOUNI</td>
+                <td style="color:#94a3b8">DALAKHANI</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">4.00</td>
+                <td style="text-align:right">+0.70</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-4-0-0</td>
+                <td>Sprint/Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Houville (FR)</td>
+                <td style="color:#94a3b8">ZELZAL</td>
+                <td style="color:#94a3b8">LE HAVRE</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">2-0-9-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#64748b;font-weight:600">4</td>
+                <td style="font-weight:600">Insidia (FR)</td>
+                <td style="color:#94a3b8">PERSIAN KING</td>
+                <td style="color:#94a3b8">CANFORD CLIFFS</td>
+                <td style="color:#64748b;font-weight:700;text-align:right">-</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">-</td>
+                <td>-</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">5</td>
+                <td style="font-weight:600">Alma Mater (FR)</td>
+                <td style="color:#94a3b8">ZELZAL</td>
+                <td style="color:#94a3b8">ELUSIVE QUALITY</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-2-0-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#64748b;font-weight:600">6</td>
+                <td style="font-weight:600">Evita (FR)</td>
+                <td style="color:#94a3b8">PERSIAN KING</td>
+                <td style="color:#94a3b8">FOXWEDGE</td>
+                <td style="color:#64748b;font-weight:700;text-align:right">-</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">-</td>
+                <td>-</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Sahimaa (FR)</td>
+                <td style="color:#94a3b8">CHACHNAK</td>
+                <td style="color:#94a3b8">IFFRAAJ</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.86</td>
+                <td style="text-align:right">+0.30</td>
+                <td style="color:#64748b;font-size:0.75rem">0-3-7-0-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">8</td>
+                <td style="font-weight:600">Caudry (FR)</td>
+                <td style="color:#94a3b8">ZELZAL</td>
+                <td style="color:#94a3b8">ZARAK</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.80</td>
+                <td style="text-align:right">+0.29</td>
+                <td style="color:#64748b;font-size:0.75rem">0-8-2-4-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1514" data-course="Chantilly">
@@ -1109,6 +1389,163 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Awj (GB)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Pradaro (FR), Dear Cat (FR), Gallius (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">1</td>
+                <td style="font-weight:600">Quiddich (FR)</td>
+                <td style="color:#94a3b8">LETHAL FORCE</td>
+                <td style="color:#94a3b8">PRIMO DOMINIE</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.83</td>
+                <td style="color:#64748b;font-size:0.75rem">2-2-1-1-0</td>
+                <td>Mile</td>
+                <td>13% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Pradaro (FR)</td>
+                <td style="color:#94a3b8">PENNY'S PICNIC</td>
+                <td style="color:#94a3b8">ZILZAL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.11</td>
+                <td style="text-align:right">+0.10</td>
+                <td style="color:#64748b;font-size:0.75rem">3-2-11-2-2</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Dear Cat (FR)</td>
+                <td style="color:#94a3b8">CHURCHILL</td>
+                <td style="color:#94a3b8">INVINCIBLE SPIRIT</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.80</td>
+                <td style="text-align:right">+0.06</td>
+                <td style="color:#64748b;font-size:0.75rem">3-1-8-6-0</td>
+                <td>Marathon</td>
+                <td>14% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Gallius (FR)</td>
+                <td style="color:#94a3b8">HUNTER'S LIGHT</td>
+                <td style="color:#94a3b8">SOLDIER HOLLOW</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.57</td>
+                <td style="text-align:right">-0.33</td>
+                <td style="color:#64748b;font-size:0.75rem">0-4-5-8-1</td>
+                <td>Marathon</td>
+                <td>50% <span style="color:#22c55e">(+34pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Le Central (FR)</td>
+                <td style="color:#94a3b8">GOKEN</td>
+                <td style="color:#94a3b8">EVASIVE</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.33</td>
+                <td style="text-align:right">+0.60</td>
+                <td style="color:#64748b;font-size:0.75rem">2-3-4-1-0</td>
+                <td>Classic</td>
+                <td>17% <span style="color:#22c55e">(+6pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">6</td>
+                <td style="font-weight:600">Match Anthem (IRE)</td>
+                <td style="color:#94a3b8">SOLDIER'S CALL</td>
+                <td style="color:#94a3b8">DANDY MAN</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-3-3-0-0</td>
+                <td>Mile</td>
+                <td>11% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Impitoyable (FR)</td>
+                <td style="color:#94a3b8">DARK ANGEL</td>
+                <td style="color:#94a3b8">INVINCIBLE SPIRIT</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.75</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-2-0-0</td>
+                <td>Mile</td>
+                <td>13% <span style="color:#94a3b8">(+1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">8</td>
+                <td style="font-weight:600">Awj (GB)</td>
+                <td style="color:#94a3b8">PROFITABLE</td>
+                <td style="color:#94a3b8">ACCLAMATION</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">7.00</td>
+                <td style="text-align:right">+0.75</td>
+                <td style="color:#64748b;font-size:0.75rem">0-6-2-0-0</td>
+                <td>Sprint/Mile</td>
+                <td>12% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Zeolakis (FR)</td>
+                <td style="color:#94a3b8">LAWMAN</td>
+                <td style="color:#94a3b8">DIKTAT</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-4-1-1</td>
+                <td>Marathon</td>
+                <td>0% <span style="color:#ef4444">(-8pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">10</td>
+                <td style="font-weight:600">Michelangelo (FR)</td>
+                <td style="color:#94a3b8">DABIRSIM</td>
+                <td style="color:#94a3b8">HOLY ROMAN EMPEROR</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.33</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">2-6-12-0-0</td>
+                <td>Classic</td>
+                <td>12% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">11</td>
+                <td style="font-weight:600">King Robbe (FR)</td>
+                <td style="color:#94a3b8">ZANZIBARI</td>
+                <td style="color:#94a3b8">HAWK WING</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">2.64</td>
+                <td style="text-align:right">+0.70</td>
+                <td style="color:#64748b;font-size:0.75rem">5-5-9-1-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">12</td>
+                <td style="font-weight:600">Koutsounakos (GB)</td>
+                <td style="color:#94a3b8">CAPTAIN GERRARD</td>
+                <td style="color:#94a3b8">KHELEYF</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.20</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-5-0-0</td>
+                <td>Classic</td>
+                <td>13% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">13</td>
+                <td style="font-weight:600">Culcor (GB)</td>
+                <td style="color:#94a3b8">INVINCIBLE SPIRIT</td>
+                <td style="color:#94a3b8">PIVOTAL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.80</td>
+                <td style="text-align:right">+0.39</td>
+                <td style="color:#64748b;font-size:0.75rem">3-7-16-2-0</td>
+                <td>Middle</td>
+                <td>10% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1519" data-course="Chantilly">
@@ -1292,6 +1729,97 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Amadeo (FR), Ciela (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Powai (GB), Astropark (Ire) (FR), Commander Tung (Ire) (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Powai (GB)</td>
+                <td style="color:#94a3b8">NEW BAY</td>
+                <td style="color:#94a3b8">FRANKEL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.71</td>
+                <td style="text-align:right">-0.17</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-5-8-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">2</td>
+                <td style="font-weight:600">Amadeo (FR)</td>
+                <td style="color:#94a3b8">CRACKSMAN</td>
+                <td style="color:#94a3b8">INVINCIBLE SPIRIT</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.67</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-3-0-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">3</td>
+                <td style="font-weight:600">Ciela (FR)</td>
+                <td style="color:#94a3b8">CITY LIGHT</td>
+                <td style="color:#94a3b8">OASIS DREAM</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.67</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-3-0-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Astropark (Ire) (FR)</td>
+                <td style="color:#94a3b8">SEA THE STARS</td>
+                <td style="color:#94a3b8">SINGSPIEL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.04</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-12-6-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Commander Tung (Ire) (FR)</td>
+                <td style="color:#94a3b8">DUBAWI</td>
+                <td style="color:#94a3b8">KINGMAN</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.92</td>
+                <td style="text-align:right">-0.04</td>
+                <td style="color:#64748b;font-size:0.75rem">1-9-3-10-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Rosa Dei Venti (FR)</td>
+                <td style="color:#94a3b8">TORONADO</td>
+                <td style="color:#94a3b8">SLICKLY</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-11-2-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">7</td>
+                <td style="font-weight:600">Une Saga (FR)</td>
+                <td style="color:#94a3b8">NO RISK AT ALL</td>
+                <td style="color:#94a3b8">SAGAMIX</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.33</td>
+                <td style="text-align:right">-0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-3-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1515" data-course="Chantilly">
@@ -1607,6 +2135,163 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Faster (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Romance Marine (FR), Bejar (FR), Platine (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Romance Marine (FR)</td>
+                <td style="color:#94a3b8">U S NAVY FLAG</td>
+                <td style="color:#94a3b8">MAKFI</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.35</td>
+                <td style="text-align:right">+0.30</td>
+                <td style="color:#64748b;font-size:0.75rem">3-5-7-5-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Bejar (FR)</td>
+                <td style="color:#94a3b8">RECOLETOS</td>
+                <td style="color:#94a3b8">OASIS DREAM</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.13</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-4-2-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">3</td>
+                <td style="font-weight:600">Faster (FR)</td>
+                <td style="color:#94a3b8">BELARDO</td>
+                <td style="color:#94a3b8">GIANT'S CAUSEWAY</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">4.33</td>
+                <td style="text-align:right">+0.66</td>
+                <td style="color:#64748b;font-size:0.75rem">1-19-12-0-0</td>
+                <td>Sprint/Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Platine (FR)</td>
+                <td style="color:#94a3b8">INTELLO</td>
+                <td style="color:#94a3b8">GALLERY OF ZURICH</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.71</td>
+                <td style="text-align:right">-0.06</td>
+                <td style="color:#64748b;font-size:0.75rem">2-1-9-6-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Joyeuse Sage (FR)</td>
+                <td style="color:#94a3b8">MORANDI</td>
+                <td style="color:#94a3b8">SAGEBURG</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.71</td>
+                <td style="text-align:right">-0.17</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-6-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Etre (FR)</td>
+                <td style="color:#94a3b8">ATTENDU</td>
+                <td style="color:#94a3b8">MOTIVATOR</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.29</td>
+                <td style="text-align:right">+0.19</td>
+                <td style="color:#64748b;font-size:0.75rem">1-4-8-3-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Pamela Boum (FR)</td>
+                <td style="color:#94a3b8">RECOLETOS</td>
+                <td style="color:#94a3b8">GOLD AWAY</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.50</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">3-0-6-1-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">8</td>
+                <td style="font-weight:600">Farahnaz (Ire) (FR)</td>
+                <td style="color:#94a3b8">WOOTTON BASSETT</td>
+                <td style="color:#94a3b8">EXCHANGE RATE</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">∞</td>
+                <td style="text-align:right">+1.50</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-0-0-0</td>
+                <td>-</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Take Me I'M Yours (FR)</td>
+                <td style="color:#94a3b8">LAWMAN</td>
+                <td style="color:#94a3b8">SPIRIT OF DESERT</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.71</td>
+                <td style="text-align:right">-0.17</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-6-3-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">10</td>
+                <td style="font-weight:600">Jonin (GB)</td>
+                <td style="color:#94a3b8">COTAI GLORY</td>
+                <td style="color:#94a3b8">NAYEF</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.25</td>
+                <td style="text-align:right">+0.28</td>
+                <td style="color:#64748b;font-size:0.75rem">3-2-10-3-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">11</td>
+                <td style="font-weight:600">Soul And Romance (FR)</td>
+                <td style="color:#94a3b8">GOKEN</td>
+                <td style="color:#94a3b8">TEOFILO</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-7-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">12</td>
+                <td style="font-weight:600">Lunala (FR)</td>
+                <td style="color:#94a3b8">PENNY'S PICNIC</td>
+                <td style="color:#94a3b8">AMERICAN POST</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">2-1-7-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">13</td>
+                <td style="font-weight:600">Grignette (FR)</td>
+                <td style="color:#94a3b8">TORONADO</td>
+                <td style="color:#94a3b8">NEW APPROACH</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.52</td>
+                <td style="text-align:right">-0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-7-7-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1516" data-course="Chantilly">
@@ -1988,6 +2673,196 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Elegante Woman (Ire) (FR), Zahara (FR), Sugar Daddy (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Gouttes De Dieu (FR), Zero Stress (IRE), Sbikha (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">1</td>
+                <td style="font-weight:600">Elegante Woman (Ire) (FR)</td>
+                <td style="color:#94a3b8">PROFITABLE</td>
+                <td style="color:#94a3b8">CHAMPS ELYSEES</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">4.60</td>
+                <td style="text-align:right">+0.79</td>
+                <td style="color:#64748b;font-size:0.75rem">2-8-3-1-0</td>
+                <td>Sprint/Mile</td>
+                <td>8% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Gouttes De Dieu (FR)</td>
+                <td style="color:#94a3b8">GOKEN</td>
+                <td style="color:#94a3b8">IFFRAAJ</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.67</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">0-3-4-1-0</td>
+                <td>Middle</td>
+                <td>8% <span style="color:#ef4444">(-4pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Zero Stress (IRE)</td>
+                <td style="color:#94a3b8">MAGNA GRECIA</td>
+                <td style="color:#94a3b8">DUBAWI</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.78</td>
+                <td style="text-align:right">-0.13</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-4-7-0</td>
+                <td>Marathon</td>
+                <td>7% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Sbikha (FR)</td>
+                <td style="color:#94a3b8">COTAI GLORY</td>
+                <td style="color:#94a3b8">ALMANZOR</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.91</td>
+                <td style="text-align:right">+0.44</td>
+                <td style="color:#64748b;font-size:0.75rem">2-3-11-0-0</td>
+                <td>Middle</td>
+                <td>10% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Go Ken Go (FR)</td>
+                <td style="color:#94a3b8">GOKEN</td>
+                <td style="color:#94a3b8">PEDRO THE GREAT</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.78</td>
+                <td style="text-align:right">-0.13</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-3-3-0</td>
+                <td>Marathon</td>
+                <td>8% <span style="color:#ef4444">(-4pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Matinal (FR)</td>
+                <td style="color:#94a3b8">DARK ANGEL</td>
+                <td style="color:#94a3b8">SHAMARDAL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.20</td>
+                <td style="text-align:right">+0.44</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-10-0-0</td>
+                <td>Classic</td>
+                <td>12% <span style="color:#94a3b8">(+1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#64748b;font-weight:600">7</td>
+                <td style="font-weight:600">Epi (IRE)</td>
+                <td style="color:#94a3b8">CALYX</td>
+                <td style="color:#94a3b8">HARBOUR WATCH</td>
+                <td style="color:#64748b;font-weight:700;text-align:right">-</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">-</td>
+                <td>-</td>
+                <td>15% <span style="color:#94a3b8">(+0pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">8</td>
+                <td style="font-weight:600">Zahara (FR)</td>
+                <td style="color:#94a3b8">PERSIAN KING</td>
+                <td style="color:#94a3b8">SIYOUNI</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">4.00</td>
+                <td style="text-align:right">+0.70</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-4-0-0</td>
+                <td>Sprint/Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Aedion (Gb) (FR)</td>
+                <td style="color:#94a3b8">ZELZAL</td>
+                <td style="color:#94a3b8">DUBAWI</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.82</td>
+                <td style="text-align:right">-0.05</td>
+                <td style="color:#64748b;font-size:0.75rem">1-4-8-7-0</td>
+                <td>Marathon</td>
+                <td>8% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">10</td>
+                <td style="font-weight:600">Sugar Daddy (FR)</td>
+                <td style="color:#94a3b8">ROMANISED</td>
+                <td style="color:#94a3b8">DABIRSIM</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.80</td>
+                <td style="text-align:right">+0.58</td>
+                <td style="color:#64748b;font-size:0.75rem">1-7-3-0-1</td>
+                <td>Sprint/Mile</td>
+                <td>0% <span style="color:#ef4444">(-8pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">11</td>
+                <td style="font-weight:600">Hornig (GB)</td>
+                <td style="color:#94a3b8">SHOWCASING</td>
+                <td style="color:#94a3b8">SLADE POWER</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-2-0-0</td>
+                <td>Mile</td>
+                <td>10% <span style="color:#94a3b8">(+0pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">12</td>
+                <td style="font-weight:600">Free Movement (Gb) (FR)</td>
+                <td style="color:#94a3b8">TIME TEST</td>
+                <td style="color:#94a3b8">OASIS DREAM</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.91</td>
+                <td style="text-align:right">+0.38</td>
+                <td style="color:#64748b;font-size:0.75rem">1-8-3-4-0</td>
+                <td>Middle</td>
+                <td>13% <span style="color:#22c55e">(+2pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">13</td>
+                <td style="font-weight:600">Selenite (Ire) (FR)</td>
+                <td style="color:#94a3b8">MEHMAS</td>
+                <td style="color:#94a3b8">TORONADO</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-11-2-0</td>
+                <td>Marathon</td>
+                <td>10% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">14</td>
+                <td style="font-weight:600">Minotor (FR)</td>
+                <td style="color:#94a3b8">GOKEN</td>
+                <td style="color:#94a3b8">KHELEYF</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">1-3-6-4-0</td>
+                <td>Marathon</td>
+                <td>8% <span style="color:#ef4444">(-4pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">15</td>
+                <td style="font-weight:600">Zenadia (FR)</td>
+                <td style="color:#94a3b8">VAN BEETHOVEN</td>
+                <td style="color:#94a3b8">RIP VAN WINKLE</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.57</td>
+                <td style="text-align:right">+0.33</td>
+                <td style="color:#64748b;font-size:0.75rem">2-5-8-3-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">16</td>
+                <td style="font-weight:600">Crook (FR)</td>
+                <td style="color:#94a3b8">ELARQAM</td>
+                <td style="color:#94a3b8">AREION</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.33</td>
+                <td style="text-align:right">-0.63</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-4-3-1</td>
+                <td>Marathon</td>
+                <td>22% <span style="color:#22c55e">(+9pp vs avg)</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1517" data-course="Chantilly">
@@ -2259,6 +3134,141 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Phineas (Gb) (FR), Reverso (Ire) (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Anssio (FR), Spanish Breeze Cen (Ire) (FR), Never Give In (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">1</td>
+                <td style="font-weight:600">Global Health (FR)</td>
+                <td style="color:#94a3b8">FARHH</td>
+                <td style="color:#94a3b8">AUTHORIZED</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">0-4-10-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Anssio (FR)</td>
+                <td style="color:#94a3b8">SCISSOR KICK</td>
+                <td style="color:#94a3b8">LOMITAS</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.33</td>
+                <td style="text-align:right">-0.72</td>
+                <td style="color:#64748b;font-size:0.75rem">0-1-7-6-4</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">3</td>
+                <td style="font-weight:600">Phineas (Gb) (FR)</td>
+                <td style="color:#94a3b8">LOPE DE VEGA</td>
+                <td style="color:#94a3b8">DANSILI</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.31</td>
+                <td style="text-align:right">+0.57</td>
+                <td style="color:#64748b;font-size:0.75rem">1-14-13-0-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Spanish Breeze Cen (Ire) (FR)</td>
+                <td style="color:#94a3b8">TOO DARN HOT</td>
+                <td style="color:#94a3b8">MONSUN</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.67</td>
+                <td style="text-align:right">-0.15</td>
+                <td style="color:#64748b;font-size:0.75rem">1-4-6-9-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Never Give In (FR)</td>
+                <td style="color:#94a3b8">CHURCHILL</td>
+                <td style="color:#94a3b8">HAWK WING</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.60</td>
+                <td style="text-align:right">-0.13</td>
+                <td style="color:#64748b;font-size:0.75rem">2-0-8-6-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Serenissimus (FR)</td>
+                <td style="color:#94a3b8">CAMELOT</td>
+                <td style="color:#94a3b8">DANSILI</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.63</td>
+                <td style="text-align:right">-0.15</td>
+                <td style="color:#64748b;font-size:0.75rem">2-2-12-10-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Make Baraket (FR)</td>
+                <td style="color:#94a3b8">MAKE BELIEVE</td>
+                <td style="color:#94a3b8">BARATHEA</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.33</td>
+                <td style="text-align:right">+0.36</td>
+                <td style="color:#64748b;font-size:0.75rem">3-3-4-4-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">8</td>
+                <td style="font-weight:600">Creativer (IRE)</td>
+                <td style="color:#94a3b8">CAMELOT</td>
+                <td style="color:#94a3b8">PLANTEUR</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.57</td>
+                <td style="text-align:right">-0.18</td>
+                <td style="color:#64748b;font-size:0.75rem">2-0-12-8-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">9</td>
+                <td style="font-weight:600">Reverso (Ire) (FR)</td>
+                <td style="color:#94a3b8">WOOTTON BASSETT</td>
+                <td style="color:#94a3b8">DANSILI</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.57</td>
+                <td style="text-align:right">+0.69</td>
+                <td style="color:#64748b;font-size:0.75rem">2-7-7-0-0</td>
+                <td>Sprint/Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">10</td>
+                <td style="font-weight:600">Brioni (FR)</td>
+                <td style="color:#94a3b8">CLOTH OF STARS</td>
+                <td style="color:#94a3b8">ZANZIBARI</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.22</td>
+                <td style="text-align:right">+0.20</td>
+                <td style="color:#64748b;font-size:0.75rem">3-2-12-2-1</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">11</td>
+                <td style="font-weight:600">Vivaheny Cze (FR)</td>
+                <td style="color:#94a3b8">RELIABLE MAN</td>
+                <td style="color:#94a3b8">ROSENSTURM</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">0.00</td>
+                <td style="text-align:right">-1.00</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-0-6-0</td>
+                <td>-</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1518" data-course="Chantilly">
@@ -2596,6 +3606,174 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Miss Supernova (FR), City Babe (FR), Anothermine (FR)</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Spring Heart (FR), Marooned (FR), Loria (Ire) (FR)</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">1</td>
+                <td style="font-weight:600">Miss Supernova (FR)</td>
+                <td style="color:#94a3b8">DABIRSIM</td>
+                <td style="color:#94a3b8">INDIAN RIDGE</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">4.50</td>
+                <td style="text-align:right">+0.86</td>
+                <td style="color:#64748b;font-size:0.75rem">5-11-4-2-0</td>
+                <td>Sprint/Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">2</td>
+                <td style="font-weight:600">City Babe (FR)</td>
+                <td style="color:#94a3b8">CITY LIGHT</td>
+                <td style="color:#94a3b8">PACO BOY</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.70</td>
+                <td style="color:#64748b;font-size:0.75rem">2-4-3-1-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Spring Heart (FR)</td>
+                <td style="color:#94a3b8">SCISSOR KICK</td>
+                <td style="color:#94a3b8">NAYEF</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.22</td>
+                <td style="text-align:right">+0.10</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-5-1-1</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Marooned (FR)</td>
+                <td style="color:#94a3b8">TORONADO</td>
+                <td style="color:#94a3b8">HOLY ROMAN EMPEROR</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">1-3-6-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Loria (Ire) (FR)</td>
+                <td style="color:#94a3b8">SOLDIER HOLLOW</td>
+                <td style="color:#94a3b8">SIXTIES ICON</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.47</td>
+                <td style="text-align:right">-0.29</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-7-6-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">6</td>
+                <td style="font-weight:600">Send Wood (FR)</td>
+                <td style="color:#94a3b8">AL WUKAIR</td>
+                <td style="color:#94a3b8">VESPONE</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.67</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-3-0-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">7</td>
+                <td style="font-weight:600">Real Sociedad (FR)</td>
+                <td style="color:#94a3b8">SHALAA</td>
+                <td style="color:#94a3b8">LOPE DE VEGA</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.13</td>
+                <td style="text-align:right">+0.06</td>
+                <td style="color:#64748b;font-size:0.75rem">0-4-9-3-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">8</td>
+                <td style="font-weight:600">Anothermine (FR)</td>
+                <td style="color:#94a3b8">ATTENDU</td>
+                <td style="color:#94a3b8">SOUL CITY</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+1.00</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-1-0-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Golden Disc (FR)</td>
+                <td style="color:#94a3b8">TELECASTER</td>
+                <td style="color:#94a3b8">DOCTOR DINO</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.33</td>
+                <td style="text-align:right">-0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-4-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">10</td>
+                <td style="font-weight:600">Kimbia (FR)</td>
+                <td style="color:#94a3b8">GOKEN</td>
+                <td style="color:#94a3b8">HARBOUR WATCH</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.67</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">0-3-4-1-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">11</td>
+                <td style="font-weight:600">Davallia (FR)</td>
+                <td style="color:#94a3b8">SOMMERABEND</td>
+                <td style="color:#94a3b8">SOLDIER HOLLOW</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.93</td>
+                <td style="text-align:right">-0.04</td>
+                <td style="color:#64748b;font-size:0.75rem">0-6-13-7-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">12</td>
+                <td style="font-weight:600">Zasymoka (FR)</td>
+                <td style="color:#94a3b8">GUIGNOL</td>
+                <td style="color:#94a3b8">COUNTRY REEL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.40</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">2-4-16-2-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">13</td>
+                <td style="font-weight:600">Dark Zel (FR)</td>
+                <td style="color:#94a3b8">ZELZAL</td>
+                <td style="color:#94a3b8">DARK ANGEL</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-9-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">14</td>
+                <td style="font-weight:600">Amorcita (FR)</td>
+                <td style="color:#94a3b8">OLYMPIC GLORY</td>
+                <td style="color:#94a3b8">ZAFEEN</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">-0.17</td>
+                <td style="color:#64748b;font-size:0.75rem">0-1-4-0-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1504" data-course="Southwell (AW)">
@@ -2757,6 +3935,86 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#ef4444">⚠ Pedigree mismatch: Zeriya, Hot Silk, Romance Spirit</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Zeriya</td>
+                <td style="color:#94a3b8">Too Darn Hot</td>
+                <td style="color:#94a3b8">Dalakhani</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.57</td>
+                <td style="text-align:right">-0.33</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-3-9-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Hot Silk</td>
+                <td style="color:#94a3b8">Too Darn Hot</td>
+                <td style="color:#94a3b8">Dalakhani</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.50</td>
+                <td style="text-align:right">-0.33</td>
+                <td style="color:#64748b;font-size:0.75rem">1-4-6-12-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Romance Spirit</td>
+                <td style="color:#94a3b8">Teofilo</td>
+                <td style="color:#94a3b8">Dubawi</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.78</td>
+                <td style="text-align:right">-0.09</td>
+                <td style="color:#64748b;font-size:0.75rem">1-7-12-12-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Vitality</td>
+                <td style="color:#94a3b8">New Bay</td>
+                <td style="color:#94a3b8">Galileo</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.65</td>
+                <td style="text-align:right">-0.16</td>
+                <td style="color:#64748b;font-size:0.75rem">2-6-14-16-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Palace Artois</td>
+                <td style="color:#94a3b8">Palace Pier</td>
+                <td style="color:#94a3b8">Fastnet Rock</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.10</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-4-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Silken Bay</td>
+                <td style="color:#94a3b8">New Bay</td>
+                <td style="color:#94a3b8">Dark Angel</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.75</td>
+                <td style="text-align:right">-0.14</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-2-7-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1505" data-course="Southwell (AW)">
@@ -3006,6 +4264,130 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#ef4444">⚠ Pedigree mismatch: Hundred Caps, Stanley Spencer, Mr Lightside</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Hundred Caps</td>
+                <td style="color:#94a3b8">Showcasing</td>
+                <td style="color:#94a3b8">Casamento</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.33</td>
+                <td style="text-align:right">+0.40</td>
+                <td style="color:#64748b;font-size:0.75rem">0-4-6-0-0</td>
+                <td>Classic</td>
+                <td>10% <span style="color:#94a3b8">(+0pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Stanley Spencer</td>
+                <td style="color:#94a3b8">Iffraaj</td>
+                <td style="color:#94a3b8">Invincible Spirit</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.11</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">2-3-9-0-0</td>
+                <td>Classic</td>
+                <td>9% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">3</td>
+                <td style="font-weight:600">Way To Dubai</td>
+                <td style="color:#94a3b8">Holy Roman Emperor</td>
+                <td style="color:#94a3b8">Harbour Watch</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.69</td>
+                <td style="color:#64748b;font-size:0.75rem">3-5-8-0-0</td>
+                <td>Mile</td>
+                <td>8% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Mr Lightside</td>
+                <td style="color:#94a3b8">Earthlight</td>
+                <td style="color:#94a3b8">War Front</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.24</td>
+                <td style="text-align:right">+0.18</td>
+                <td style="color:#64748b;font-size:0.75rem">2-7-13-6-0</td>
+                <td>Staying</td>
+                <td>3% <span style="color:#ef4444">(-6pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">5</td>
+                <td style="font-weight:600">Digital</td>
+                <td style="color:#94a3b8">Kodi Bear</td>
+                <td style="color:#94a3b8">Acclamation</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-2-0-0</td>
+                <td>Mile</td>
+                <td>13% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">6</td>
+                <td style="font-weight:600">King's Crown</td>
+                <td style="color:#94a3b8">Starspangledbanner</td>
+                <td style="color:#94a3b8">Dark Angel</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-1-1-0-0</td>
+                <td>Mile</td>
+                <td>10% <span style="color:#94a3b8">(-0pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Cajetan</td>
+                <td style="color:#94a3b8">Advertise</td>
+                <td style="color:#94a3b8">Exceed And Excel</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.63</td>
+                <td style="color:#64748b;font-size:0.75rem">1-3-4-0-0</td>
+                <td>Mile</td>
+                <td>4% <span style="color:#ef4444">(-6pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">8</td>
+                <td style="font-weight:600">Musical Touch</td>
+                <td style="color:#94a3b8">Mehmas</td>
+                <td style="color:#94a3b8">Canford Cliffs</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+1.00</td>
+                <td style="color:#64748b;font-size:0.75rem">2-0-2-0-0</td>
+                <td>Mile</td>
+                <td>10% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">9</td>
+                <td style="font-weight:600">Dorney Lake</td>
+                <td style="color:#94a3b8">Ardad</td>
+                <td style="color:#94a3b8">Dark Angel</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.75</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-2-0-0</td>
+                <td>Mile</td>
+                <td>9% <span style="color:#94a3b8">(-0pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">10</td>
+                <td style="font-weight:600">Palmarian</td>
+                <td style="color:#94a3b8">Kingman</td>
+                <td style="color:#94a3b8">Dubawi</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.40</td>
+                <td style="text-align:right">+0.17</td>
+                <td style="color:#64748b;font-size:0.75rem">0-9-3-6-0</td>
+                <td>Staying</td>
+                <td>12% <span style="color:#ef4444">(-2pp vs avg)</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1506" data-course="Southwell (AW)">
@@ -3233,6 +4615,119 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#ef4444">⚠ Pedigree mismatch: Folk Pageant, Tewkesbury, On The Inlet</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">1</td>
+                <td style="font-weight:600">Hardstyle</td>
+                <td style="color:#94a3b8">Blue Point</td>
+                <td style="color:#94a3b8">Oasis Dream</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.67</td>
+                <td style="text-align:right">+0.30</td>
+                <td style="color:#64748b;font-size:0.75rem">1-6-11-2-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Folk Pageant</td>
+                <td style="color:#94a3b8">Masar</td>
+                <td style="color:#94a3b8">Nayef</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">2-0-9-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Tewkesbury</td>
+                <td style="color:#94a3b8">Ghaiyyath</td>
+                <td style="color:#94a3b8">Iffraaj</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">0-7-6-7-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">On The Inlet</td>
+                <td style="color:#94a3b8">New Bay</td>
+                <td style="color:#94a3b8">Acclamation</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.15</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">0-6-3-5-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Ebn Sabt</td>
+                <td style="color:#94a3b8">Ardad</td>
+                <td style="color:#94a3b8">Shamardal</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.46</td>
+                <td style="text-align:right">+0.19</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-9-2-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Haddiah</td>
+                <td style="color:#94a3b8">Olden Times</td>
+                <td style="color:#94a3b8">Frankel</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.26</td>
+                <td style="text-align:right">-0.64</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-7-12-2</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Boy Named Sioux</td>
+                <td style="color:#94a3b8">Sioux Nation</td>
+                <td style="color:#94a3b8">Sageburg</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.55</td>
+                <td style="text-align:right">+0.29</td>
+                <td style="color:#64748b;font-size:0.75rem">1-4-7-2-0</td>
+                <td>Middle</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">8</td>
+                <td style="font-weight:600">What's The Plan</td>
+                <td style="color:#94a3b8">Time Test</td>
+                <td style="color:#94a3b8">Galileo</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.58</td>
+                <td style="text-align:right">-0.23</td>
+                <td style="color:#64748b;font-size:0.75rem">1-4-12-13-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Booziebrunch</td>
+                <td style="color:#94a3b8">Coulsty</td>
+                <td style="color:#94a3b8">Bushranger</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.54</td>
+                <td style="text-align:right">-0.30</td>
+                <td style="color:#64748b;font-size:0.75rem">0-1-5-4-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1507" data-course="Southwell (AW)">
@@ -3548,6 +5043,163 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#ef4444">⚠ Pedigree mismatch: Fortunate Star, Little Mi Mi, Auntie Jo</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Fortunate Star</td>
+                <td style="color:#94a3b8">Unfortunately</td>
+                <td style="color:#94a3b8">Starspangledbanner</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.00</td>
+                <td style="text-align:right">+0.33</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-4-0-0</td>
+                <td>Middle</td>
+                <td>8% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Little Mi Mi</td>
+                <td style="color:#94a3b8">Dandy Man</td>
+                <td style="color:#94a3b8">Shamardal</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.20</td>
+                <td style="text-align:right">+0.44</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-10-0-0</td>
+                <td>Classic</td>
+                <td>12% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">3</td>
+                <td style="font-weight:600">Arlington</td>
+                <td style="color:#94a3b8">Washington DC</td>
+                <td style="color:#94a3b8">Mineshaft</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-1-1-0-0</td>
+                <td>Mile</td>
+                <td>10% <span style="color:#94a3b8">(+0pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Auntie Jo</td>
+                <td style="color:#94a3b8">Havana Grey</td>
+                <td style="color:#94a3b8">Dawn Approach</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.33</td>
+                <td style="text-align:right">-0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-4-4-0</td>
+                <td>Marathon</td>
+                <td>17% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">5</td>
+                <td style="font-weight:600">Okami</td>
+                <td style="color:#94a3b8">Showcasing</td>
+                <td style="color:#94a3b8">Helmet</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.67</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-3-0-0</td>
+                <td>Mile</td>
+                <td>14% <span style="color:#22c55e">(+4pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Street Life</td>
+                <td style="color:#94a3b8">Hot Streak</td>
+                <td style="color:#94a3b8">Shamardal</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.75</td>
+                <td style="text-align:right">+0.32</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-16-0-0</td>
+                <td>Middle</td>
+                <td>11% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Colors Of Freedom</td>
+                <td style="color:#94a3b8">Mayson</td>
+                <td style="color:#94a3b8">Dandy Man</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-3-3-0-0</td>
+                <td>Mile</td>
+                <td>13% <span style="color:#22c55e">(+2pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">8</td>
+                <td style="font-weight:600">Isla Bella</td>
+                <td style="color:#94a3b8">Land Force</td>
+                <td style="color:#94a3b8">Elusive Quality</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.36</td>
+                <td style="text-align:right">+0.83</td>
+                <td style="color:#64748b;font-size:0.75rem">7-6-11-0-0</td>
+                <td>Mile</td>
+                <td>12% <span style="color:#22c55e">(+5pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Let's Go Hugo</td>
+                <td style="color:#94a3b8">Unfortunately</td>
+                <td style="color:#94a3b8">Encosta De Lago</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.00</td>
+                <td style="text-align:right">+0.67</td>
+                <td style="color:#64748b;font-size:0.75rem">2-0-4-0-0</td>
+                <td>Middle</td>
+                <td>8% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">10</td>
+                <td style="font-weight:600">Jeany May</td>
+                <td style="color:#94a3b8">Mayson</td>
+                <td style="color:#94a3b8">Kodiac</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.50</td>
+                <td style="color:#64748b;font-size:0.75rem">0-4-4-0-0</td>
+                <td>Mile</td>
+                <td>13% <span style="color:#22c55e">(+2pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">11</td>
+                <td style="font-weight:600">Master Zack</td>
+                <td style="color:#94a3b8">Ardad</td>
+                <td style="color:#94a3b8">Sayif</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.67</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-6-0-0</td>
+                <td>Middle</td>
+                <td>12% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">12</td>
+                <td style="font-weight:600">Silky Robin</td>
+                <td style="color:#94a3b8">Exceed And Excel</td>
+                <td style="color:#94a3b8">Invincible Spirit</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">2.43</td>
+                <td style="text-align:right">+0.58</td>
+                <td style="color:#64748b;font-size:0.75rem">2-3-7-0-0</td>
+                <td>Classic</td>
+                <td>11% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">13</td>
+                <td style="font-weight:600">Opal Storm</td>
+                <td style="color:#94a3b8">Hot Streak</td>
+                <td style="color:#94a3b8">Camacho</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.67</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">0-2-6-0-0</td>
+                <td>Middle</td>
+                <td>11% <span style="color:#22c55e">(+3pp vs avg)</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1508" data-course="Southwell (AW)">
@@ -3731,6 +5383,97 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#ef4444">⚠ Pedigree mismatch: Espanita, Polka Blue, Sporting Light</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Espanita</td>
+                <td style="color:#94a3b8">Phoenix Of Spain</td>
+                <td style="color:#94a3b8">Newfoundland</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.86</td>
+                <td style="text-align:right">+0.40</td>
+                <td style="color:#64748b;font-size:0.75rem">1-3-5-1-0</td>
+                <td>Middle</td>
+                <td>14% <span style="color:#94a3b8">(+1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">2</td>
+                <td style="font-weight:600">Polka Blue</td>
+                <td style="color:#94a3b8">Space Blues</td>
+                <td style="color:#94a3b8">Dansili</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.80</td>
+                <td style="text-align:right">-0.06</td>
+                <td style="color:#64748b;font-size:0.75rem">1-5-4-8-0</td>
+                <td>Marathon</td>
+                <td>9% <span style="color:#ef4444">(-4pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Sporting Light</td>
+                <td style="color:#94a3b8">Calyx</td>
+                <td style="color:#94a3b8">Lawman</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.23</td>
+                <td style="text-align:right">-0.63</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-3-5-0</td>
+                <td>Marathon</td>
+                <td>14% <span style="color:#94a3b8">(-1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Keep An Eye On It</td>
+                <td style="color:#94a3b8">Century Dream</td>
+                <td style="color:#94a3b8">Sir Percy</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">-0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">0-1-11-2-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">Tekitoff</td>
+                <td style="color:#94a3b8">Mayson</td>
+                <td style="color:#94a3b8">Mukhadram</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.25</td>
+                <td style="text-align:right">+0.11</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-10-3-0</td>
+                <td>Staying</td>
+                <td>9% <span style="color:#ef4444">(-2pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">6</td>
+                <td style="font-weight:600">Homestrait</td>
+                <td style="color:#94a3b8">Coulsty</td>
+                <td style="color:#94a3b8">Casamento</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-8-5-0</td>
+                <td>Marathon</td>
+                <td>11% <span style="color:#94a3b8">(+1pp vs avg)</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">7</td>
+                <td style="font-weight:600">Everydaysasaturday</td>
+                <td style="color:#94a3b8">Cotai Glory</td>
+                <td style="color:#94a3b8">Nathaniel</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">1.50</td>
+                <td style="text-align:right">+0.40</td>
+                <td style="color:#64748b;font-size:0.75rem">4-4-8-4-0</td>
+                <td>Staying</td>
+                <td>6% <span style="color:#ef4444">(-5pp vs avg)</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1509" data-course="Southwell (AW)">
@@ -3936,6 +5679,108 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Captain Robert, Rogue Justice, Bruce Banner</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: A Mere Bagatelle</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">1</td>
+                <td style="font-weight:600">Captain Robert</td>
+                <td style="color:#94a3b8">Indian Haven</td>
+                <td style="color:#94a3b8">Galileo</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">1.31</td>
+                <td style="text-align:right">+0.20</td>
+                <td style="color:#64748b;font-size:0.75rem">3-9-10-7-1</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">2</td>
+                <td style="font-weight:600">Rogue Justice</td>
+                <td style="color:#94a3b8">Calyx</td>
+                <td style="color:#94a3b8">Kodiac</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">1.22</td>
+                <td style="text-align:right">+0.10</td>
+                <td style="color:#64748b;font-size:0.75rem">0-3-5-2-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">3</td>
+                <td style="font-weight:600">Bruce Banner</td>
+                <td style="color:#94a3b8">Starspangledbanner</td>
+                <td style="color:#94a3b8">Mount Nelson</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">0.33</td>
+                <td style="text-align:right">-0.75</td>
+                <td style="color:#64748b;font-size:0.75rem">0-0-2-1-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">4</td>
+                <td style="font-weight:600">Zephlyn</td>
+                <td style="color:#94a3b8">Iffraaj</td>
+                <td style="color:#94a3b8">Sea The Stars</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">1.32</td>
+                <td style="text-align:right">+0.27</td>
+                <td style="color:#64748b;font-size:0.75rem">3-2-15-2-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">5</td>
+                <td style="font-weight:600">A Mere Bagatelle</td>
+                <td style="color:#94a3b8">Born To Sea</td>
+                <td style="color:#94a3b8">Fasliyev</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">4.00</td>
+                <td style="text-align:right">+1.15</td>
+                <td style="color:#64748b;font-size:0.75rem">11-1-8-0-0</td>
+                <td>Sprint/Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">6</td>
+                <td style="font-weight:600">Payment Plan</td>
+                <td style="color:#94a3b8">Decorated Knight</td>
+                <td style="color:#94a3b8">Tiger Hill</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">0.60</td>
+                <td style="text-align:right">-0.19</td>
+                <td style="color:#64748b;font-size:0.75rem">1-1-8-6-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">7</td>
+                <td style="font-weight:600">Haaland</td>
+                <td style="color:#94a3b8">Buratino</td>
+                <td style="color:#94a3b8">Haafhd</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.14</td>
+                <td style="color:#64748b;font-size:0.75rem">2-1-8-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">8</td>
+                <td style="font-weight:600">Charlie Darling</td>
+                <td style="color:#94a3b8">Ultra</td>
+                <td style="color:#94a3b8">Divine Light</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">1.00</td>
+                <td style="text-align:right">+0.25</td>
+                <td style="color:#64748b;font-size:0.75rem">3-0-6-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
         <section class="race-card" id="race-1510" data-course="Southwell (AW)">
@@ -4163,8 +6008,122 @@
             </tbody>
           </table>
           </div>
+          
+    <details class="breeding-panel">
+        <summary class="bp-title">🧬 Breeding &amp; Dosage
+            <span class="bp-summary"><span style="color:#22c55e">✦ Breeding suits: Chicago Storm, Phaedra</span> &nbsp;·&nbsp; <span style="color:#ef4444">⚠ Pedigree mismatch: Solanna, Hackney Diamonds, Pigeon House</span></span>
+        </summary>
+        <table class="bp-table">
+            <thead><tr>
+                <th>#</th><th>Horse</th><th>Sire</th><th>Dam Sire</th>
+                <th>DI</th><th>CD</th><th>Profile</th><th>Aptitude</th>
+                <th>Sire at dist</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">1</td>
+                <td style="font-weight:600">Solanna</td>
+                <td style="color:#94a3b8">Helmet</td>
+                <td style="color:#94a3b8">Night Shift</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.87</td>
+                <td style="text-align:right">-</td>
+                <td style="color:#64748b;font-size:0.75rem">2-1-7-3-1</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">2</td>
+                <td style="font-weight:600">Chicago Storm</td>
+                <td style="color:#94a3b8">Dabirsim</td>
+                <td style="color:#94a3b8">Dansili</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">2.56</td>
+                <td style="text-align:right">+0.75</td>
+                <td style="color:#64748b;font-size:0.75rem">5-4-5-2-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">3</td>
+                <td style="font-weight:600">Hackney Diamonds</td>
+                <td style="color:#94a3b8">Camelot</td>
+                <td style="color:#94a3b8">Holy Roman Emperor</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.94</td>
+                <td style="text-align:right">+0.07</td>
+                <td style="color:#64748b;font-size:0.75rem">3-4-15-8-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">4</td>
+                <td style="font-weight:600">Pigeon House</td>
+                <td style="color:#94a3b8">Saxon Warrior</td>
+                <td style="color:#94a3b8">Zoffany</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.60</td>
+                <td style="text-align:right">-0.13</td>
+                <td style="color:#64748b;font-size:0.75rem">1-0-4-3-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#22c55e;font-weight:600">5</td>
+                <td style="font-weight:600">Phaedra</td>
+                <td style="color:#94a3b8">Ghaiyyath</td>
+                <td style="color:#94a3b8">Oasis Dream</td>
+                <td style="color:#22c55e;font-weight:700;text-align:right">3.00</td>
+                <td style="text-align:right">+0.67</td>
+                <td style="color:#64748b;font-size:0.75rem">1-2-3-0-0</td>
+                <td>Mile</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">6</td>
+                <td style="font-weight:600">Latin</td>
+                <td style="color:#94a3b8">No Nay Never</td>
+                <td style="color:#94a3b8">Camelot</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.40</td>
+                <td style="text-align:right">+0.29</td>
+                <td style="color:#64748b;font-size:0.75rem">3-5-12-4-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#94a3b8;font-weight:600">7</td>
+                <td style="font-weight:600">Spec Of Light</td>
+                <td style="color:#94a3b8">Muhaarar</td>
+                <td style="color:#94a3b8">Shamardal</td>
+                <td style="color:#94a3b8;font-weight:700;text-align:right">1.10</td>
+                <td style="text-align:right">+0.05</td>
+                <td style="color:#64748b;font-size:0.75rem">0-5-13-4-0</td>
+                <td>Staying</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">8</td>
+                <td style="font-weight:600">Theophilos</td>
+                <td style="color:#94a3b8">Teofilo</td>
+                <td style="color:#94a3b8">Dubawi</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.79</td>
+                <td style="text-align:right">-0.08</td>
+                <td style="color:#64748b;font-size:0.75rem">1-6-9-10-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr>
+            <tr>
+                <td style="color:#ef4444;font-weight:600">9</td>
+                <td style="font-weight:600">Wood Whisperer</td>
+                <td style="color:#94a3b8">Waldgeist</td>
+                <td style="color:#94a3b8">Mastercraftsman</td>
+                <td style="color:#ef4444;font-weight:700;text-align:right">0.82</td>
+                <td style="text-align:right">-0.05</td>
+                <td style="color:#64748b;font-size:0.75rem">1-3-10-6-0</td>
+                <td>Marathon</td>
+                <td><span style="color:#64748b">-</span></td>
+            </tr></tbody>
+        </table>
+    </details>
         </section>
         
+    <!-- sire leaderboard error: no such column: rc.is_aw -->
     <details class="claude-export">
   <summary>📋 Copy data for Claude analysis</summary>
   <pre id="claude-data">[
