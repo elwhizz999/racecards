@@ -40,6 +40,10 @@
     .signal-sources { font-size: 0.78rem; color: #93c5fd; }
     .signal-notes { font-size: 0.8rem; color: #c4b5fd; margin-top: 4px; font-style: italic; }
 
+    /* ── Convergence cards ── */
+    .convergence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                          padding: 12px 16px; margin-bottom: 10px; }
+
     /* ── NAP Table ── */
     .nap-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
                         border-radius: 0 0 8px 8px; }
@@ -62,6 +66,21 @@
     .conflict-detail { font-size: 0.82rem; line-height: 1.7; }
     .conflict-detail strong { color: var(--accent); }
 
+    /* ── Judges ── */
+    .judge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                    padding: 12px 16px; margin-bottom: 10px; }
+    .judge-name { font-weight: 700; color: #f0f6fc; font-size: 0.95rem; }
+    .judge-source { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+    .judge-spec { color: var(--accent); font-size: 0.78rem; margin-bottom: 6px; }
+    .judge-status { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 4px; }
+    .judge-pick { font-size: 0.82rem; margin-top: 3px; line-height: 1.5; }
+    .judge-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.82rem;
+                         padding: 4px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .judge-selection:last-child { border-bottom: none; }
+    .judge-horse { font-weight: 700; color: #f0f6fc; }
+    .judge-meta { color: var(--muted); font-size: 0.78rem; }
+    .judge-notes { color: #c4b5fd; font-size: 0.78rem; font-style: italic; }
+
     /* ── Trainer intel ── */
     .trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
                       padding: 12px 16px; margin-bottom: 10px; }
@@ -82,9 +101,10 @@
     /* ── Responsive ── */
     @media (max-width: 640px) {
       main { padding: 10px; }
-      .signal-card, .conflict-card, .trainer-card { padding: 10px 12px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card { padding: 10px 12px; }
       .nap-table { font-size: 0.75rem; }
       .nap-table th, .nap-table td { padding: 6px 6px; }
+      .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
     }
   </style>
 </head>
@@ -126,7 +146,7 @@
     <div class="summary-chip" style="color:#f87171">No French racing today</div>
   </div>
 
-  <!-- ── Strongest Signals ── -->
+  <!-- 1. Strongest Signals — the most actionable info, always first -->
   <section class="briefing-section">
     <h2 class="section-title">Strongest Signals (5)</h2>
     <div>
@@ -169,8 +189,8 @@
           </div>
           <div class="signal-stats">
             <span>R1</span>
-            <span>Prob: —</span>
-            <span>Model: —</span>
+            <span>Prob: 30.8%</span>
+            <span>Model: 3.25</span>
             <span>Sources: 3</span>
           </div>
           <div class="signal-sources">model_r1, dan_skelton_blog, rp_naps</div>
@@ -184,8 +204,8 @@
           </div>
           <div class="signal-stats">
             <span>R1</span>
-            <span>Prob: —</span>
-            <span>Model: —</span>
+            <span>Prob: 46.9%</span>
+            <span>Model: 2.13</span>
             <span>Sources: 2</span>
           </div>
           <div class="signal-sources">model_r1, rp_naps</div>
@@ -199,8 +219,8 @@
           </div>
           <div class="signal-stats">
             <span>R1</span>
-            <span>Prob: —</span>
-            <span>Model: —</span>
+            <span>Prob: 35.2%</span>
+            <span>Model: 2.84</span>
             <span>Sources: 2</span>
           </div>
           <div class="signal-sources">model_r1, rp_naps_top_pnl</div>
@@ -209,7 +229,7 @@
     </div>
   </section>
 
-  <!-- ── NAP Convergence Table ── -->
+  <!-- 2. NAP Convergence Table — quick scan of newspaper tipster alignment -->
   <section class="briefing-section">
     <h2 class="section-title">NAP Convergence (2+ Newspaper NAPs)</h2>
     <div class="nap-table-wrap">
@@ -281,7 +301,60 @@
     </div>
   </section>
 
-  <!-- ── Expert-vs-Model Conflicts ── -->
+  <!-- 3. Updated Convergences — new findings from judge sweep -->
+  
+  <!-- ── Updated Convergences (from judge sweep) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title">Updated Convergence Findings</h2>
+    <div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Jakar Du Moulin</span>
+            <span class="signal-meta">14:46 Haydock</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">3 sources</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, Hugh Taylor, Model R3</div>
+          <div class="signal-notes">Two respected judges agree; model also R3</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #dc2626">
+          <div class="signal-header">
+            <span class="signal-horse">Brookside La</span>
+            <span class="signal-meta">16:30 Haydock</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">5 sources</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor, Dan Skelton blog, Easter Aces, 2 RP NAPS</div>
+          <div class="signal-notes">Massive convergence but NOT model top 3 — potential blind spot</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #dc2626">
+          <div class="signal-header">
+            <span class="signal-horse">Triple Trade</span>
+            <span class="signal-meta">15:20 Haydock</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">4 sources</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, Easter Aces, 2 RP NAPS</div>
+          <div class="signal-notes">Multiple experts but model has Minella Drama R1 — HIGH CONFLICT</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Fillyoureye</span>
+            <span class="signal-meta">16:25 Fairyhouse</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">3 sources</span>
+          </div>
+          <div class="signal-sources">ATR expert, Model R1, RP NAP (Irish Sun)</div>
+          <div class="signal-notes">Model + ATR expert aligned on Mullins runner</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Karbau</span>
+            <span class="signal-meta">17:00 Fairyhouse</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">3 sources</span>
+          </div>
+          <div class="signal-sources">ATR expert, Model R1, RP NAP (Brian Flanagan)</div>
+          <div class="signal-notes">Model + ATR expert aligned on Mullins runner</div>
+        </div></div>
+  </section>
+
+  <!-- 4. Expert-vs-Model Conflicts — where to be cautious -->
   <section class="briefing-section">
     <h2 class="section-title">Expert-vs-Model Conflicts (3)</h2>
     <div>
@@ -322,7 +395,155 @@
     </div>
   </section>
 
-  <!-- ── Trainer Intelligence ── -->
+  <!-- 5. Respected Judges — full breakdown by source (collapsible) -->
+  
+  <!-- ── Respected Judges ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+      Respected Judges <span class="toggle-hint">(tap to expand/collapse)</span>
+    </h2>
+    <div class="collapsible"><div class="judge-card"><div class="judge-name">Hugh Taylor <span class="judge-source">(At The Races)</span></div><div class="judge-spec">UK daily tips</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">First Candidate</span>
+                  <span class="judge-meta">13:37 Haydock</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 — CONVERGENCE</span>
+                  <span class="judge-notes">Two narrow seconds, tough to beat on flatter track</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">We're Red And Blue</span>
+                  <span class="judge-meta">14:12 Haydock</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">MODEL R2 — partial</span>
+                  <span class="judge-notes">Career best third in Imperial Cup</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jakar Du Moulin</span>
+                  <span class="judge-meta">14:46 Haydock</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">MODEL R3 — partial (also Ruby Walsh)</span>
+                  <span class="judge-notes">Plenty in hand at Doncaster</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Guard Your Dreams</span>
+                  <span class="judge-meta">15:20 Haydock</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">Conflict — model has Minella Drama R1</span>
+                  <span class="judge-notes">Won previous start at Warwick very easily</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Count Adhemar</span>
+                  <span class="judge-meta">15:55 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not scored</span>
+                  <span class="judge-notes">Second in last two, stamina in pedigree</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Brookside La</span>
+                  <span class="judge-meta">16:30 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not model top 3 (also Skelton + Easter Aces)</span>
+                  <span class="judge-notes">Scored on handicap bow at Wetherby</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Laganhill</span>
+                  <span class="judge-meta">17:05 Haydock</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">Conflict — model has Major Fortune R1</span>
+                  <span class="judge-notes">Cheekpieces first time, extra furlongs to help</span>
+                </div></div><div class="judge-card"><div class="judge-name">Ruby Walsh <span class="judge-source">(Paddy Power column)</span></div><div class="judge-spec">NH expert — ITV Saturdays</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tashan</span>
+                  <span class="judge-meta">14:12 Haydock</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">Conflict — model has Bucephalus R1</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jakar Du Moulin</span>
+                  <span class="judge-meta">14:46 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">MODEL R3 (also Hugh Taylor)</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Triple Trade</span>
+                  <span class="judge-meta">15:20 Haydock</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">Conflict — model has Minella Drama R1</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Gambino</span>
+                  <span class="judge-meta">15:05 Musselburgh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 — STRONG CONVERGENCE</span>
+                  <span class="judge-notes">BEST BET</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Al Qareem</span>
+                  <span class="judge-meta">14:30 Musselburgh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 — CONVERGENCE</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Davy Crockett</span>
+                  <span class="judge-meta">17:00 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">Conflict — model has Karbau R1</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Dan Skelton Blog <span class="judge-source">(Ladbrokes blog)</span></div><div class="judge-spec">Trainer intelligence (9 runners today)</div><div class="judge-pick">Blue Carpet (14:46 Haydock) — progressive year, MODEL R1</div><div class="judge-pick">Major Fortune (17:05 Haydock) — expects improvement, MODEL R1</div><div class="judge-pick">First Candidate (13:37 Haydock) — leading player, MODEL R1</div><div class="judge-pick">Gambino (15:05 Musselburgh) — chance despite stable flat inexperience</div></div><div class="judge-card"><div class="judge-name">Atr Fairyhouse Expert <span class="judge-source">(At The Races expert panel)</span></div><div class="judge-spec">Fairyhouse race-by-race guide</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Salsinha</span>
+                  <span class="judge-meta">14:05 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not model top 3</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">May Call You Back</span>
+                  <span class="judge-meta">14:40 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">MODEL R3</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Vaureal</span>
+                  <span class="judge-meta">15:15 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not scored</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sine Qua Non</span>
+                  <span class="judge-meta">15:50 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not model top 3</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fillyoureye</span>
+                  <span class="judge-meta">16:25 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 — CONVERGENCE</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Karbau</span>
+                  <span class="judge-meta">17:00 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 — CONVERGENCE</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Some Pretender</span>
+                  <span class="judge-meta">17:35 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not scored</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Sporting Life Easter Aces <span class="judge-source">(Sporting Life)</span></div><div class="judge-spec">Easter weekend picks</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Vincenzo Peruggia</span>
+                  <span class="judge-meta">13:25 Musselburgh</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not model top 3</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Triple Trade</span>
+                  <span class="judge-meta">15:20 Haydock</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">Conflict — also Ruby Walsh</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Brookside La</span>
+                  <span class="judge-meta">16:30 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0">Not model top 3 (also Taylor + Skelton)</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(Sporting Life / The Irish Field)</span></div><div class="judge-spec">Irish racing specialist</div><div class="judge-status">Saturday column not published — covers Easter Sunday and Monday. Irish Field preview (Apr 2) focused on trainer angles: Mullins 28% SR at Fairyhouse Easter since 2015.</div></div><div class="judge-card"><div class="judge-name">Paul Kealy <span class="judge-source">(Racing Post Saturday Sizzlers (RP+ paywall))</span></div><div class="judge-spec">UK expert</div><div class="judge-status">6 Saturday tips behind paywall. Not accessible.</div></div><div class="judge-card"><div class="judge-name">Tom Segal <span class="judge-source">(Racing Post Pricewise (RP+ paywall))</span></div><div class="judge-spec">Value betting specialist</div><div class="judge-status">3 ITV tips behind paywall. Not accessible.</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Apple Podcasts)</span></div><div class="judge-spec">Daily racing podcast</div><div class="judge-status">Podcast available but not transcribable from this environment.</div></div><div class="judge-card"><div class="judge-name">The Spectator <span class="judge-source">(The Spectator)</span></div><div class="judge-spec">Weekend racing column</div><div class="judge-status">All 3 picks are Sunday/Monday (Big Westerner, Monbeg Genius, One Big Bang). No Saturday selections.</div></div><div class="judge-card"><div class="judge-name">Tom Collins <span class="judge-source">(ITV Racing ("Tipping Tom") / At The Races / Sky Sports Racing / X (@Tomptin) / Patreon)</span></div><div class="judge-spec">GB/IRE NH & Flat + US Flat — ITV Opening Show presenter</div><div class="judge-status">Tips shared via ITV broadcast and X (@Tomptin). Not found in web search for today — likely shared during ITV broadcast or on X. Check ITV replay and @Tomptin.</div></div></div>
+  </section>
+
+  <!-- 6. Trainer Intelligence — insider quotes -->
   <section class="briefing-section">
     <h2 class="section-title">Trainer Intelligence</h2>
     <div>
@@ -339,7 +560,7 @@
     </div>
   </section>
 
-  <!-- ── Blind Spots ── -->
+  <!-- 7. Blind Spots — where model has least confidence -->
   <section class="briefing-section">
     <h2 class="section-title">Blind Spot Alerts</h2>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
@@ -347,7 +568,7 @@
     </div>
   </section>
 
-  <!-- ── Full Text ── -->
+  <!-- 8. Full Text — raw briefing for reference (collapsed by default) -->
   
     <section class="briefing-section">
       <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
