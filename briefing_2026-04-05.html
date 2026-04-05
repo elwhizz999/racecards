@@ -88,6 +88,23 @@
     .quote-item { font-size: 0.82rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
     .quote-item strong { color: #f0f6fc; }
 
+    /* ── Skip races (no bet) ── */
+    .skip-card { background: var(--surface); border-left: 3px solid #dc2626; border: 1px solid var(--border);
+                  border-left: 3px solid #dc2626; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+    .skip-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .skip-meta { color: var(--muted); font-size: 0.82rem; }
+    .skip-race { font-weight: 700; color: #fecaca; font-size: 0.95rem; }
+    .skip-reason { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+    /* ── Confidence tier badges ── */
+    .tier-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .tier-1 { background: #f59e0b; color: #fff; }
+    .tier-2 { background: #94a3b8; color: #fff; }
+    .tier-3 { background: #6b7280; color: #fff; }
+
+    /* ── Judge accuracy ── */
+    .judge-accuracy { color: #93c5fd; font-size: 0.75rem; margin-top: 2px; }
+
     /* ── Blind spots ── */
     .blind-category { font-size: 0.82rem; margin-bottom: 6px; }
     .blind-category ul { margin-left: 16px; color: var(--muted); }
@@ -101,10 +118,11 @@
     /* ── Responsive ── */
     @media (max-width: 640px) {
       main { padding: 10px; }
-      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card { padding: 10px 12px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card, .skip-card { padding: 10px 12px; }
       .nap-table { font-size: 0.75rem; }
       .nap-table th, .nap-table td { padding: 6px 6px; }
       .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .signal-header, .skip-header, .conflict-header { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -155,13 +173,14 @@
           <div class="signal-header">
             <span class="signal-horse">Mondo Man</span>
             <span class="signal-meta">4:05 Plumpton</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">VERY_STRONG</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">VERY STRONG</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
           </div>
           <div class="signal-stats">
             <span>R1</span>
             <span>Prob: 15.8%</span>
             <span>Model: 6.3</span>
-            <span>Sources: 6</span>
+            <span>Market: 2.63</span><span style="color:#10b981">Edge: +140%</span>
+            <span>Sources: 6w (6 sources)</span>
           </div>
           <div class="signal-sources">Model R1, ATR Expert View, ATR Verdict, Templegate (Sun) NAP, Cambridge Evening News NAP, Daily Record NAP</div>
           <div class="signal-notes">Strongest NAP convergence of the day (3 newspaper NAPs) plus model R1 and both ATR experts agree</div>
@@ -170,13 +189,14 @@
           <div class="signal-header">
             <span class="signal-horse">Absurde</span>
             <span class="signal-meta">1:50 Cork</span>
-            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
           </div>
           <div class="signal-stats">
             <span>R1</span>
             <span>Prob: 38.2%</span>
             <span>Model: 2.6</span>
-            <span>Sources: 3</span>
+            <span>Market: 2.00</span><span style="color:#10b981">Edge: +30%</span>
+            <span>Sources: 5w (3 sources)</span>
           </div>
           <div class="signal-sources">Model R1, Ruby Walsh, ATR Expert View</div>
           <div class="signal-notes">Walsh: 'Rating 153, obvious choice, Harry Cobden coming over'. ATR: '2024 County Hurdle winner'</div>
@@ -185,13 +205,14 @@
           <div class="signal-header">
             <span class="signal-horse">Oldschool Outlaw</span>
             <span class="signal-meta">3:50 Fairyhouse</span>
-            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-2">TIER 2</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
           </div>
           <div class="signal-stats">
             <span>R1</span>
             <span>Prob: 31.2%</span>
             <span>Model: 3.2</span>
-            <span>Sources: 3</span>
+            <span>Market: 3.00</span><span style="color:#10b981">Edge: +7%</span>
+            <span>Sources: 3w (3 sources)</span>
           </div>
           <div class="signal-sources">Model R1, ATR Expert View, ATR Verdict</div>
           <div class="signal-notes">Model R1 + both ATR experts. ATR: 'Runner-up at Cheltenham, had rivals in behind'. Note: Walsh picks Place De La Nation, 2 NAPs also on PDLN</div>
@@ -200,13 +221,14 @@
           <div class="signal-header">
             <span class="signal-horse">Sixmilebridge</span>
             <span class="signal-meta">5:00 Fairyhouse</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">VERY_STRONG</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">VERY STRONG</span> <span class="tier-badge tier-2">TIER 2</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
           </div>
           <div class="signal-stats">
             <span>R2</span>
             <span>Prob: 24.4%</span>
             <span>Model: 4.1</span>
-            <span>Sources: 5</span>
+            <span>Market: 3.75</span><span style="color:#10b981">Edge: +9%</span>
+            <span>Sources: 7w (5 sources)</span>
           </div>
           <div class="signal-sources">Ruby Walsh, ATR Expert View, ATR Verdict, The Spectator, FreeTips</div>
           <div class="signal-notes">5 expert sources all pick Sixmilebridge but model has Jacob's Ladder R1. Walsh: 'Skipped Cheltenham, trip ideal, Scilly Isles form good enough'. KEY CONFLICT.</div>
@@ -215,13 +237,14 @@
           <div class="signal-header">
             <span class="signal-horse">Zaraki</span>
             <span class="signal-meta">2:50 / 15:50 Longchamp / ParisLongchamp</span>
-            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-2">TIER 2</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
           </div>
           <div class="signal-stats">
             <span>R1</span>
             <span>Prob: 30.0%</span>
             <span>Model: 3.3</span>
-            <span>Sources: 2</span>
+            <span>Market: 2.60</span><span style="color:#10b981">Edge: +27%</span>
+            <span>Sources: 4w (2 sources)</span>
           </div>
           <div class="signal-sources">Model R1, Laurent Barbarin (ATR)</div>
           <div class="signal-notes">Barbarin: 'Son of Zarak, beat 3 subsequent winners, could be a very good horse'</div>
@@ -230,13 +253,14 @@
           <div class="signal-header">
             <span class="signal-horse">Tajlina</span>
             <span class="signal-meta">4:35 / 17:35 Longchamp / ParisLongchamp</span>
-            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-2">TIER 2</span>
           </div>
           <div class="signal-stats">
             <span>R1</span>
             <span>Prob: 20.4%</span>
             <span>Model: 4.9</span>
-            <span>Sources: 2</span>
+            <span>Market: 5.20</span><span style="color:#ef4444">Edge: -6%</span>
+            <span>Sources: 4w (2 sources)</span>
           </div>
           <div class="signal-sources">Model R1, Laurent Barbarin (ATR)</div>
           <div class="signal-notes">Barbarin: 'Graffard trainer excellent at comeback races'</div>
@@ -245,13 +269,14 @@
           <div class="signal-header">
             <span class="signal-horse">Tuscan Point</span>
             <span class="signal-meta">1:55 Southwell (AW)</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">MODERATE_STRONG</span>
+            <span class="sig-badge" style="background:#22c55e;color:#fff">MODERATE-STRONG</span> <span class="tier-badge tier-2">TIER 2</span>
           </div>
           <div class="signal-stats">
             <span>R1</span>
             <span>Prob: 29.7%</span>
             <span>Model: 3.4</span>
-            <span>Sources: 3</span>
+            <span>Market: 3.50</span><span style="color:#ef4444">Edge: -3%</span>
+            <span>Sources: 3w (3 sources)</span>
           </div>
           <div class="signal-sources">Model R1, Daily Star Sunday NAP, The Times NAP</div>
           <div class="signal-notes">2 newspaper NAPs align with model R1</div>
@@ -356,7 +381,7 @@
         <div class="conflict-card">
           <div class="conflict-header">
             <span>5:00 Fairyhouse</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">HIGH</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
           </div>
           <div class="conflict-race">WillowWarm Gold Cup (G1)</div>
           <div class="conflict-detail">
@@ -367,7 +392,7 @@
         <div class="conflict-card">
           <div class="conflict-header">
             <span>2:40 Fairyhouse</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">MODERATE</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
           </div>
           <div class="conflict-race">Donohue Marquees Novice Hurdle (G2)</div>
           <div class="conflict-detail">
@@ -378,7 +403,7 @@
         <div class="conflict-card">
           <div class="conflict-header">
             <span>3:15 Fairyhouse</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">MODERATE</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
           </div>
           <div class="conflict-race">Paddy Kehoe Novice Hurdle (G2)</div>
           <div class="conflict-detail">
@@ -389,7 +414,7 @@
         <div class="conflict-card">
           <div class="conflict-header">
             <span>4:10 Cork</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">LOW-MODERATE</span>
+            <span class="sig-badge" style="background:#e5793a;color:#fff">LOW-MODERATE</span>
           </div>
           <div class="conflict-race">BAR 1 Betting Chase (G3)</div>
           <div class="conflict-detail">
@@ -400,7 +425,7 @@
         <div class="conflict-card">
           <div class="conflict-header">
             <span>4:00 Longchamp</span>
-            <span class="sig-badge" style="background:#6b7280;color:#fff">MODERATE</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
           </div>
           <div class="conflict-race">Prix d'Harcourt (G2)</div>
           <div class="conflict-detail">
@@ -422,61 +447,61 @@
                 <div class="judge-selection">
                   <span class="judge-horse">Absurde</span>
                   <span class="judge-meta">1:50 Cork</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
                   
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">Leader d'Allier</span>
                   <span class="judge-meta">2:40 Fairyhouse</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
                   
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">He's On Fire</span>
                   <span class="judge-meta">3:15 Fairyhouse</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
                   
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">Place De La Nation</span>
                   <span class="judge-meta">3:50 Fairyhouse</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
                   
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">Sixmilebridge</span>
                   <span class="judge-meta">5:00 Fairyhouse</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
                   
                 </div></div><div class="judge-card"><div class="judge-name">Laurent Barbarin <span class="judge-source">(attheraces.com)</span></div><div class="judge-spec">French flat racing</div>
                 <div class="judge-selection">
                   <span class="judge-horse">Zaraki</span>
                   <span class="judge-meta">15:50 ParisLongchamp</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
                   
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">First Look</span>
                   <span class="judge-meta">16:00 ParisLongchamp</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
                   
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">Tajlina</span>
                   <span class="judge-meta">16:35 ParisLongchamp</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
                   
                 </div></div><div class="judge-card"><div class="judge-name">Kate Tracey <span class="judge-source">(attheraces.com)</span></div><div class="judge-spec">NH, Irish racing</div>
                 <div class="judge-selection">
                   <span class="judge-horse">Larzac</span>
                   <span class="judge-meta">3:00 Cork</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
                   <span class="judge-notes">1pt win 9/2</span>
                 </div>
                 <div class="judge-selection">
                   <span class="judge-horse">A Path To Ronda</span>
                   <span class="judge-meta">3:50 Fairyhouse</span>
-                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
                   <span class="judge-notes">1pt EW 22/1</span>
                 </div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(sportinglife.com)</span></div><div class="judge-spec">Irish racing</div><div class="judge-status">unavailable — article URL returned wrong date content</div></div><div class="judge-card"><div class="judge-name">Tom Collins <span class="judge-source">(X @Tomptin / ITV)</span></div><div class="judge-spec">GB/IRE NH & Flat</div><div class="judge-status">unavailable — no ITV today, no tips found via search</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Podcast (Spotify/Apple))</span></div><div class="judge-spec">Daily racing preview</div><div class="judge-status">unavailable — podcast not extractable from search</div></div><div class="judge-card"><div class="judge-name">The Spectator <span class="judge-source">(spectator.com)</span></div><div class="judge-spec">Weekend racing column</div>
                 <div class="judge-selection">
@@ -504,6 +529,72 @@
     <h2 class="section-title">Blind Spot Alerts</h2>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
       <div class="blind-category"><strong>5:30 Fairyhouse — Hunters Chase:</strong> </div><div class="blind-category"><strong>3:00 Cork — BAR 1 Betting Handicap Hurdle:</strong> </div>
+    </div>
+  </section>
+
+  <!-- 7b. Skip Races — red-themed no-bet list (if present) -->
+  
+  <!-- ── Skip Races (No Bet) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" style="background:#7f1d1d;border-color:#991b1b;color:#fca5a5">Races to Skip (No Bet)</h2>
+    <div>
+      
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">1:15 Cork</span>
+            <span class="skip-race">Dermot Casey Tree Care Maiden Hurdle</span>
+          </div>
+          <div class="skip-reason">Large field (16 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">3:00 Cork</span>
+            <span class="skip-race">BAR 1 Betting Handicap Hurdle</span>
+          </div>
+          <div class="skip-reason">Large field (19 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">3:35 Cork</span>
+            <span class="skip-race">Hibernian Hotel Mallow Handicap Hurdle</span>
+          </div>
+          <div class="skip-reason">Large field (16 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">5:15 Cork</span>
+            <span class="skip-race">Ampion Ltd. Electrical And Testing (Pro/Am) INH Flat Race</span>
+          </div>
+          <div class="skip-reason">Large field (18 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">1:30 Fairyhouse</span>
+            <span class="skip-race">Ryan's Cleaning Maiden Hurdle</span>
+          </div>
+          <div class="skip-reason">Large field (25 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">2:05 Fairyhouse</span>
+            <span class="skip-race">Cawley Furniture Novice Handicap Hurdle</span>
+          </div>
+          <div class="skip-reason">Large field (22 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">15:15 ParisLongchamp</span>
+            <span class="skip-race">SUPER HANDICAP DE REOUVERTURE</span>
+          </div>
+          <div class="skip-reason">Large field (20 runners), no expert or model convergence on any runner</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">18:10 ParisLongchamp</span>
+            <span class="skip-race">PRIX DU GRAND CHATELET</span>
+          </div>
+          <div class="skip-reason">Large field (16 runners), no expert or model convergence on any runner</div>
+        </div>
     </div>
   </section>
 
