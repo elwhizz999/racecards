@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Intelligence Briefing — 2026-04-05</title>
+  <style>
+    :root {
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; }
+    header h1 { font-size: 1.15rem; color: var(--accent); }
+    header .sub { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+    main { padding: 16px; max-width: 900px; margin: 0 auto; }
+
+    .summary-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .summary-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; }
+    .summary-chip strong { color: var(--accent); }
+
+    .briefing-section { margin-bottom: 24px; }
+    .section-title { font-size: 1rem; color: var(--accent); padding: 10px 16px; background: var(--surface);
+                       border: 1px solid var(--border); border-radius: 8px 8px 0 0; cursor: pointer; user-select: none; }
+    .section-title .toggle-hint { color: var(--muted); font-size: 0.75rem; font-weight: 400; }
+
+    .collapsible { transition: max-height 0.3s ease; overflow: hidden; }
+    .collapsible.collapsed { max-height: 0 !important; }
+
+    /* ── Signals ── */
+    .signal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                     padding: 14px 16px; margin-bottom: 10px; }
+    .signal-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .signal-horse { font-size: 1.05rem; font-weight: 700; color: #f0f6fc; }
+    .signal-meta { color: var(--muted); font-size: 0.82rem; }
+    .sig-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .signal-stats { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .signal-sources { font-size: 0.78rem; color: #93c5fd; }
+    .signal-notes { font-size: 0.8rem; color: #c4b5fd; margin-top: 4px; font-style: italic; }
+
+    /* ── Convergence cards ── */
+    .convergence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                          padding: 12px 16px; margin-bottom: 10px; }
+
+    /* ── NAP Table ── */
+    .nap-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
+                        border-radius: 0 0 8px 8px; }
+    .nap-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .nap-table th { padding: 8px 10px; text-align: left; color: var(--muted); font-weight: 600;
+                      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+                      background: #0f172a; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .nap-table td { padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+    .nap-table tr:last-child td { border-bottom: none; }
+    .nap-table tr:hover td { background: rgba(56,189,248,0.04); }
+    .nap-table .horse-name { font-weight: 700; color: #f0f6fc; white-space: nowrap; }
+    .nap-table .nap-count { font-weight: 700; font-size: 1rem; color: var(--accent); text-align: center; }
+    .nap-table .tipsters { font-size: 0.75rem; color: var(--muted); max-width: 220px; }
+
+    /* ── Conflicts ── */
+    .conflict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                       padding: 12px 16px; margin-bottom: 10px; }
+    .conflict-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: 600; }
+    .conflict-race { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
+    .conflict-detail { font-size: 0.82rem; line-height: 1.7; }
+    .conflict-detail strong { color: var(--accent); }
+
+    /* ── Judges ── */
+    .judge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                    padding: 12px 16px; margin-bottom: 10px; }
+    .judge-name { font-weight: 700; color: #f0f6fc; font-size: 0.95rem; }
+    .judge-source { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+    .judge-spec { color: var(--accent); font-size: 0.78rem; margin-bottom: 6px; }
+    .judge-status { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 4px; }
+    .judge-pick { font-size: 0.82rem; margin-top: 3px; line-height: 1.5; }
+    .judge-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.82rem;
+                         padding: 4px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .judge-selection:last-child { border-bottom: none; }
+    .judge-horse { font-weight: 700; color: #f0f6fc; }
+    .judge-meta { color: var(--muted); font-size: 0.78rem; }
+    .judge-notes { color: #c4b5fd; font-size: 0.78rem; font-style: italic; }
+
+    /* ── Trainer intel ── */
+    .trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                      padding: 12px 16px; margin-bottom: 10px; }
+    .trainer-name { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .quote-item { font-size: 0.82rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .quote-item strong { color: #f0f6fc; }
+
+    /* ── Blind spots ── */
+    .blind-category { font-size: 0.82rem; margin-bottom: 6px; }
+    .blind-category ul { margin-left: 16px; color: var(--muted); }
+    .blind-category li { margin-bottom: 2px; }
+
+    /* ── Full text ── */
+    .full-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.72rem; line-height: 1.5;
+                   color: var(--muted); white-space: pre-wrap; word-break: break-word; padding: 12px 16px;
+                   background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      main { padding: 10px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card { padding: 10px 12px; }
+      .nap-table { font-size: 0.75rem; }
+      .nap-table th, .nap-table td { padding: 6px 6px; }
+      .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+<script>
+(function() {
+  var h = "9b36ddb03d0b4853ee17397a239ca4149aa6f2f3dc2fdaf4279691046db994ad";
+  if (localStorage.getItem("rc_auth") === h) return;
+  document.body.style.display = "none";
+  var p = prompt("Password:");
+  if (p) {
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(p)).then(function(buf) {
+      var hex = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+      if (hex === h) {
+        localStorage.setItem("rc_auth", h);
+        document.body.style.display = "";
+      } else {
+        document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Wrong password</h1>";
+        document.body.style.display = "";
+      }
+    });
+  } else {
+    document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Password required</h1>";
+    document.body.style.display = "";
+  }
+})();
+</script>
+
+<header>
+  <h1>Intelligence Briefing</h1>
+  <div class="sub">2026-04-05 · ? races · NH: 23 · Flat: 15</div>
+</header>
+
+<main>
+
+  <div class="summary-bar">
+    <div class="summary-chip"><strong>NH:</strong> </div>
+    <div class="summary-chip"><strong>Flat:</strong> </div>
+    <div class="summary-chip" style="color:#f87171">No French racing today</div>
+  </div>
+
+  <!-- 1. Strongest Signals — the most actionable info, always first -->
+  <section class="briefing-section">
+    <h2 class="section-title">Strongest Signals (5)</h2>
+    <div>
+      
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Mondo Man</span>
+            <span class="signal-meta">16:05 Plumpton</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">VERY STRONG</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            <span>Sources: 5</span>
+          </div>
+          <div class="signal-sources">Templegate (The Sun NAP), Garry Owen (Daily Record NAP), Luke Tucker (Cambridge Evening News NAP), ATR tipster, ATR Expert View</div>
+          <div class="signal-notes">Imperial Cup winner. 3 newspaper NAPs + ATR both panels. Dominant convergence signal.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Sixmilebridge</span>
+            <span class="signal-meta">17:00 Fairyhouse</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">VERY STRONG</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            <span>Sources: 5</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, ATR tipster (Hugh Taylor), ATR Expert View, Ian Gaughran (Irish Herald NAP), Racing Post The Punt (NAP)</div>
+          <div class="signal-notes">G1 winner at Sandown in January, unbeaten in 3 over fences. Front-runner proven right-handed. Ruby + ATR + 2 NAPs.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Leader D'Allier</span>
+            <span class="signal-meta">14:40 Fairyhouse</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">VERY STRONG</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            <span>Sources: 5</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, ATR tipster (Hugh Taylor), ATR Expert View, Mercury (Daily Post NAP), The Judge (The Favourite NAP)</div>
+          <div class="signal-notes">Five-time French winner, impressed at Punchestown. Rare unanimous consensus across all sources.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Absurde</span>
+            <span class="signal-meta">13:50 Cork</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">STRONG</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            <span>Sources: 3</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, ATR tipster, ATR Expert View</div>
+          <div class="signal-notes">2024 County Hurdle winner, rated 153. Harry Cobden booked from England — significant jockey booking.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Place De La Nation</span>
+            <span class="signal-meta">15:50 Fairyhouse</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">STRONG</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            <span>Sources: 3</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh (strongest fancy), Andrew Mount (RFO NAP), Dean Kilbryde (EADT NAP)</div>
+          <div class="signal-notes">Ruby Walsh's STRONGEST FANCY of the day. Only 1 length off Oldschool Outlaw at much bigger price. VALUE ANGLE.</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. NAP Convergence Table — quick scan of newspaper tipster alignment -->
+  <section class="briefing-section">
+    <h2 class="section-title">NAP Convergence (2+ Newspaper NAPs)</h2>
+    <div class="nap-table-wrap">
+      <table class="nap-table">
+        <thead>
+          <tr>
+            <th>Horse</th><th>Time</th><th>Course</th><th>NAPs</th>
+            <th>Tipsters</th><th>Model R1</th><th>Agrees?</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td class="horse-name">Mondo Man</td>
+          <td>16:05</td>
+          <td>Plumpton</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">Templegate (The Sun), Garry Owen (Daily Record), Luke Tucker (Cambridge Evening News)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Place De La Nation</td>
+          <td>15:50</td>
+          <td>Fairyhouse</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Andrew Mount (RFO), Dean Kilbryde (East Anglian Daily Times)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Tuscan Point</td>
+          <td>13:55</td>
+          <td>Southwell</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Moorestyle (Daily Star Sunday), Rob Wright (The Times)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Leader D'Allier</td>
+          <td>14:40</td>
+          <td>Fairyhouse</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Mercury (Daily Post), The Judge (The Favourite)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Beautiful Diamond</td>
+          <td>15:10</td>
+          <td>Bath</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Glendale (The Scotsman), Rockavon (Sunday Mail)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Miss Attitude</td>
+          <td>15:10</td>
+          <td>Bath</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Mirror Online, Racing Post Spotlight</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Hold A Dream</td>
+          <td>15:10</td>
+          <td>Bath</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">sportinglife.com, Ross Shepherd (Wrexham Leader)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">French Affair</td>
+          <td>14:31</td>
+          <td>Southwell</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Jason Heavey (The Star), The Duke (Yorkshire Post)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Sixmilebridge</td>
+          <td>17:00</td>
+          <td>Fairyhouse</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Ian Gaughran (Irish Herald), The Punt (Racing Post)</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. Updated Convergences — new findings from judge sweep -->
+  
+  <!-- ── Updated Convergences (from judge sweep) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title">Updated Convergence Findings</h2>
+    <div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Sixmilebridge</span>
+            <span class="signal-meta">17:00 Fairyhouse</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">5 sources</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, ATR (Hugh Taylor), ATR Expert View, Irish Herald NAP, Racing Post NAP</div>
+          <div class="signal-notes">Beyond NAPS table: Ruby Walsh and both ATR panels all pick Sixmilebridge. Total 5-source convergence.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Leader D'Allier</span>
+            <span class="signal-meta">14:40 Fairyhouse</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">5 sources</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, ATR (Hugh Taylor), ATR Expert View, Daily Post NAP, The Favourite NAP</div>
+          <div class="signal-notes">Full expert consensus. Both ATR panels + Ruby + 2 NAPs. Rare unanimous agreement.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Absurde</span>
+            <span class="signal-meta">13:50 Cork</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">3 sources</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, ATR tipster, ATR Expert View</div>
+          <div class="signal-notes">Triple-source alignment at Cork. County Hurdle winner with Harry Cobden booked.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">He's On Fire</span>
+            <span class="signal-meta">15:15 Fairyhouse</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">2 sources</span>
+          </div>
+          <div class="signal-sources">Ruby Walsh, Willie Mullins (stable confidence)</div>
+          <div class="signal-notes">Patrick Mullins 'raving about' him after Carlisle. Stable confidence signal from champion yard.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Oldschool Outlaw</span>
+            <span class="signal-meta">15:50 Fairyhouse</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">2 sources</span>
+          </div>
+          <div class="signal-sources">ATR (Hugh Taylor), ATR Expert View</div>
+          <div class="signal-notes">ATR both panels pick Oldschool Outlaw, but Ruby Walsh strongly disagrees — backs Place De La Nation at bigger price.</div>
+        </div></div>
+  </section>
+
+  <!-- 4. Expert-vs-Model Conflicts — where to be cautious -->
+  <section class="briefing-section">
+    <h2 class="section-title">Expert-vs-Model Conflicts (3)</h2>
+    <div>
+      
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>15:50 Fairyhouse</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">HIGH — RUBY VS ATR SPLIT ON G1</span>
+          </div>
+          <div class="conflict-race">Honeysuckle Mares Novice Hurdle (Grade 1)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> None</div>
+            <div><strong>ruby_walsh:</strong> Place De La Nation (strongest fancy, bigger price) · <strong>atr_tipster:</strong> Oldschool Outlaw (Cheltenham runner-up) · <strong>atr_expert_view:</strong> Oldschool Outlaw · <strong>naps:</strong> Place De La Nation (2 NAPs)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>15:15 Fairyhouse</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MEDIUM — THREE-WAY SPLIT</span>
+          </div>
+          <div class="conflict-race">Novice Hurdle (Grade 2)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> None</div>
+            <div><strong>ruby_walsh:</strong> He's On Fire (Mullins) · <strong>atr_tipster:</strong> I Started A Joke (Byrnes) · <strong>atr_expert_view:</strong> Love Me Tender</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>16:10 Cork</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">LOW — WIDE-OPEN RACE, KEENAN ON LONGSHOT</span>
+          </div>
+          <div class="conflict-race">BAR 1 Betting Chase (Grade 3)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> None</div>
+            <div><strong>tony_keenan:</strong> Tareze (33/1 each-way) · <strong>atr_tipster:</strong> Nowwhatdoyouthink · <strong>atr_expert_view:</strong> Classic Getaway</div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 5. Respected Judges — full breakdown by source (collapsible) -->
+  
+  <!-- ── Respected Judges ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+      Respected Judges <span class="toggle-hint">(tap to expand/collapse)</span>
+    </h2>
+    <div class="collapsible"><div class="judge-card"><div class="judge-name">Ruby Walsh <span class="judge-source">(Paddy Power (news.paddypower.com))</span></div><div class="judge-spec">NH expert, ex-champion jockey</div><div class="judge-status">fetched via search (direct fetch 403)</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Absurde</span>
+                  <span class="judge-meta">13:50 Cork</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Rating 153, Harry Cobden booked</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Leader D'Allier</span>
+                  <span class="judge-meta">14:40 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Five-time French winner</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">He's On Fire</span>
+                  <span class="judge-meta">15:15 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Patrick Mullins raving after Carlisle</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Place De La Nation</span>
+                  <span class="judge-meta">15:50 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">STRONGEST FANCY — 1 length off favourite, bigger price</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sixmilebridge</span>
+                  <span class="judge-meta">17:00 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Unbeaten over fences, G1 Sandown winner</span>
+                </div></div><div class="judge-card"><div class="judge-name">Hugh Taylor Atr <span class="judge-source">(At The Races race-by-race guides)</span></div><div class="judge-spec">UK/Irish daily expert</div><div class="judge-status">fetched — all 5 venues</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Colcannon</span>
+                  <span class="judge-meta">13:30 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sticwiththeprocess</span>
+                  <span class="judge-meta">14:05 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Leader D'Allier</span>
+                  <span class="judge-meta">14:40 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">I Started A Joke</span>
+                  <span class="judge-meta">15:15 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Oldschool Outlaw</span>
+                  <span class="judge-meta">15:50 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Come Walk With Me</span>
+                  <span class="judge-meta">16:25 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sixmilebridge</span>
+                  <span class="judge-meta">17:00 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Wrappedupinmay</span>
+                  <span class="judge-meta">17:30 Fairyhouse</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(Sporting Life)</span></div><div class="judge-spec">Irish racing specialist</div><div class="judge-status">partial — 1 selection extracted</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tareze</span>
+                  <span class="judge-meta">16:10 Cork</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">33/1 each-way</span>
+                </div></div><div class="judge-card"><div class="judge-name">Naps Table <span class="judge-source">(Sporting Life NAPS table)</span></div><div class="judge-spec">Aggregated newspaper tipster NAPs</div><div class="judge-status">fetched — full table</div></div><div class="judge-card"><div class="judge-name">Tom Collins <span class="judge-source">(Patreon / X (@Tomptin))</span></div><div class="judge-status">unavailable — behind Patreon paywall</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Nick Luck Daily Podcast)</span></div><div class="judge-status">unavailable — cannot access from sandbox</div></div><div class="judge-card"><div class="judge-name">Laurent Barbarin <span class="judge-source">(At The Races)</span></div><div class="judge-status">n/a — no French racing today</div></div><div class="judge-card"><div class="judge-name">Dan Skelton <span class="judge-source">(Ladbrokes blog)</span></div><div class="judge-status">Saturday blog only — no Sunday blog found</div></div><div class="judge-card"><div class="judge-name">Willie Mullins <span class="judge-source">(Ruby Walsh column / Racing Post)</span></div><div class="judge-status">indirect — stable confidence via Ruby Walsh + RP headline</div></div><div class="judge-card"><div class="judge-name">Gavin Lynch <span class="judge-source">(gavinlynchracing.com)</span></div><div class="judge-status">unavailable — outside Sep-Mar season</div></div><div class="judge-card"><div class="judge-name">Paul Kealy <span class="judge-source">(Racing Post (RP+ paywall))</span></div><div class="judge-status">headlines only — Saturday tips found, Sunday behind paywall</div></div><div class="judge-card"><div class="judge-name">Tom Segal <span class="judge-source">(Racing Post Pricewise (RP+ paywall))</span></div><div class="judge-status">headline: 3 Fairyhouse tips + Plumpton Placepot. Predicts Grade 1 upset. Content behind paywall.</div></div><div class="judge-card"><div class="judge-name">Johnny Dineen <span class="judge-source">(Racing Post (RP+ paywall))</span></div><div class="judge-status">unavailable — behind paywall</div></div></div>
+  </section>
+
+  <!-- 6. Trainer Intelligence — insider quotes -->
+  <section class="briefing-section">
+    <h2 class="section-title">Trainer Intelligence</h2>
+    <div>
+      
+            <div class="trainer-card">
+              <div class="trainer-name">Willie Mullins — HIGH confidence</div>
+              <div class="quote-item"><strong>He's On Fire (15:15 Fairyhouse):</strong> "He's On Fire: Patrick Mullins 'raving about' him after Carlisle win. French recruit with more to come." <em>(Ruby Walsh column)</em></div>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-name">Willie Mullins — MEDIUM confidence</div>
+              <div class="quote-item"><strong>4 runners (16:05 Plumpton):</strong> "4-strong attack on Sussex Champion Hurdle at Plumpton. Significant cross-water raid suggests high expectation." <em>(Racing Post headline)</em></div>
+            </div>
+    </div>
+  </section>
+
+  <!-- 7. Blind Spots — where model has least confidence -->
+  <section class="briefing-section">
+    <h2 class="section-title">Blind Spot Alerts</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
+      <div class="blind-category"><strong>16:05 Plumpton — Sussex Champion Hurdle:</strong> Model data stale (March 29). Mondo Man has 3 NAPs + ATR consensus. <em>Expert view: Mondo Man dominant favourite</em></div><div class="blind-category"><strong>17:00 Fairyhouse — WillowWarm Gold Cup (Grade 1):</strong> Tom Segal predicts a G1 upset (behind paywall). Sixmilebridge is consensus but Mullins has 6 entries. <em>Expert view: Sixmilebridge strong consensus but Segal's upset call worth noting</em></div><div class="blind-category"><strong>15:10 Bath — Lansdown Stakes (Listed):</strong> Three different horses each have 2 NAPs. Market completely split. High uncertainty. <em>Expert view: Beautiful Diamond (ATR Expert View), Miss Attitude (ATR tipster + RP Spotlight), Hold A Dream (Sporting Life)</em></div>
+    </div>
+  </section>
+
+  <!-- 8. Full Text — raw briefing for reference (collapsed by default) -->
+  
+    <section class="briefing-section">
+      <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+        Full Text Briefing <span class="toggle-hint">(tap to expand/collapse)</span>
+      </h2>
+      <div class="collapsible collapsed">
+        <pre class="full-text">=========================================================
+MORNING INTELLIGENCE BRIEFING — Sunday 5 April 2026
+=========================================================
+Generated: 2026-04-05 (automated Cowork scheduled task)
+
+EASTER SUNDAY — Fairyhouse Festival Day 2 (WillowWarm Gold Cup G1)
++ Cork (NH), Plumpton (NH), Bath (Flat Listed), Southwell (Flat)
+No French racing today. No ITV broadcast.
+
+=========================================================
+TOP SIGNALS — WHAT THE MODEL CAN'T SEE
+=========================================================
+
+*** VERY STRONG CONVERGENCE (5+ sources) ***
+
+1. MONDO MAN — 16:05 Plumpton, Sussex Champion Hurdle (Class 2)
+   Sources: Templegate NAP, Garry Owen NAP, Luke Tucker NAP, ATR tipster, ATR Expert View
+   Imperial Cup winner. 3 newspaper NAPs + both ATR panels. Dominant signal.
+
+2. SIXMILEBRIDGE — 17:00 Fairyhouse, WillowWarm Gold Cup (Grade 1)
+   Sources: Ruby Walsh, ATR (Hugh Taylor), ATR Expert View, Irish Herald NAP, RP The Punt NAP
+   G1 winner at Sandown in January. Unbeaten in 3 over fences. Front-runner, proven right-handed.
+   ⚠ Tom Segal (Pricewise) predicts a G1 upset — behind paywall. Mullins has 6 entries.
+
+3. LEADER D'ALLIER — 14:40 Fairyhouse, Donohue Marquees Novice Hurdle (Grade 2)
+   Sources: Ruby Walsh, ATR (Hugh Taylor), ATR Expert View, Daily Post NAP, The Favourite NAP
+   Five-time French winner, impressed at Punchestown. RARE UNANIMOUS CONSENSUS.
+
+*** STRONG CONVERGENCE (3 sources) ***
+
+4. ABSURDE — 13:50 Cork, BAR 1 Betting Hurdle
+   Sources: Ruby Walsh, ATR tipster, ATR Expert View
+   2024 County Hurdle winner, rated 153. Harry Cobden booked from England — significant jockey booking.
+
+5. PLACE DE LA NATION — 15:50 Fairyhouse, Honeysuckle Mares Novice Hurdle (Grade 1)
+   Sources: Ruby Walsh (STRONGEST FANCY), RFO NAP, EADT NAP
+   Ruby: "particularly sweet on" — only 1 length to make up on favourite Oldschool Outlaw, much bigger price.
+   ⚠ ATR both panels prefer Oldschool Outlaw. VALUE ANGLE if you follow Ruby.
+
+=========================================================
+NATIONAL HUNT — FAIRYHOUSE (8 races)
+=========================================================
+
+13:30 Ryan's Cleaning Maiden Hurdle
+  ATR: Colcannon | Expert View: Splendid Fellow
+  Note: Splendid Fellow "sets clear standard" — form franked at Graded level.
+
+14:05 Cawley Furniture Novice Handicap Hurdle
+  ATR: Sticwiththeprocess (cheekpieces + tongue-tie) | Expert View: Doctor Elvis
+
+14:40 Donohue Marquees Novice Hurdle (GRADE 2)
+  ★ LEADER D'ALLIER — 5-source convergence (see above)
+  ATR + Expert View + Ruby Walsh + 2 NAPs all agree. Unanimous.
+
+15:15 Paddy Kehoe Novice Hurdle (GRADE 2)
+  ⚠ THREE-WAY SPLIT:
+  Ruby Walsh: He's On Fire (Mullins — Patrick Mullins "raving")
+  ATR: I Started A Joke (Charles Byrnes)
+  Expert View: Love Me Tender
+  TRAINER INTEL: Mullins stable confidence on He's On Fire is genuine — French recruit.
+
+15:50 Honeysuckle Mares Novice Hurdle (GRADE 1)
+  ⚠ KEY EXPERT CONFLICT:
+  Ruby Walsh: Place De La Nation (STRONGEST FANCY — value at bigger price)
+  ATR + Expert View: Oldschool Outlaw (Cheltenham runner-up, "relish longer distance")
+  2 NAPs for Place De La Nation. Ruby's conviction is notable.
+
+16:25 BOYLE Sports Novice Handicap Chase (Listed)
+  ATR: Come Walk With Me (foot of the weights) | Expert View: Break My Soul
+
+17:00 WillowWarm Gold Cup (GRADE 1)
+  ★ SIXMILEBRIDGE — 5-source convergence (see above)
+  Mullins entries: Kappa Jy Pyke, Salvator Mandi, Predators Gold, Jimmy De Seuil, Gold Dancer, Argento Boy
+  ⚠ Segal (Pricewise) predicts a G1 upset — worth checking if you have RP+ access.
+
+17:30 Race Displays Hunters Chase
+  ATR: Wrappedupinmay (needs rain) | Expert View: Solitary Man
+
+=========================================================
+NATIONAL HUNT — CORK (8 races)
+=========================================================
+
+13:15 Dermot Casey Tree Care Maiden Hurdle
+  ATR + Expert View: Mino Des Mottes (French bumper winner)
+
+13:50 BAR 1 Betting Hurdle
+  ★ ABSURDE — 3-source convergence (see above)
+  Harry Cobden travelling from England. 2024 County Hurdle winner.
+
+14:25 O'Flynn Motors Mares Maiden Hurdle
+  ATR + Expert View: Kimi De Mai (three-time French bumper winner, "sets clear standard")
+
+15:00 BAR 1 Betting Handicap Hurdle
+  ATR: Ifallgoeswell | Expert View: Sainte Lucie
+
+15:35 Hibernian Hotel Handicap Hurdle
+  ATR: Onlymammycanloveme | Expert View: Ishan
+
+16:10 BAR 1 Betting Chase (GRADE 3)
+  ATR: Nowwhatdoyouthink | Expert View: Classic Getaway (G2 winner)
+  Tony Keenan: Tareze at 33/1 each-way — longshot angle.
+
+16:45 Irish Stallion Farms EBF Beginners Chase
+  ATR: Wingmen (twice G1-placed) | Expert View: Funiculi Funicula
+
+17:15 Ampion Ltd Flat Race
+  ATR: Harry's Diamond (Mullins) | Expert View: Gonewild
+
+=========================================================
+NATIONAL HUNT — PLUMPTON (7 races)
+=========================================================
+
+13:45 Mares' Maiden Hurdle
+  ATR + Expert View: Eremenko
+
+14:20 Novices' Handicap Chase
+  ATR + Expert View: Sweet Nightingale
+
+14:55 Charlotte Savill Memorial Novices' Handicap Hurdle
+  ATR: Goodwin Face | Expert View: Shalfa
+
+15:30 Harry &amp; Betty Savill Memorial Handicap Chase
+  ATR: Angel's Dream | Expert View: Sea Thrift
+
+16:05 Sussex Champion Hurdle (CLASS 2)
+  ★ MONDO MAN — 5-source convergence (see above)
+  Imperial Cup winner. Dominant consensus.
+  Mullins has 4 runners in this — significant cross-water raid.
+
+16:40 Handicap Chase
+  ATR: Superstylin | Expert View: Inca De Lafayette
+
+17:10 Handicap Hurdle
+  ATR: Rukaana | Expert View: Rukaana (both agree)
+
+=========================================================
+FLAT — BATH (8 races)
+=========================================================
+
+14:00 Handicap (5f)
+  ATR: Dragon Spin | Expert View: Solar Invincible
+
+14:35 Novice Stakes (5f)
+  ATR: Paper View | Expert View: Innichen
+
+15:10 Lansdown Stakes (LISTED, 5f)
+  ⚠ MARKET COMPLETELY SPLIT — 3 horses each have 2 NAPs:
+  Beautiful Diamond — Glendale (Scotsman) + Rockavon (Sunday Mail) NAPs | Expert View pick
+  Miss Attitude — Mirror Online + RP Spotlight NAPs | ATR tipster pick
+  Hold A Dream — sportinglife.com + Ross Shepherd NAPs
+  No clear convergence = HIGH UNCERTAINTY. Avoid or tread carefully.
+
+15:45 Handicap (5f)
+  ATR: Dandy Dinmont | Expert View: Twilight Madness
+
+16:20 Restricted Novice Stakes (1m2f)
+  ATR: Colourband | Expert View: Baron Wagstaff
+
+16:55 Handicap (1m)
+  ATR: Look Back Smiling | Expert View: The Hare Rail
+
+17:25 Handicap Div I (1m)
+  ATR: Ciotog | Expert View: Volendam
+
+17:55 Handicap Div II (1m)
+  ATR: Port Noir | Expert View: Pessoa
+
+=========================================================
+FLAT — SOUTHWELL (7 races)
+=========================================================
+
+13:55 Handicap (6f)
+  ★ Tuscan Point — 2 NAPs (Moorestyle, Rob Wright) + ATR tip
+
+14:31 Handicap (7f)
+  ★ French Affair — 2 NAPs (Jason Heavey, The Duke) + ATR tip
+
+15:06 Restricted Novice Stakes (7f)
+  ATR: Blue Mantle
+
+15:41 Fillies' Handicap (1m)
+  ATR: Song N Dance
+
+16:15-17:20 — Remaining 3 races. No notable convergence.
+
+=========================================================
+RUBY WALSH FULL CARD
+=========================================================
+13:50 Cork — Absurde (rating 153, Cobden booked)
+14:40 Fairyhouse — Leader D'Allier (five-time French winner)
+15:15 Fairyhouse — He's On Fire (Mullins, Patrick Mullins raving)
+15:50 Fairyhouse — Place De La Nation (STRONGEST FANCY — value angle)
+17:00 Fairyhouse — Sixmilebridge (unbeaten over fences, G1 winner)
+
+=========================================================
+TRAINER INTELLIGENCE
+=========================================================
+WILLIE MULLINS:
+  • He's On Fire (15:15 Fairyhouse) — Patrick Mullins "raving" after Carlisle. HIGH confidence.
+  • 4 runners in Sussex Champion Hurdle at Plumpton — rare cross-water raid on Class 2. MEDIUM confidence.
+  • 6 entries in Gold Cup at Fairyhouse — strength in depth.
+
+=========================================================
+PAYWALLED / UNAVAILABLE SOURCES
+=========================================================
+Tom Segal (Pricewise): Has 3 Fairyhouse tips + Plumpton Placepot. Predicts G1 upset. RP+ required.
+Paul Kealy: Saturday tips found. Sunday behind RP+ paywall.
+Johnny Dineen: Behind RP+ paywall.
+Tom Collins: Behind Patreon paywall.
+Nick Luck: Podcast exists but cannot access/transcribe from sandbox.
+Gavin Lynch: Outside Sep-Mar season.
+Dan Skelton: Saturday blog only. No Sunday blog.
+Laurent Barbarin: n/a — no French racing today.
+
+=========================================================
+NAP CONVERGENCE TABLE (2+ NAPs)
+=========================================================
+3 NAPs: Mondo Man (16:05 Plumpton)
+2 NAPs: Place De La Nation (15:50 Fairyhouse)
+2 NAPs: Leader D'Allier (14:40 Fairyhouse)
+2 NAPs: Sixmilebridge (17:00 Fairyhouse)
+2 NAPs: Tuscan Point (13:55 Southwell)
+2 NAPs: French Affair (14:31 Southwell)
+2 NAPs: Beautiful Diamond (15:10 Bath)
+2 NAPs: Miss Attitude (15:10 Bath)
+2 NAPs: Hold A Dream (15:10 Bath)
+
+=========================================================
+END OF BRIEFING
+=========================================================
+</pre>
+      </div>
+    </section>
+
+</main>
+
+</body>
+</html>
