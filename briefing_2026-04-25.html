@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Intelligence Briefing — 2026-04-25</title>
+  <style>
+    :root {
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; }
+    header h1 { font-size: 1.15rem; color: var(--accent); }
+    header .sub { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+    main { padding: 16px; max-width: 900px; margin: 0 auto; }
+
+    .summary-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .summary-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; }
+    .summary-chip strong { color: var(--accent); }
+
+    .briefing-section { margin-bottom: 24px; }
+    .section-title { font-size: 1rem; color: var(--accent); padding: 10px 16px; background: var(--surface);
+                       border: 1px solid var(--border); border-radius: 8px 8px 0 0; cursor: pointer; user-select: none; }
+    .section-title .toggle-hint { color: var(--muted); font-size: 0.75rem; font-weight: 400; }
+
+    .collapsible { transition: max-height 0.3s ease; overflow: hidden; }
+    .collapsible.collapsed { max-height: 0 !important; }
+
+    /* ── Signals ── */
+    .signal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                     padding: 14px 16px; margin-bottom: 10px; }
+    .signal-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .signal-horse { font-size: 1.05rem; font-weight: 700; color: #f0f6fc; }
+    .signal-meta { color: var(--muted); font-size: 0.82rem; }
+    .sig-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .signal-stats { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .signal-sources { font-size: 0.78rem; color: #93c5fd; }
+    .signal-notes { font-size: 0.8rem; color: #c4b5fd; margin-top: 4px; font-style: italic; }
+
+    /* ── Convergence cards ── */
+    .convergence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                          padding: 12px 16px; margin-bottom: 10px; }
+
+    /* ── NAP Table ── */
+    .nap-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
+                        border-radius: 0 0 8px 8px; }
+    .nap-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .nap-table th { padding: 8px 10px; text-align: left; color: var(--muted); font-weight: 600;
+                      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+                      background: #0f172a; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .nap-table td { padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+    .nap-table tr:last-child td { border-bottom: none; }
+    .nap-table tr:hover td { background: rgba(56,189,248,0.04); }
+    .nap-table .horse-name { font-weight: 700; color: #f0f6fc; white-space: nowrap; }
+    .nap-table .nap-count { font-weight: 700; font-size: 1rem; color: var(--accent); text-align: center; }
+    .nap-table .tipsters { font-size: 0.75rem; color: var(--muted); max-width: 220px; }
+
+    /* ── Conflicts ── */
+    .conflict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                       padding: 12px 16px; margin-bottom: 10px; }
+    .conflict-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: 600; }
+    .conflict-race { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
+    .conflict-detail { font-size: 0.82rem; line-height: 1.7; }
+    .conflict-detail strong { color: var(--accent); }
+
+    /* ── Judges ── */
+    .judge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                    padding: 12px 16px; margin-bottom: 10px; }
+    .judge-name { font-weight: 700; color: #f0f6fc; font-size: 0.95rem; }
+    .judge-source { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+    .judge-spec { color: var(--accent); font-size: 0.78rem; margin-bottom: 6px; }
+    .judge-status { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 4px; }
+    .judge-pick { font-size: 0.82rem; margin-top: 3px; line-height: 1.5; }
+    .judge-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.82rem;
+                         padding: 4px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .judge-selection:last-child { border-bottom: none; }
+    .judge-horse { font-weight: 700; color: #f0f6fc; }
+    .judge-meta { color: var(--muted); font-size: 0.78rem; }
+    .judge-notes { color: #c4b5fd; font-size: 0.78rem; font-style: italic; }
+
+    /* ── Trainer intel ── */
+    .trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                      padding: 12px 16px; margin-bottom: 10px; }
+    .trainer-name { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .quote-item { font-size: 0.82rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .quote-item strong { color: #f0f6fc; }
+
+    /* ── Skip races (no bet) ── */
+    .skip-card { background: var(--surface); border-left: 3px solid #dc2626; border: 1px solid var(--border);
+                  border-left: 3px solid #dc2626; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+    .skip-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .skip-meta { color: var(--muted); font-size: 0.82rem; }
+    .skip-race { font-weight: 700; color: #fecaca; font-size: 0.95rem; }
+    .skip-reason { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+    /* ── Confidence tier badges ── */
+    .tier-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .tier-1 { background: #f59e0b; color: #fff; }
+    .tier-2 { background: #94a3b8; color: #fff; }
+    .tier-3 { background: #6b7280; color: #fff; }
+
+    /* ── Judge accuracy ── */
+    .judge-accuracy { color: #93c5fd; font-size: 0.75rem; margin-top: 2px; }
+
+    /* ── Blind spots ── */
+    .blind-category { font-size: 0.82rem; margin-bottom: 6px; }
+    .blind-category ul { margin-left: 16px; color: var(--muted); }
+    .blind-category li { margin-bottom: 2px; }
+
+    /* ── Full text ── */
+    .full-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.72rem; line-height: 1.5;
+                   color: var(--muted); white-space: pre-wrap; word-break: break-word; padding: 12px 16px;
+                   background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      main { padding: 10px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card, .skip-card { padding: 10px 12px; }
+      .nap-table { font-size: 0.75rem; }
+      .nap-table th, .nap-table td { padding: 6px 6px; }
+      .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .signal-header, .skip-header, .conflict-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<script>
+(function() {
+  var h = "9b36ddb03d0b4853ee17397a239ca4149aa6f2f3dc2fdaf4279691046db994ad";
+  if (localStorage.getItem("rc_auth") === h) return;
+  document.body.style.display = "none";
+  var p = prompt("Password:");
+  if (p) {
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(p)).then(function(buf) {
+      var hex = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+      if (hex === h) {
+        localStorage.setItem("rc_auth", h);
+        document.body.style.display = "";
+      } else {
+        document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Wrong password</h1>";
+        document.body.style.display = "";
+      }
+    });
+  } else {
+    document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Password required</h1>";
+    document.body.style.display = "";
+  }
+})();
+</script>
+
+<header>
+  <h1>Intelligence Briefing</h1>
+  <div class="sub">2026-04-25 · 59 races · NH: 8 · Flat: 51</div>
+</header>
+
+<main>
+
+  <div class="summary-bar">
+    <div class="summary-chip"><strong>NH:</strong> </div>
+    <div class="summary-chip"><strong>Flat:</strong> </div>
+    
+  </div>
+
+  <!-- 1. Strongest Signals — the most actionable info, always first -->
+  <section class="briefing-section">
+    <h2 class="section-title">Strongest Signals (4)</h2>
+    <div>
+      
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">KADASTRAL</span>
+            <span class="signal-meta">1:45 Sandown</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MEDIUM</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            
+            <span>Sources: 4w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, Ruby Walsh</div>
+          <div class="signal-notes">ATR Verdict: Watch out for | Ruby Walsh: Looks the obvious one for the in-form Skelton team; decent second behind Sober Glory at Newbury penultimate start.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">BLOW YOUR WAD</span>
+            <span class="signal-meta">2:20 Sandown</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MEDIUM</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            
+            <span>Sources: 4w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Ruby Walsh</div>
+          <div class="signal-notes">ATR Expert View: Top Tip | Ruby Walsh: Walsh tip</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">MONTREGARD</span>
+            <span class="signal-meta">3:30 PM Sandown</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, RP NAPs</div>
+          <div class="signal-notes">ATR Verdict: Watch out for | RP NAPs: RP NAP — Gold Cup; right-handed Sandown might inconvenience Ask Brewster</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">GNOMON</span>
+            <span class="signal-meta">5:15 Sandown</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>RNone</span>
+            <span>Prob: —</span>
+            <span>Model: None</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs</div>
+          <div class="signal-notes">ATR Expert View: Top Tip | RP NAPs: RP-cited final-race pick — cruised clear at Ascot last month</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. NAP Convergence Table — quick scan of newspaper tipster alignment -->
+  <section class="briefing-section">
+    <h2 class="section-title">NAP Convergence (2+ Newspaper NAPs)</h2>
+    <div class="nap-table-wrap">
+      <table class="nap-table">
+        <thead>
+          <tr>
+            <th>Horse</th><th>Time</th><th>Course</th><th>NAPs</th>
+            <th>Tipsters</th><th>Model R1</th><th>Agrees?</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td class="horse-name">ONLY ONE BLUE</td>
+          <td>1:13</td>
+          <td>Sandown</td>
+          <td class="nap-count">1</td>
+          <td class="tipsters">Racing Post NAP-cited</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">MONTREGARD</td>
+          <td>3:30 PM</td>
+          <td>Sandown</td>
+          <td class="nap-count">1</td>
+          <td class="tipsters">Racing Post NAP-cited, ATR Verdict</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">GNOMON</td>
+          <td>5:15</td>
+          <td>Sandown</td>
+          <td class="nap-count">1</td>
+          <td class="tipsters">Racing Post NAP-cited, ATR Expert View</td>
+          <td>None</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. Updated Convergences — new findings from judge sweep -->
+  
+  <!-- ── Updated Convergences (from judge sweep) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title">Updated Convergence Findings</h2>
+    <div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">KADASTRAL</span>
+            <span class="signal-meta">1:45 Sandown</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">2 sources</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, Ruby Walsh</div>
+          <div class="signal-notes">ATR Verdict: Watch out for | Ruby Walsh: Looks the obvious one for the in-form Skelton team; decent second behind Sober Glory at Newbury penultimate start.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">BLOW YOUR WAD</span>
+            <span class="signal-meta">2:20 Sandown</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">2 sources</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Ruby Walsh</div>
+          <div class="signal-notes">ATR Expert View: Top Tip | Ruby Walsh: Walsh tip</div>
+        </div></div>
+  </section>
+
+  <!-- 4. Expert-vs-Model Conflicts — where to be cautious -->
+  <section class="briefing-section">
+    <h2 class="section-title">Expert-vs-Model Conflicts (2)</h2>
+    <div>
+      
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>2:55 Sandown</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">bet365 Celebration Chase (Grade 1)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> None</div>
+            <div><strong>ATR Expert View:</strong> SOLNESS · <strong>ATR Verdict:</strong> THISTLE ASK · <strong>Ruby Walsh:</strong> JONBON</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:30 Sandown</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">bet365 Gold Cup Handicap Chase</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> None</div>
+            <div><strong>ATR Expert View:</strong> IN D'OR · <strong>ATR Verdict:</strong> MONTREGARD · <strong>RP NAPs:</strong> MONTREGARD · <strong>Ruby Walsh:</strong> HAVAILA</div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 5. Respected Judges — full breakdown by source (collapsible) -->
+  
+  <!-- ── Respected Judges ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+      Respected Judges <span class="toggle-hint">(tap to expand/collapse)</span>
+    </h2>
+    <div class="collapsible"><div class="judge-card"><div class="judge-name">Hugh Taylor <span class="judge-source">(At The Races (free))</span></div><div class="judge-spec">UK flat daily tips (Mon–Fri)</div><div class="judge-status">unavailable — no Saturday column (Taylor tips flat Mon–Fri only; latest column dated Fri 24 April for Sandown). Per CLAUDE.md note: no weekend column except Royal Ascot Saturday.</div></div><div class="judge-card"><div class="judge-name">Laurent Barbarin <span class="judge-source">(At The Races (free))</span></div><div class="judge-spec">French racing specialist</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KAADAM</span>
+                  <span class="judge-meta">16:00 Auteuil</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Final official prep race for Grand Steeple de Paris on 17 May. Chaillé-Chaillé/Pamart stable runner; should come on for comeback.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MAKAROV</span>
+                  <span class="judge-meta">16:17 Compiègne</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Trained by Gérald Mossé. Top weight, drawn 13 of 13. Yet to win after 9 starts but goes close often; second at Fontainebleau on 17 March (4th and 5th have since won).</span>
+                </div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(Sporting Life (free))</span></div><div class="judge-spec">Irish racing specialist</div><div class="judge-status">unavailable — no Sat 25 April Sporting Life article located (search did not return a dated Limerick/Navan preview). Possible publication delay; Irish flat preview archive pages found but not today.</div></div><div class="judge-card"><div class="judge-name">Ruby Walsh <span class="judge-source">(Paddy Power)</span></div><div class="judge-spec">NH season ITV Saturday columnist; Elliot's only trusted ex-jockey</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KADASTRAL</span>
+                  <span class="judge-meta">1:45 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Looks the obvious one for the in-form Skelton team; decent second behind Sober Glory at Newbury penultimate start.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ANNAF</span>
+                  <span class="judge-meta">2:05 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Michael Appleby/Harry Davies — more than respectable at Doncaster last start.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">BLOW YOUR WAD</span>
+                  <span class="judge-meta">2:20 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Walsh tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CABURN</span>
+                  <span class="judge-meta">2:35 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Walsh tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">JONBON</span>
+                  <span class="judge-meta">2:55 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Celebration Chase — Walsh sides with Jonbon</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">HAVAILA</span>
+                  <span class="judge-meta">3:30 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">BEST BET — Gold Cup</span>
+                </div></div><div class="judge-card"><div class="judge-name">Tom Collins <span class="judge-source">(ITV Racing / At The Races / X (@Tomptin) / Patreon)</span></div><div class="judge-spec">GB/IRE NH & Flat — ITV Opening Show presenter</div><div class="judge-status">unavailable — no Sat 25 April tips found via web search (his X feed and the ITV broadcast tips weren't surfaced in search results). Available via broadcast/X but not text-scraped today.</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Apple Podcasts (Daily Racing Podcast))</span></div><div class="judge-spec">Daily racing podcast</div><div class="judge-status">unavailable for transcription in this environment — episode may exist but cannot be transcribed without local audio file.</div></div><div class="judge-card"><div class="judge-name">Paul Kealy <span class="judge-source">(Racing Post (RP+ paywalled))</span></div><div class="judge-spec">UK expert; Saturday tips column</div><div class="judge-status">paywalled — content behind RP+ subscription. Headline likely available but tips not accessible to this briefing.</div></div><div class="judge-card"><div class="judge-name">Tom Segal (Pricewise) <span class="judge-source">(Racing Post (RP+ paywalled))</span></div><div class="judge-spec">Value betting specialist</div><div class="judge-status">paywalled — Saturday Pricewise column behind RP+ subscription.</div></div><div class="judge-card"><div class="judge-name">Johnny Dineen <span class="judge-source">(Racing Post (RP+ paywalled))</span></div><div class="judge-spec">Irish expert</div><div class="judge-status">paywalled — RP+ subscription required.</div></div><div class="judge-card"><div class="judge-name">Gavin Lynch <span class="judge-source">(gavinlynchracing.com)</span></div><div class="judge-spec">Irish racing (mainly Sep–Mar NH season)</div><div class="judge-status">unavailable — outside main NH season; April 25 likely inactive (last NH-focused tips typically taper after Punchestown).</div></div><div class="judge-card"><div class="judge-name">Willie Mullins <span class="judge-source">(wpmullins.com/race-previews/)</span></div><div class="judge-spec">Champion Irish trainer — own runners</div><div class="judge-status">no dedicated 25 April preview located on race-previews page. No NH meeting in Ireland today (Limerick + Navan are flat) — Mullins flat string runs primarily mid-season; unlikely to have a public preview today.</div></div><div class="judge-card"><div class="judge-name">Dan Skelton <span class="judge-source">(Ladbrokes blog)</span></div><div class="judge-spec">UK NH trainer (own runners)</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">LISTENTOYOURHEART</span>
+                  <span class="judge-meta">5:15 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Skelton: 'I think she'll run well' but doesn't believe she has enough in hand. 11 runners total Saturday — Listentoyourheart is the Sandown 5:15 pick of the bunch in his blog.</span>
+                </div></div><div class="judge-card"><div class="judge-name">Ruby Walsh (Paddy Power) <span class="judge-source">(Paddy Power)</span></div><div class="judge-spec">NH season ITV Saturday columnist; Elliot's only trusted ex-jockey</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KADASTRAL</span>
+                  <span class="judge-meta">1:45 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Looks the obvious one for the in-form Skelton team; decent second behind Sober Glory at Newbury penultimate start.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ANNAF</span>
+                  <span class="judge-meta">2:05 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Michael Appleby/Harry Davies — more than respectable at Doncaster last start.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">BLOW YOUR WAD</span>
+                  <span class="judge-meta">2:20 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Walsh tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CABURN</span>
+                  <span class="judge-meta">2:35 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Walsh tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">JONBON</span>
+                  <span class="judge-meta">2:55 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Celebration Chase — Walsh sides with Jonbon</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">HAVAILA</span>
+                  <span class="judge-meta">3:30 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">BEST BET — Gold Cup</span>
+                </div></div><div class="judge-card"><div class="judge-name">Atr Expert View <span class="judge-source">(attheraces.com race-by-race guides)</span></div><div class="judge-spec">UK + Irish race-by-race guide — Top Tip column (NOT a named individual judge)</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">LA LUNA ARTISTA</span>
+                  <span class="judge-meta">1:13 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MINELLA YOGA</span>
+                  <span class="judge-meta">1:45 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">BLOW YOUR WAD</span>
+                  <span class="judge-meta">2:20 Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SOLNESS</span>
+                  <span class="judge-meta">2:55 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">IN D'OR</span>
+                  <span class="judge-meta">3:30 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KABRAL DU MATHAN</span>
+                  <span class="judge-meta">4:02 Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CALIMYSTIC</span>
+                  <span class="judge-meta">4:40 Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GNOMON</span>
+                  <span class="judge-meta">5:15 Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">RAVENSPIRE</span>
+                  <span class="judge-meta">1:25 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SYMBOL OF MAJESTY</span>
+                  <span class="judge-meta">2:00 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CERULEAN BAY</span>
+                  <span class="judge-meta">2:35 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">WINTER FLOWER</span>
+                  <span class="judge-meta">3:10 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">STRENGTH OF SPIRIT</span>
+                  <span class="judge-meta">3:45 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">PARANJAPE</span>
+                  <span class="judge-meta">4:20 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FISCAL POLICY</span>
+                  <span class="judge-meta">4:55 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">THANOS</span>
+                  <span class="judge-meta">4:35 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">PROPOSAL</span>
+                  <span class="judge-meta">5:10 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">TIME TO TAKE OFF</span>
+                  <span class="judge-meta">5:45 Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GOLDEN MUSE</span>
+                  <span class="judge-meta">6:15 Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">AL AZD</span>
+                  <span class="judge-meta">6:45 Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SEA OF KINGS</span>
+                  <span class="judge-meta">7:15 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">QUEEN OF GOOD NEWS</span>
+                  <span class="judge-meta">7:45 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DONEGAL ROSE</span>
+                  <span class="judge-meta">1:30 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ZOULU CHIEF</span>
+                  <span class="judge-meta">2:05 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">WRECK IT RYLEY</span>
+                  <span class="judge-meta">2:44 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CAMELEY DAYS</span>
+                  <span class="judge-meta">3:19 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">HEYZOOM</span>
+                  <span class="judge-meta">3:55 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">EVELYN'S PHOENIX</span>
+                  <span class="judge-meta">4:30 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CIRCLE OF TRUST</span>
+                  <span class="judge-meta">5:05 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">BLUESTONE LADY</span>
+                  <span class="judge-meta">1:40 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ROMANCE SPIRIT</span>
+                  <span class="judge-meta">2:15 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">NO MORE BOLERO</span>
+                  <span class="judge-meta">3:00 PM Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DANCINGWITHMYSELF</span>
+                  <span class="judge-meta">3:35 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SEVEN QUESTIONS</span>
+                  <span class="judge-meta">4:10 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KISS ME MY LOVE</span>
+                  <span class="judge-meta">4:45 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">VENCEDORA</span>
+                  <span class="judge-meta">5:20 PM Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SIGNORA</span>
+                  <span class="judge-meta">1:35 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ZENFORD</span>
+                  <span class="judge-meta">2:10 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SRON NA CAISE</span>
+                  <span class="judge-meta">2:40 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DEUTERONOMY</span>
+                  <span class="judge-meta">3:15 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FAOLADH</span>
+                  <span class="judge-meta">3:50 PM Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">HELLORHIGHWATER</span>
+                  <span class="judge-meta">4:25 PM Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CHABLIS ROCK</span>
+                  <span class="judge-meta">5:00 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KHORMOR SYD</span>
+                  <span class="judge-meta">5:35 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">AN LAOCHMOR</span>
+                  <span class="judge-meta">1:20 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">TRIBECA</span>
+                  <span class="judge-meta">1:55 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CHARLES DARWIN</span>
+                  <span class="judge-meta">2:30 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SCANDINAVIA</span>
+                  <span class="judge-meta">3:05 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">EMMELEIA</span>
+                  <span class="judge-meta">3:40 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">LATIN AMERICA</span>
+                  <span class="judge-meta">4:15 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">OBSCENITY</span>
+                  <span class="judge-meta">4:50 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CELTIC DRUID</span>
+                  <span class="judge-meta">5:25 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CABEZA DE LLAVE</span>
+                  <span class="judge-meta">5:30 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">RING FENCED</span>
+                  <span class="judge-meta">6:00 PM Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CHASING TIME</span>
+                  <span class="judge-meta">6:30 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FARASI LANE</span>
+                  <span class="judge-meta">7:00 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">LUNA CELESTE</span>
+                  <span class="judge-meta">7:30 PM Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">WHAT FOOLS BELIEVE</span>
+                  <span class="judge-meta">8:00 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MARRY THE NIGHT</span>
+                  <span class="judge-meta">8:30 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Top Tip</span>
+                </div></div><div class="judge-card"><div class="judge-name">Atr Verdict <span class="judge-source">(attheraces.com race-by-race guides)</span></div><div class="judge-spec">UK + Irish race-by-race guide — Watch out for column (NOT a named individual judge)</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MADE U BLUSH</span>
+                  <span class="judge-meta">1:13 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KADASTRAL</span>
+                  <span class="judge-meta">1:45 Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DOYEN QUEST</span>
+                  <span class="judge-meta">2:20 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">THISTLE ASK</span>
+                  <span class="judge-meta">2:55 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MONTREGARD</span>
+                  <span class="judge-meta">3:30 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">JINGKO BLUE</span>
+                  <span class="judge-meta">4:02 Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GO WEST</span>
+                  <span class="judge-meta">4:40 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FAVOUR AND FORTUNE</span>
+                  <span class="judge-meta">5:15 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">PURSUIT OF LOVE</span>
+                  <span class="judge-meta">1:25 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SILKEN BAY</span>
+                  <span class="judge-meta">2:00 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">COSI BELLO</span>
+                  <span class="judge-meta">2:35 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">EMPIRE OF LIGHT</span>
+                  <span class="judge-meta">3:10 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GO RIMBAUD</span>
+                  <span class="judge-meta">3:45 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FLASH RASCAL</span>
+                  <span class="judge-meta">4:20 PM Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DANDY DINMONT</span>
+                  <span class="judge-meta">4:55 Haydock</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MOJITO</span>
+                  <span class="judge-meta">4:35 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">LUNAR MELODY</span>
+                  <span class="judge-meta">5:10 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MANATEE MEHMAS</span>
+                  <span class="judge-meta">5:45 Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">NAGA</span>
+                  <span class="judge-meta">6:15 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SAILOR SONG</span>
+                  <span class="judge-meta">6:45 Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GHAIYYA</span>
+                  <span class="judge-meta">7:15 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">U S S CONSTITUTION</span>
+                  <span class="judge-meta">7:45 PM Doncaster</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FROM ME TO YOU</span>
+                  <span class="judge-meta">1:30 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">FAST TRACK HARRY</span>
+                  <span class="judge-meta">2:05 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">JUSTCALLMEPETE</span>
+                  <span class="judge-meta">2:44 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">VON KROLOCK</span>
+                  <span class="judge-meta">3:19 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SUPERIOR CHOICE</span>
+                  <span class="judge-meta">3:55 PM Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">PORTER'S SONG</span>
+                  <span class="judge-meta">4:30 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">LION OF MALI</span>
+                  <span class="judge-meta">5:05 Leicester</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">NAVY LIGHT</span>
+                  <span class="judge-meta">1:40 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">TRIUMPH</span>
+                  <span class="judge-meta">2:15 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">RUPERT THE PRINCE</span>
+                  <span class="judge-meta">3:00 PM Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">PRYDWEN</span>
+                  <span class="judge-meta">3:35 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DREAM COMPOSER</span>
+                  <span class="judge-meta">4:10 PM Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">THE SWEET ESCAPE</span>
+                  <span class="judge-meta">4:45 Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ARISHKA'S DREAM</span>
+                  <span class="judge-meta">5:20 PM Ripon</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">EXPERT DANCER</span>
+                  <span class="judge-meta">1:35 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GOD OF POWER</span>
+                  <span class="judge-meta">2:10 PM Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">TYRAXES</span>
+                  <span class="judge-meta">2:40 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ELECTRIC NIGHT</span>
+                  <span class="judge-meta">3:15 PM Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">RED HUGH O'DONNELL</span>
+                  <span class="judge-meta">3:50 PM Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">RION RUBETTE</span>
+                  <span class="judge-meta">4:25 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">NEAR PERFECTION</span>
+                  <span class="judge-meta">5:00 Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MISS CRINSHAWN</span>
+                  <span class="judge-meta">5:35 PM Limerick</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ARCTIC STEPS</span>
+                  <span class="judge-meta">1:20 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">WEST OF EDEN</span>
+                  <span class="judge-meta">1:55 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SILK BRAID</span>
+                  <span class="judge-meta">2:30 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">CARMERS</span>
+                  <span class="judge-meta">3:05 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ICE DANCER</span>
+                  <span class="judge-meta">3:40 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GENCHEV</span>
+                  <span class="judge-meta">4:15 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">JUSTENZIA</span>
+                  <span class="judge-meta">4:50 Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">TRUBSHAW</span>
+                  <span class="judge-meta">5:25 PM Navan</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SONIC SI</span>
+                  <span class="judge-meta">5:30 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">APACHE EAGLE</span>
+                  <span class="judge-meta">6:00 PM Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KENNETH</span>
+                  <span class="judge-meta">6:30 PM Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">DOWN TO THE KID</span>
+                  <span class="judge-meta">7:00 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">POSITIVE THOUGHTS</span>
+                  <span class="judge-meta">7:30 PM Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">KALOKALO</span>
+                  <span class="judge-meta">8:00 PM Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">SUPERFORTRESS</span>
+                  <span class="judge-meta">8:30 Southwell (AW)</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">Watch out for</span>
+                </div></div><div class="judge-card"><div class="judge-name">Racing Post Naps (Cited) <span class="judge-source">(Racing Post NAPs / Pricewise summary)</span></div><div class="judge-spec">Aggregated newspaper tipster NAPs — convergence signal</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">ONLY ONE BLUE</span>
+                  <span class="judge-meta">1:13 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">RP-cited NAP candidate (alongside Cloaks Of Gold)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">MONTREGARD</span>
+                  <span class="judge-meta">3:30 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">RP NAP — Gold Cup; right-handed Sandown might inconvenience Ask Brewster</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">GNOMON</span>
+                  <span class="judge-meta">5:15 PM Sandown</span>
+                  <span class="sig-badge" style="background:#475569;color:#e2e8f0"></span>
+                  <span class="judge-notes">RP-cited final-race pick — cruised clear at Ascot last month</span>
+                </div></div></div>
+  </section>
+
+  <!-- 6. Trainer Intelligence — insider quotes -->
+  <section class="briefing-section">
+    <h2 class="section-title">Trainer Intelligence</h2>
+    <div>
+      
+            <div class="trainer-card">
+              <div class="trainer-name">Dan Skelton —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+    </div>
+  </section>
+
+  <!-- 7. Blind Spots — where model has least confidence -->
+  <section class="briefing-section">
+    <h2 class="section-title">Blind Spot Alerts</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
+      <p style="color:var(--muted)">No alerts.</p>
+    </div>
+  </section>
+
+  <!-- 7b. Skip Races — red-themed no-bet list (if present) -->
+  
+  <!-- ── Skip Races (No Bet) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" style="background:#7f1d1d;border-color:#991b1b;color:#fca5a5">Races to Skip (No Bet)</h2>
+    <div>
+      
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">4:50 PM Navan</span>
+            <span class="skip-race">Future Stars Raceday Handicap (23 runners)</span>
+          </div>
+          <div class="skip-reason">Huge field (23 runners) on Irish flat handicap. Without model R1 today, no expert convergence signal beyond the lone ATR Top Tip — recommend skipping.</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">4:15 PM Navan</span>
+            <span class="skip-race">Irish Stallion Farms EBF Median Auction Maiden (Smullen) — 19 runners</span>
+          </div>
+          <div class="skip-reason">Maiden, 19 runners, no model output today — only ATR has a view (LATIN AMERICA). Skip.</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">5:25 PM Navan</span>
+            <span class="skip-race">Cusack Hotel Group Family Day Handicap — 20 runners</span>
+          </div>
+          <div class="skip-reason">Big-field Irish handicap; no model output, no expert convergence beyond ATR.</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">1:20 PM Navan</span>
+            <span class="skip-race">Kilberry Apprentice Handicap — 17 runners</span>
+          </div>
+          <div class="skip-reason">Apprentice handicap, large field; no model output today; no convergence signal.</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 8. Full Text — raw briefing for reference (collapsed by default) -->
+  
+    <section class="briefing-section">
+      <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+        Full Text Briefing <span class="toggle-hint">(tap to expand/collapse)</span>
+      </h2>
+      <div class="collapsible collapsed">
+        <pre class="full-text">MORNING INTELLIGENCE BRIEFING — 2026-04-25
+Generated: 2026-04-25T07:40:58.552623
+======================================================================
+
+&gt;&gt;&gt; CRITICAL PIPELINE ALERT &lt;&lt;&lt;
+CRITICAL — morning workflow has not produced model ratings for today. NH and Flat model_ratings tables both empty (0 rows). ATR tipster picks not scraped (0 rows). GG best odds not scraped (0 runners). NH scoring failed yesterday too (per memory). This briefing has NO model R1 / R2 data — convergence is judge-only and edge_pct/value_flag are null. Re-run morning workflow on Mac (cd ~/Claude/horse_racing &amp;&amp; python3.10 main.py → 'am') before betting.
+
+Races today: 59 (8 NH, 51 flat)
+Venues: Doncaster, Haydock, Leicester, Limerick, Navan, Ripon, Sandown, Southwell (AW)
+Headline meeting: SANDOWN — bet365 Gold Cup Day (Grade 1 Celebration Chase 2:55, Premier Handicap Gold Cup 3:30, plus Grade 2 Oaksey + Grade 2 Select Hurdle)
+
+--- STRONGEST SIGNALS (judge-only, no model R1 today) ---
+  T3 KADASTRAL                 1:45     Sandown        | wgt=4 (2src)
+      sources: ATR Verdict, Ruby Walsh
+  T3 BLOW YOUR WAD             2:20     Sandown        | wgt=4 (2src)
+      sources: ATR Expert View, Ruby Walsh
+  T3 MONTREGARD                3:30 PM  Sandown        | wgt=2 (2src)
+      sources: ATR Verdict, RP NAPs
+  T3 GNOMON                    5:15     Sandown        | wgt=2 (2src)
+      sources: ATR Expert View, RP NAPs
+
+--- RACING POST NAPs (cited) ---
+  ONLY ONE BLUE             1:13 Sandown        — RP-cited NAP candidate (alongside Cloaks Of Gold)
+  MONTREGARD                3:30 PM Sandown        — RP NAP — Gold Cup; right-handed Sandown might inconvenience Ask Brewster
+  GNOMON                    5:15 Sandown        — RP-cited final-race pick — cruised clear at Ascot last month
+
+--- EXPERT-vs-EXPERT DISAGREEMENTS on Sandown headline races ---
+  2:55 Sandown (bet365 Celebration Chase (Grade 1)) [medium]
+      SOLNESS (ATR Expert View)
+      THISTLE ASK (ATR Verdict)
+      JONBON (Ruby Walsh)
+  3:30 Sandown (bet365 Gold Cup Handicap Chase) [medium]
+      IN D'OR (ATR Expert View)
+      MONTREGARD (ATR Verdict,RP NAPs)
+      HAVAILA (Ruby Walsh)
+
+--- KEY JUDGES ---
+RUBY WALSH (Paddy Power, ITV Saturday):
+  1:45 PM  Sandown   — KADASTRAL (Looks the obvious one for the in-form Skelton team; decent second behind Sober Glory at Newbury penultimate start.)
+  2:05 PM  Leicester — ANNAF (Michael Appleby/Harry Davies — more than respectable at Doncaster last start.)
+  2:20 PM  Sandown   — BLOW YOUR WAD (Walsh tip)
+  2:35 PM  Haydock   — CABURN (Walsh tip)
+  2:55 PM  Sandown   — JONBON (Celebration Chase — Walsh sides with Jonbon)
+  3:30 PM  Sandown   — HAVAILA (BEST BET — Gold Cup)
+
+LAURENT BARBARIN (ATR — French only):
+  16:00  Auteuil     — KAADAM (no UK/IRE overlap)
+  16:17  Compiègne   — MAKAROV (no UK/IRE overlap)
+
+HUGH TAYLOR: unavailable (no Saturday column)
+TONY KEENAN: unavailable (no Sat 25 article located)
+TOM COLLINS: unavailable (no text tips surfaced; ITV broadcast only)
+PAUL KEALY / TOM SEGAL / JOHNNY DINEEN: paywalled
+NICK LUCK: podcast — no transcription in this environment
+GAVIN LYNCH: outside main NH season (Sep–Mar)
+WILLIE MULLINS: no dedicated 25 April preview located
+
+DAN SKELTON (Ladbrokes blog, 11 runners today):
+  5:15 Sandown — Listentoyourheart: SOFT mention. 'she'll run well' but doubts she has enough in hand.
+
+--- TRAINER INTELLIGENCE ---
+  Dan Skelton (11 runners): On LISTENTOYOURHEART (5:15 Sandown): 'she's done very well for the team this year' — but adds 'I don't think she hides anything from the handicapper... no reason to think she won't run another consistent race here, without them thinking they've got enough in hand to win this race'.
+      tone: soft / honest — public talk-down rather than confidence
+
+--- SKIP LIST ---
+  4:50 PM Navan — Huge field (23 runners) on Irish flat handicap. Without model R1 today, no expert convergence signal beyond the lone ATR Top Tip — recommend skipping.
+  4:15 PM Navan — Maiden, 19 runners, no model output today — only ATR has a view (LATIN AMERICA). Skip.
+  5:25 PM Navan — Big-field Irish handicap; no model output, no expert convergence beyond ATR.
+  1:20 PM Navan — Apprentice handicap, large field; no model output today; no convergence signal.
+
+--- WATCH-OUTS WITHOUT MODEL ---
+  - Sandown 3:30 Gold Cup is a FOUR-WAY split: Walsh→Havaila, ATR→In D'Or, RP NAP→Montregard, ATR Watch→Montregard.
+    Treat this as low-confidence — no model R1 to break the tie.
+  - Sandown 2:55 Celebration Chase: Walsh (Jonbon) vs ATR (Solness). Two-way split between trusted sources.
+  - Sandown 1:45 Novices' Hcap Hurdle: ATR (Minella Yoga) vs Walsh (Kadastral). Walsh + ATR-Watch alignment on Kadastral.
+</pre>
+      </div>
+    </section>
+
+</main>
+
+</body>
+</html>
