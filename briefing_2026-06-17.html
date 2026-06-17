@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Intelligence Briefing — 2026-06-17</title>
+  <style>
+    :root {
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; }
+    header h1 { font-size: 1.15rem; color: var(--accent); }
+    header .sub { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+    main { padding: 16px; max-width: 900px; margin: 0 auto; }
+
+    .summary-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .summary-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; }
+    .summary-chip strong { color: var(--accent); }
+
+    .briefing-section { margin-bottom: 24px; }
+    .section-title { font-size: 1rem; color: var(--accent); padding: 10px 16px; background: var(--surface);
+                       border: 1px solid var(--border); border-radius: 8px 8px 0 0; cursor: pointer; user-select: none; }
+    .section-title .toggle-hint { color: var(--muted); font-size: 0.75rem; font-weight: 400; }
+
+    .collapsible { transition: max-height 0.3s ease; overflow: hidden; }
+    .collapsible.collapsed { max-height: 0 !important; }
+
+    /* ── Signals ── */
+    .signal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                     padding: 14px 16px; margin-bottom: 10px; }
+    .signal-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .signal-horse { font-size: 1.05rem; font-weight: 700; color: #f0f6fc; }
+    .signal-meta { color: var(--muted); font-size: 0.82rem; }
+    .sig-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .signal-stats { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .signal-sources { font-size: 0.78rem; color: #93c5fd; }
+    .signal-notes { font-size: 0.8rem; color: #c4b5fd; margin-top: 4px; font-style: italic; }
+
+    /* ── Convergence cards ── */
+    .convergence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                          padding: 12px 16px; margin-bottom: 10px; }
+
+    /* ── NAP Table ── */
+    .nap-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
+                        border-radius: 0 0 8px 8px; }
+    .nap-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .nap-table th { padding: 8px 10px; text-align: left; color: var(--muted); font-weight: 600;
+                      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+                      background: #0f172a; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .nap-table td { padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+    .nap-table tr:last-child td { border-bottom: none; }
+    .nap-table tr:hover td { background: rgba(56,189,248,0.04); }
+    .nap-table .horse-name { font-weight: 700; color: #f0f6fc; white-space: nowrap; }
+    .nap-table .nap-count { font-weight: 700; font-size: 1rem; color: var(--accent); text-align: center; }
+    .nap-table .tipsters { font-size: 0.75rem; color: var(--muted); max-width: 220px; }
+
+    /* ── Conflicts ── */
+    .conflict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                       padding: 12px 16px; margin-bottom: 10px; }
+    .conflict-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: 600; }
+    .conflict-race { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
+    .conflict-detail { font-size: 0.82rem; line-height: 1.7; }
+    .conflict-detail strong { color: var(--accent); }
+
+    /* ── Judges ── */
+    .judge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                    padding: 12px 16px; margin-bottom: 10px; }
+    .judge-name { font-weight: 700; color: #f0f6fc; font-size: 0.95rem; }
+    .judge-source { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+    .judge-spec { color: var(--accent); font-size: 0.78rem; margin-bottom: 6px; }
+    .judge-status { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 4px; }
+    .judge-pick { font-size: 0.82rem; margin-top: 3px; line-height: 1.5; }
+    .judge-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.82rem;
+                         padding: 4px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .judge-selection:last-child { border-bottom: none; }
+    .judge-horse { font-weight: 700; color: #f0f6fc; }
+    .judge-meta { color: var(--muted); font-size: 0.78rem; }
+    .judge-notes { color: #c4b5fd; font-size: 0.78rem; font-style: italic; }
+
+    /* ── Trainer intel ── */
+    .trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                      padding: 12px 16px; margin-bottom: 10px; }
+    .trainer-name { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .quote-item { font-size: 0.82rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .quote-item strong { color: #f0f6fc; }
+
+    /* ── Skip races (no bet) ── */
+    .skip-card { background: var(--surface); border-left: 3px solid #dc2626; border: 1px solid var(--border);
+                  border-left: 3px solid #dc2626; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+    .skip-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .skip-meta { color: var(--muted); font-size: 0.82rem; }
+    .skip-race { font-weight: 700; color: #fecaca; font-size: 0.95rem; }
+    .skip-reason { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+    /* ── Confidence tier badges ── */
+    .tier-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .tier-1 { background: #f59e0b; color: #fff; }
+    .tier-2 { background: #94a3b8; color: #fff; }
+    .tier-3 { background: #6b7280; color: #fff; }
+
+    /* ── Judge accuracy ── */
+    .judge-accuracy { color: #93c5fd; font-size: 0.75rem; margin-top: 2px; }
+
+    /* ── Blind spots ── */
+    .blind-category { font-size: 0.82rem; margin-bottom: 6px; }
+    .blind-category ul { margin-left: 16px; color: var(--muted); }
+    .blind-category li { margin-bottom: 2px; }
+
+    /* ── Full text ── */
+    .full-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.72rem; line-height: 1.5;
+                   color: var(--muted); white-space: pre-wrap; word-break: break-word; padding: 12px 16px;
+                   background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      main { padding: 10px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card, .skip-card { padding: 10px 12px; }
+      .nap-table { font-size: 0.75rem; }
+      .nap-table th, .nap-table td { padding: 6px 6px; }
+      .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .signal-header, .skip-header, .conflict-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<script>
+(function() {
+  var h = "9b36ddb03d0b4853ee17397a239ca4149aa6f2f3dc2fdaf4279691046db994ad";
+  if (localStorage.getItem("rc_auth") === h) return;
+  document.body.style.display = "none";
+  var p = prompt("Password:");
+  if (p) {
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(p)).then(function(buf) {
+      var hex = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+      if (hex === h) {
+        localStorage.setItem("rc_auth", h);
+        document.body.style.display = "";
+      } else {
+        document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Wrong password</h1>";
+        document.body.style.display = "";
+      }
+    });
+  } else {
+    document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Password required</h1>";
+    document.body.style.display = "";
+  }
+})();
+</script>
+
+<header>
+  <h1>Intelligence Briefing</h1>
+  <div class="sub">2026-06-17 · 35 races · NH: 8 · Flat: 27</div>
+</header>
+
+<main>
+
+  <div class="summary-bar">
+    <div class="summary-chip"><strong>NH:</strong> </div>
+    <div class="summary-chip"><strong>Flat:</strong> </div>
+    
+  </div>
+
+  <!-- 1. Strongest Signals — the most actionable info, always first -->
+  <section class="briefing-section">
+    <h2 class="section-title">Strongest Signals (16)</h2>
+    <div>
+      
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Ombudsman (IRE)</span>
+            <span class="signal-meta">4:20 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 30.1%</span>
+            <span>Model: 3.32</span>
+            <span>Market: 2.38</span><span style="color:#10b981">Edge: +0.4%</span>
+            <span>Sources: 9w (7 sources)</span>
+          </div>
+          <div class="signal-sources">ITV Racing, NAP:Mirror Online, NAP:Racing Post, Newmarket, NAP:The Favourite, The Judge, NAP:The Racing App, Computeform, NAP:punterslounge.com, The Brigadier, Ruby Walsh</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Galiyan</span>
+            <span class="signal-meta">3:05 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 27.8%</span>
+            <span>Model: 3.59</span>
+            <span>Market: 3.25</span><span style="color:#10b981">Edge: +0.1%</span>
+            <span>Sources: 7w (5 sources)</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor, ITV Racing, NAP:Daily Mirror, Newsboy, NAP:Racing Post, Lambourn, NAP:The Sun, Templegate</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Blue Bolt (IRE)</span>
+            <span class="signal-meta">3:40 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 19.0%</span>
+            <span>Model: 5.26</span>
+            <span>Market: 4.00</span><span style="color:#10b981">Edge: +0.3%</span>
+            <span>Sources: 7w (5 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Daily Telegraph, Marlborough, NAP:Jersey Evening Post, Rory Paddock, NAP:Racing TV, Dave Nevison, NAP:Weekender, Sam Hardy, Ruby Walsh</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Alobayyah (GB)</span>
+            <span class="signal-meta">5:35 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 7.6%</span>
+            <span>Model: 13.07</span>
+            <span>Market: 4.50</span><span style="color:#10b981">Edge: +1.9%</span>
+            <span>Sources: 5w (3 sources)</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor, NAP:Sunday Telegraph, Whistler, NAP:sportinglife.com</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Victorious</span>
+            <span class="signal-meta">2:30 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 8.7%</span>
+            <span>Model: 11.52</span>
+            <span>Market: 5.50</span><span style="color:#10b981">Edge: +1.1%</span>
+            <span>Sources: 4w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:The Irish Sun, Ruby Walsh</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Sale Shark</span>
+            <span class="signal-meta">6:10 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 12.5%</span>
+            <span>Model: 8.02</span>
+            <span>Market: 9.00</span><span style="color:#ef4444">Edge: -0.1%</span>
+            <span>Sources: 3w (1 sources)</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Limestone (IRE)</span>
+            <span class="signal-meta">3:05 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 12.4%</span>
+            <span>Model: 8.08</span>
+            <span>Market: 4.50</span><span style="color:#10b981">Edge: +0.8%</span>
+            <span>Sources: 6w (4 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Daily Mail, Robin Goodfellow, NAP:Irish Herald, Ian Gaughran, NAP:tipmantips.com, Tipman Tips, Ruby Walsh</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Jagged Edge (IRE)</span>
+            <span class="signal-meta">5:00 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R19</span>
+            <span>Prob: 2.6%</span>
+            <span>Model: 39.07</span>
+            <span>Market: 13.00</span><span style="color:#10b981">Edge: +2.0%</span>
+            <span>Sources: 6w (4 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:RaceiQ, The Data Detective, NAP:Sunday Mail, Rockavon, NAP:The Times, Rob Wright, Ruby Walsh</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">One Number</span>
+            <span class="signal-meta">6:10 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R11</span>
+            <span>Prob: 3.8%</span>
+            <span>Model: 26.02</span>
+            <span>Market: 9.00</span><span style="color:#10b981">Edge: +1.9%</span>
+            <span>Sources: 4w (2 sources)</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor, NAP:Daily Post, Mercury</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Wild Blossom</span>
+            <span class="signal-meta">2:30 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 5.9%</span>
+            <span>Model: 16.83</span>
+            <span>Market: 9.00</span><span style="color:#10b981">Edge: +0.9%</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ITV Racing, NAP:Sheffield Star, Fortunatus, NAP:The Scotsman, Glendale</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Minnie Hauk (IRE)</span>
+            <span class="signal-meta">4:20 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 16.2%</span>
+            <span>Model: 6.16</span>
+            <span>Market: 8.00</span><span style="color:#ef4444">Edge: -0.2%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Daily Record, Garry Owen, NAP:Irish Daily Star, Brian Flanagan</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Wareeth</span>
+            <span class="signal-meta">3:05 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R8</span>
+            <span>Prob: 4.5%</span>
+            <span>Model: 22.01</span>
+            <span>Market: 13.00</span><span style="color:#10b981">Edge: +0.7%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Morning Star, Farringdon, NAP:racing-daily.com</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">La Botte</span>
+            <span class="signal-meta">5:00 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R26</span>
+            <span>Prob: 1.9%</span>
+            <span>Model: 53.0</span>
+            <span>Market: 13.00</span><span style="color:#10b981">Edge: +3.1%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Racing Post, RP Ratings, NAP:Racing Post, Spotlight</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Pershaada</span>
+            <span class="signal-meta">2:30 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R10</span>
+            <span>Prob: 3.7%</span>
+            <span>Model: 27.14</span>
+            <span>Market: 26.00</span><span style="color:#10b981">Edge: +0.0%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Racing Ahead, Ben Morgan, NAP:Racing and Football Outlook, Andrew Mount</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Our Guide</span>
+            <span class="signal-meta">3:50 Worcester</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 68.4%</span>
+            <span>Model: 1.46</span>
+            <span>Market: 1.91</span><span style="color:#ef4444">Edge: -0.2%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:attheraces.com, Ratings Hub, NAP:bettinggods.com</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Stateira</span>
+            <span class="signal-meta">5:35 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 6.6%</span>
+            <span>Model: 15.06</span>
+            <span>Market: 9.50</span><span style="color:#10b981">Edge: +0.6%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP:Sunday Express, NAP:The Star, Jason Heavey</div>
+          
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. NAP Convergence Table — quick scan of newspaper tipster alignment -->
+  <section class="briefing-section">
+    <h2 class="section-title">NAP Convergence (2+ Newspaper NAPs)</h2>
+    <div class="nap-table-wrap">
+      <table class="nap-table">
+        <thead>
+          <tr>
+            <th>Horse</th><th>Time</th><th>Course</th><th>NAPs</th>
+            <th>Tipsters</th><th>Model R1</th><th>Agrees?</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td class="horse-name">Ombudsman</td>
+          <td>16:20</td>
+          <td>Asct</td>
+          <td class="nap-count">5</td>
+          <td class="tipsters">Mirror Online, Racing Post, Newmarket, The Favourite, The Judge, The Racing App, Computeform, punterslounge.com, The Brigadier</td>
+          <td>True</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Blue Bolt</td>
+          <td>15:40</td>
+          <td>Asct</td>
+          <td class="nap-count">4</td>
+          <td class="tipsters">Daily Telegraph, Marlborough, Jersey Evening Post, Rory Paddock, Racing TV, Dave Nevison, Weekender, Sam Hardy</td>
+          <td>True</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Limestone</td>
+          <td>15:05</td>
+          <td>Asct</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">Daily Mail, Robin Goodfellow, Irish Herald, Ian Gaughran, tipmantips.com, Tipman Tips</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Jagged Edge</td>
+          <td>17:00</td>
+          <td>Asct</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">RaceiQ, The Data Detective, Sunday Mail, Rockavon, The Times, Rob Wright</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Galiyan</td>
+          <td>15:05</td>
+          <td>Asct</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">Daily Mirror, Newsboy, Racing Post, Lambourn, The Sun, Templegate</td>
+          <td>True</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Minnie Hauk</td>
+          <td>16:20</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Record, Garry Owen, Irish Daily Star, Brian Flanagan</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Wareeth</td>
+          <td>15:05</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Morning Star, Farringdon, racing-daily.com</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">La Botte</td>
+          <td>17:00</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Post, RP Ratings, Racing Post, Spotlight</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Wild Blossom</td>
+          <td>14:30</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Sheffield Star, Fortunatus, The Scotsman, Glendale</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Pershaada</td>
+          <td>14:30</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Ahead, Ben Morgan, Racing and Football Outlook, Andrew Mount</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Our Guide</td>
+          <td>15:50</td>
+          <td>Worc</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">attheraces.com, Ratings Hub, bettinggods.com</td>
+          <td>True</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Stateira</td>
+          <td>17:35</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Sunday Express, The Star, Jason Heavey</td>
+          <td>False</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Alobayyah</td>
+          <td>17:35</td>
+          <td>Asct</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Sunday Telegraph, Whistler, sportinglife.com</td>
+          <td>True</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. Updated Convergences — new findings from judge sweep -->
+  
+
+  <!-- 4. Expert-vs-Model Conflicts — where to be cautious -->
+  <section class="briefing-section">
+    <h2 class="section-title">Expert-vs-Model Conflicts (4)</h2>
+    <div>
+      
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>6:10 Ascot</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">Windsor Castle Stakes (Listed Race)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Sale Shark</div>
+            <div><strong>Hugh Taylor:</strong> One Number (model R11) · <strong>Ruby Walsh:</strong> Controlla (model R12)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>2:30 Ascot</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
+          </div>
+          <div class="conflict-race">Queen Mary Stakes (Group 2) (Fillies)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Victorious</div>
+            <div><strong>Hugh Taylor:</strong> Senorita Bonita (model R4) · <strong>Ruby Walsh:</strong> Love A Giggle (model R12)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>5:00 Ascot</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">Royal Hunt Cup (Heritage Handicap)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Fifth Column (IRE)</div>
+            <div><strong>Ruby Walsh:</strong> Jagged Edge (IRE) (model R19), Mister Winston (GB) (model R4)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>5:35 Ascot</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">Kensington Palace Stakes (Fillies' Handicap)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Alobayyah (GB)</div>
+            <div><strong>Ruby Walsh:</strong> Sand Gazelle (GB) (model R10)</div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 5. Respected Judges — full breakdown by source (collapsible) -->
+  
+  <!-- ── Respected Judges ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+      Respected Judges <span class="toggle-hint">(tap to expand/collapse)</span>
+    </h2>
+    <div class="collapsible"><div class="judge-card"><div class="judge-name">Hugh Taylor <span class="judge-source">(At The Races (free))</span></div><div class="judge-spec">UK flat daily tips</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Galiyan</span>
+                  <span class="judge-meta">3:05 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Alobayyah</span>
+                  <span class="judge-meta">5:35 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sale Shark</span>
+                  <span class="judge-meta">6:10 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">One Number</span>
+                  <span class="judge-meta">6:10 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Senorita Bonita</span>
+                  <span class="judge-meta">2:30 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Ruby Walsh <span class="judge-source">(Paddy Power (free))</span></div><div class="judge-spec">NH/flat, ITV days</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Victorious</span>
+                  <span class="judge-meta">2:30 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Love A Giggle</span>
+                  <span class="judge-meta">2:30 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Limestone</span>
+                  <span class="judge-meta">3:05 Ascot</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Blue Bolt</span>
+                  <span class="judge-meta">3:40 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ombudsman</span>
+                  <span class="judge-meta">4:20 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jagged Edge</span>
+                  <span class="judge-meta">5:00 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Mister Winston</span>
+                  <span class="judge-meta">5:00 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sand Gazelle</span>
+                  <span class="judge-meta">5:35 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Best Bet</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Controlla</span>
+                  <span class="judge-meta">6:10 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Itv Racing (Footy Accumulators) <span class="judge-source">(footyaccumulators.com)</span></div><div class="judge-spec">ITV televised races</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Wild Blossom</span>
+                  <span class="judge-meta">2:30 Ascot</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Galiyan</span>
+                  <span class="judge-meta">3:05 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Friendly Soul</span>
+                  <span class="judge-meta">3:40 Ascot</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ombudsman</span>
+                  <span class="judge-meta">4:20 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fifth Column</span>
+                  <span class="judge-meta">5:00 Ascot</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Zgharta</span>
+                  <span class="judge-meta">5:35 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Green Sovereign</span>
+                  <span class="judge-meta">6:10 Ascot</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Laurent Barbarin <span class="judge-source">(At The Races (free))</span></div><div class="judge-spec">French racing</div><div class="judge-status">unavailable - no French racing today (all UK cards: Ascot, Ffos Las, Hamilton, Ripon, Worcester)</div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(Sporting Life (free))</span></div><div class="judge-spec">Irish racing</div><div class="judge-status">unavailable - no Irish racing on todays UK-only card</div></div><div class="judge-card"><div class="judge-name">Paul Kealy <span class="judge-source">(Racing Post (RP+ paywall))</span></div><div class="judge-spec">UK value</div><div class="judge-status">paywalled - headline: 7 selections for Royal Ascot Day 2, backing Jamie Spencer; Fifth Column noted in Royal Hunt Cup. Full picks behind RP+</div></div><div class="judge-card"><div class="judge-name">Tom Segal <span class="judge-source">(Racing Post Pricewise (RP+ paywall))</span></div><div class="judge-spec">value</div><div class="judge-status">paywalled - Pricewise Day 2 behind RP+</div></div><div class="judge-card"><div class="judge-name">Johnny Dineen <span class="judge-source">(Racing Post (RP+ paywall))</span></div><div class="judge-spec">Irish</div><div class="judge-status">paywalled - RP+ Good Morning Royal Ascot video</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Apple Podcasts)</span></div><div class="judge-spec">daily podcast</div><div class="judge-status">unavailable - no local transcript available this run</div></div><div class="judge-card"><div class="judge-name">Tom Collins <span class="judge-source">(ITV/ATR/X)</span></div><div class="judge-spec">GB/IRE NH & flat</div><div class="judge-status">unavailable - tips via ITV Opening Show broadcast / X, not captured this run</div></div><div class="judge-card"><div class="judge-name">Gavin Lynch <span class="judge-source">(gavinlynchracing.com)</span></div><div class="judge-spec">Irish NH</div><div class="judge-status">unavailable - Irish NH specialist, inactive in flat-festival period / no Irish card today</div></div><div class="judge-card"><div class="judge-name">Willie Mullins <span class="judge-source">(wpmullins.com)</span></div><div class="judge-spec">own runners</div><div class="judge-status">unavailable - no Mullins runners on todays UK cards</div></div><div class="judge-card"><div class="judge-name">Dan Skelton <span class="judge-source">(Ladbrokes blog)</span></div><div class="judge-spec">own runners</div><div class="judge-status">unavailable - NH stable, no runners on flat festival card</div></div></div>
+  </section>
+
+  <!-- 6. Trainer Intelligence — insider quotes -->
+  <section class="briefing-section">
+    <h2 class="section-title">Trainer Intelligence</h2>
+    <div>
+      
+    </div>
+  </section>
+
+  <!-- 7. Blind Spots — where model has least confidence -->
+  <section class="briefing-section">
+    <h2 class="section-title">Blind Spot Alerts</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
+      <div class="blind-category"><strong>  — :</strong> </div>
+    </div>
+  </section>
+
+  <!-- 7b. Skip Races — red-themed no-bet list (if present) -->
+  
+  <!-- ── Skip Races (No Bet) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" style="background:#7f1d1d;border-color:#991b1b;color:#fca5a5">Races to Skip (No Bet)</h2>
+    <div>
+      
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">5:00 Ascot</span>
+            <span class="skip-race">Royal Hunt Cup (Heritage Handicap)</span>
+          </div>
+          <div class="skip-reason">Large-field handicap (30 runners), no expert/nap convergence on a model top-3 runner - lottery race, avoid singles</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 8. Full Text — raw briefing for reference (collapsed by default) -->
+  
+    <section class="briefing-section">
+      <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+        Full Text Briefing <span class="toggle-hint">(tap to expand/collapse)</span>
+      </h2>
+      <div class="collapsible collapsed">
+        <pre class="full-text">======================================================================
+MORNING INTELLIGENCE BRIEFING — 2026-06-17  (Royal Ascot Day 2)
+======================================================================
+35 races | 27 flat, 8 NH | venues: Ascot, Ffos Las, Hamilton, Ripon, Worcester
+Royal Ascot Day 2 - model + experts converge strongly on Ombudsman, Galiyan, Blue Bolt; Taylor confirms Galiyan &amp; Alobayyah
+
+** edge_pct caveat: edge_pct = model_price/market_odds - 1 per task spec. NOTE: model_price is the model FAIR price (1/prob), so a POSITIVE edge_pct means the market is SHORTER than model-fair (market more confident than model) - it is NOT classic back-value. Treat convergence + model-rank agreement as the real signal, not value_flag.
+
+----------------------------------------------------------------------
+STRONGEST SIGNALS (model R1 + convergence)
+----------------------------------------------------------------------
+[T1] Ombudsman (IRE)  4:20 Ascot — model R1 (score 73.9)
+     wConv=9 from 7 src | mkt 2.38 vs model-fair 3.32
+     sources: ITV Racing, NAP:Mirror Online, NAP:Racing Post, Newmarket, NAP:The Favourite, The Judge, NAP:The Racing App, Computeform, NAP:punterslounge.com, The Brigadier, Ruby Walsh
+[T1] Galiyan  3:05 Ascot — model R1 (score 64.7)
+     wConv=7 from 5 src | mkt 3.25 vs model-fair 3.59
+     sources: Hugh Taylor, ITV Racing, NAP:Daily Mirror, Newsboy, NAP:Racing Post, Lambourn, NAP:The Sun, Templegate
+[T1] Blue Bolt (IRE)  3:40 Ascot — model R1 (score 68.5)
+     wConv=7 from 5 src | mkt 4.0 vs model-fair 5.26
+     sources: NAP:Daily Telegraph, Marlborough, NAP:Jersey Evening Post, Rory Paddock, NAP:Racing TV, Dave Nevison, NAP:Weekender, Sam Hardy, Ruby Walsh
+[T1] Alobayyah (GB)  5:35 Ascot — model R1 (score 61.2)
+     wConv=5 from 3 src | mkt 4.5 vs model-fair 13.07
+     sources: Hugh Taylor, NAP:Sunday Telegraph, Whistler, NAP:sportinglife.com
+[T2] Victorious  2:30 Ascot — model R1 (score 61.6)
+     wConv=4 from 2 src | mkt 5.5 vs model-fair 11.52
+     sources: NAP:The Irish Sun, Ruby Walsh
+[T2] Sale Shark  6:10 Ascot — model R1 (score 64.4)
+     wConv=3 from 1 src | mkt 9.0 vs model-fair 8.02
+     sources: Hugh Taylor
+
+----------------------------------------------------------------------
+NAP CONVERGENCE (newspaper naps, &gt;=2 papers)
+----------------------------------------------------------------------
+Ombudsman          x5  16:20 Asct  — AGREES w/model R1
+Blue Bolt          x4  15:40 Asct  — AGREES w/model R1
+Limestone          x3  15:05 Asct  — model R2
+Jagged Edge        x3  17:00 Asct  — model R19
+Galiyan            x3  15:05 Asct  — AGREES w/model R1
+Minnie Hauk        x2  16:20 Asct  — model R3
+Wareeth            x2  15:05 Asct  — model R8
+La Botte           x2  17:00 Asct  — model R26
+Wild Blossom       x2  14:30 Asct  — model R3
+Pershaada          x2  14:30 Asct  — model R10
+Our Guide          x2  15:50 Worc  — AGREES w/model R1
+Stateira           x2  17:35 Asct  — model R3
+Alobayyah          x2  17:35 Asct  — AGREES w/model R1
+
+----------------------------------------------------------------------
+EXPERT vs MODEL CONFLICTS
+----------------------------------------------------------------------
+6:10 Ascot — model R1 Sale Shark [high]
+     Hugh Taylor prefers One Number (model R11)
+     Ruby Walsh prefers Controlla (model R12)
+2:30 Ascot — model R1 Victorious [moderate]
+     Hugh Taylor prefers Senorita Bonita (model R4)
+     Ruby Walsh prefers Love A Giggle (model R12)
+5:00 Ascot — model R1 Fifth Column (IRE) [high]
+     Ruby Walsh prefers Jagged Edge (IRE) (model R19)
+     Ruby Walsh prefers Mister Winston (GB) (model R4)
+5:35 Ascot — model R1 Alobayyah (GB) [high]
+     Ruby Walsh prefers Sand Gazelle (GB) (model R10)
+
+----------------------------------------------------------------------
+RESPECTED JUDGES
+----------------------------------------------------------------------
+Hugh Taylor (w3): Galiyan*, Alobayyah*, Sale Shark*, One Number, Senorita Bonita
+Ruby Walsh (w3): Victorious*, Love A Giggle, Limestone, Blue Bolt*, Ombudsman*, Jagged Edge, Mister Winston, Sand Gazelle, Controlla
+ITV Racing (Footy Accumulators) (w1): Wild Blossom, Galiyan*, Friendly Soul, Ombudsman*, Fifth Column*, Zgharta, Green Sovereign
+Laurent Barbarin (w3): unavailable - no French racing today (all UK cards: Ascot, Ffos Las, Hamilton, Ripon, Worcester)
+Tony Keenan (w3): unavailable - no Irish racing on todays UK-only card
+Paul Kealy (w3): paywalled - headline: 7 selections for Royal Ascot Day 2, backing Jamie Spencer; Fifth Column noted in Royal Hunt Cup. Full picks behind RP+
+Tom Segal (w3): paywalled - Pricewise Day 2 behind RP+
+Johnny Dineen (w3): paywalled - RP+ Good Morning Royal Ascot video
+Nick Luck (w3): unavailable - no local transcript available this run
+Tom Collins (w3): unavailable - tips via ITV Opening Show broadcast / X, not captured this run
+Gavin Lynch (w3): unavailable - Irish NH specialist, inactive in flat-festival period / no Irish card today
+Willie Mullins (w3): unavailable - no Mullins runners on todays UK cards
+Dan Skelton (w3): unavailable - NH stable, no runners on flat festival card
+  (* = agrees with model R1)
+
+----------------------------------------------------------------------
+SKIP LIST
+----------------------------------------------------------------------
+5:00 Ascot Royal Hunt Cup (Heritage Handicap) — Large-field handicap (30 runners), no expert/nap convergence on a model top-3 runner - lottery race, avoid singles</pre>
+      </div>
+    </section>
+
+</main>
+
+</body>
+</html>
