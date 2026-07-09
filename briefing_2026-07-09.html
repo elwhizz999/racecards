@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Intelligence Briefing — 2026-07-09</title>
+  <style>
+    :root {
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; }
+    header h1 { font-size: 1.15rem; color: var(--accent); }
+    header .sub { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+    main { padding: 16px; max-width: 900px; margin: 0 auto; }
+
+    .summary-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .summary-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; }
+    .summary-chip strong { color: var(--accent); }
+
+    .briefing-section { margin-bottom: 24px; }
+    .section-title { font-size: 1rem; color: var(--accent); padding: 10px 16px; background: var(--surface);
+                       border: 1px solid var(--border); border-radius: 8px 8px 0 0; cursor: pointer; user-select: none; }
+    .section-title .toggle-hint { color: var(--muted); font-size: 0.75rem; font-weight: 400; }
+
+    .collapsible { transition: max-height 0.3s ease; overflow: hidden; }
+    .collapsible.collapsed { max-height: 0 !important; }
+
+    /* ── Signals ── */
+    .signal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                     padding: 14px 16px; margin-bottom: 10px; }
+    .signal-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .signal-horse { font-size: 1.05rem; font-weight: 700; color: #f0f6fc; }
+    .signal-meta { color: var(--muted); font-size: 0.82rem; }
+    .sig-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .signal-stats { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .signal-sources { font-size: 0.78rem; color: #93c5fd; }
+    .signal-notes { font-size: 0.8rem; color: #c4b5fd; margin-top: 4px; font-style: italic; }
+
+    /* ── Convergence cards ── */
+    .convergence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                          padding: 12px 16px; margin-bottom: 10px; }
+
+    /* ── NAP Table ── */
+    .nap-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
+                        border-radius: 0 0 8px 8px; }
+    .nap-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .nap-table th { padding: 8px 10px; text-align: left; color: var(--muted); font-weight: 600;
+                      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+                      background: #0f172a; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .nap-table td { padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+    .nap-table tr:last-child td { border-bottom: none; }
+    .nap-table tr:hover td { background: rgba(56,189,248,0.04); }
+    .nap-table .horse-name { font-weight: 700; color: #f0f6fc; white-space: nowrap; }
+    .nap-table .nap-count { font-weight: 700; font-size: 1rem; color: var(--accent); text-align: center; }
+    .nap-table .tipsters { font-size: 0.75rem; color: var(--muted); max-width: 220px; }
+
+    /* ── Conflicts ── */
+    .conflict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                       padding: 12px 16px; margin-bottom: 10px; }
+    .conflict-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: 600; }
+    .conflict-race { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
+    .conflict-detail { font-size: 0.82rem; line-height: 1.7; }
+    .conflict-detail strong { color: var(--accent); }
+
+    /* ── Judges ── */
+    .judge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                    padding: 12px 16px; margin-bottom: 10px; }
+    .judge-name { font-weight: 700; color: #f0f6fc; font-size: 0.95rem; }
+    .judge-source { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+    .judge-spec { color: var(--accent); font-size: 0.78rem; margin-bottom: 6px; }
+    .judge-status { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 4px; }
+    .judge-pick { font-size: 0.82rem; margin-top: 3px; line-height: 1.5; }
+    .judge-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.82rem;
+                         padding: 4px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .judge-selection:last-child { border-bottom: none; }
+    .judge-horse { font-weight: 700; color: #f0f6fc; }
+    .judge-meta { color: var(--muted); font-size: 0.78rem; }
+    .judge-notes { color: #c4b5fd; font-size: 0.78rem; font-style: italic; }
+
+    /* ── Trainer intel ── */
+    .trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                      padding: 12px 16px; margin-bottom: 10px; }
+    .trainer-name { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .quote-item { font-size: 0.82rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .quote-item strong { color: #f0f6fc; }
+
+    /* ── Skip races (no bet) ── */
+    .skip-card { background: var(--surface); border-left: 3px solid #dc2626; border: 1px solid var(--border);
+                  border-left: 3px solid #dc2626; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+    .skip-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .skip-meta { color: var(--muted); font-size: 0.82rem; }
+    .skip-race { font-weight: 700; color: #fecaca; font-size: 0.95rem; }
+    .skip-reason { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+    /* ── Confidence tier badges ── */
+    .tier-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .tier-1 { background: #f59e0b; color: #fff; }
+    .tier-2 { background: #94a3b8; color: #fff; }
+    .tier-3 { background: #6b7280; color: #fff; }
+
+    /* ── Judge accuracy ── */
+    .judge-accuracy { color: #93c5fd; font-size: 0.75rem; margin-top: 2px; }
+
+    /* ── Blind spots ── */
+    .blind-category { font-size: 0.82rem; margin-bottom: 6px; }
+    .blind-category ul { margin-left: 16px; color: var(--muted); }
+    .blind-category li { margin-bottom: 2px; }
+
+    /* ── Full text ── */
+    .full-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.72rem; line-height: 1.5;
+                   color: var(--muted); white-space: pre-wrap; word-break: break-word; padding: 12px 16px;
+                   background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      main { padding: 10px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card, .skip-card { padding: 10px 12px; }
+      .nap-table { font-size: 0.75rem; }
+      .nap-table th, .nap-table td { padding: 6px 6px; }
+      .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .signal-header, .skip-header, .conflict-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<script>
+(function() {
+  var h = "9b36ddb03d0b4853ee17397a239ca4149aa6f2f3dc2fdaf4279691046db994ad";
+  if (localStorage.getItem("rc_auth") === h) return;
+  document.body.style.display = "none";
+  var p = prompt("Password:");
+  if (p) {
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(p)).then(function(buf) {
+      var hex = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+      if (hex === h) {
+        localStorage.setItem("rc_auth", h);
+        document.body.style.display = "";
+      } else {
+        document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Wrong password</h1>";
+        document.body.style.display = "";
+      }
+    });
+  } else {
+    document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Password required</h1>";
+    document.body.style.display = "";
+  }
+})();
+</script>
+
+<header>
+  <h1>Intelligence Briefing</h1>
+  <div class="sub">2026-07-09 · ? races · NH: 0 · Flat: 48</div>
+</header>
+
+<main>
+
+  <div class="summary-bar">
+    <div class="summary-chip"><strong>NH:</strong> </div>
+    <div class="summary-chip"><strong>Flat:</strong> </div>
+    
+  </div>
+
+  <!-- 1. Strongest Signals — the most actionable info, always first -->
+  <section class="briefing-section">
+    <h2 class="section-title">Strongest Signals (20)</h2>
+    <div>
+      
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Red Spells Danger</span>
+            <span class="signal-meta">3:00 Newmarket</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R7</span>
+            <span>Prob: 7.3%</span>
+            <span>Model: 13.64</span>
+            <span>Market: 9.00</span><span style="color:#ef4444">Edge: -0.3%</span>
+            <span>Sources: 5w (5 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: East Anglian Daily Times, Dean Kilbryde, NAP: Liverpool Echo, Chris Wright, NAP: Scottish Sun, Jim Delahunt, NAP: Sunday Express</div>
+          <div class="signal-notes">ATR Verdict: watch: Thunder Call</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Shipbourne</span>
+            <span class="signal-meta">5:20 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 14.2%</span>
+            <span>Model: 7.03</span>
+            <span>Market: 3.75</span><span style="color:#ef4444">Edge: -0.5%</span>
+            <span>Sources: 4w (4 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Sunday Mail, Rockavon, NAP: The Favourite, The Judge, NAP: The Times, Rob Wright, NAP: Yorkshire Evening Post, Lee Sobot</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Galiyan</span>
+            <span class="signal-meta">1:50 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 16.5%</span>
+            <span>Model: 6.07</span>
+            <span>Market: 4.33</span><span style="color:#ef4444">Edge: -0.3%</span>
+            <span>Sources: 4w (2 sources)</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor, SL best bets</div>
+          <div class="signal-notes">Hugh Taylor: 1pt win (tipped 9/1, now ~3/1 — heavily backed). Also speculative ante-post St Leger play. Expects Murphy to ride prominently; dour stayer angle.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Pilu</span>
+            <span class="signal-meta">3:00 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R8</span>
+            <span>Prob: 7.2%</span>
+            <span>Model: 13.91</span>
+            <span>Market: 10.00</span><span style="color:#ef4444">Edge: -0.3%</span>
+            <span>Sources: 4w (4 sources)</span>
+          </div>
+          <div class="signal-sources">SL Verdict (Ben Linfoot), NAP: The Guardian, NAP: The Irish Field, Rory Delargy, NAP: Yorkshire Post, The Duke</div>
+          <div class="signal-notes">SL Verdict (Ben Linfoot): 1pt e.w. 18/1</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Inner City Blues</span>
+            <span class="signal-meta">2:25 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 34.0%</span>
+            <span>Model: 2.94</span>
+            <span>Market: 1.91</span><span style="color:#ef4444">Edge: -0.3%</span>
+            <span>Sources: 4w (4 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Races Now, Stephen Darbyshire, NAP: Weekender, Sam Hardy, NAP: William Hill Racing, Steve Mullington, NAP: bettinggods.com</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Instant Bond</span>
+            <span class="signal-meta">3:45 Carlisle</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 27.2%</span>
+            <span>Model: 3.68</span>
+            <span>Market: 3.00</span><span style="color:#ef4444">Edge: -0.2%</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: Daily Mirror, Newsboy, NAP: Irish Herald, Ian Gaughran</div>
+          <div class="signal-notes">ATR Verdict: watch: Miss Rainbow</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Rebel's Romance</span>
+            <span class="signal-meta">3:35 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 57.9%</span>
+            <span>Model: 1.73</span>
+            <span>Market: 1.91</span><span style="color:#10b981">Edge: +0.1%</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Jersey Evening Post, Rory Paddock, NAP: The Scotsman, Glendale, NAP: attheraces.com, Ratings Hub</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Spanish Voice</span>
+            <span class="signal-meta">5:20 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 11.2%</span>
+            <span>Model: 8.92</span>
+            <span>Market: 7.00</span><span style="color:#ef4444">Edge: -0.2%</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: Daily Mail, Robin Goodfellow, NAP: punterslounge.com, The Brigadier</div>
+          <div class="signal-notes">ATR Verdict: watch: Shipbourne</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Calico Blue</span>
+            <span class="signal-meta">3:00 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 9.8%</span>
+            <span>Model: 10.21</span>
+            <span>Market: 8.00</span><span style="color:#ef4444">Edge: -0.2%</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Daily Post, Mercury, NAP: Sheffield Star, Fortunatus, NAP: The Sun, Templegate</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Sea Cookie</span>
+            <span class="signal-meta">3:00 Newmarket</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 9.4%</span>
+            <span>Model: 10.63</span>
+            <span>Market: 15.00</span><span style="color:#10b981">Edge: +0.4%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">SL Verdict (Ben Linfoot), NAP: Daily Record, Garry Owen</div>
+          <div class="signal-notes">SL Verdict (Ben Linfoot): 1pt win 8/1</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Strike</span>
+            <span class="signal-meta">6:52 Newbury</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 18.4%</span>
+            <span>Model: 5.43</span>
+            <span>Market: 5.00</span><span style="color:#ef4444">Edge: -0.1%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">SL best bets, NAP: Morning Star, Farringdon</div>
+          <div class="signal-notes">SL best bets: SL NAP — quick ground key, Tubb back on</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Morris Dancer</span>
+            <span class="signal-meta">4:45 Newmarket</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 27.3%</span>
+            <span>Model: 3.67</span>
+            <span>Market: 2.38</span><span style="color:#ef4444">Edge: -0.4%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: Racing Post, Spotlight</div>
+          <div class="signal-notes">ATR Verdict: watch: Shayem</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Golden Flame</span>
+            <span class="signal-meta">3:20 Doncaster</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 23.8%</span>
+            <span>Model: 4.19</span>
+            <span>Market: 2.88</span><span style="color:#ef4444">Edge: -0.3%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: racing-daily.com</div>
+          <div class="signal-notes">ATR Verdict: watch: Tazaman</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Room Fourteen</span>
+            <span class="signal-meta">3:55 Doncaster</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 35.4%</span>
+            <span>Model: 2.82</span>
+            <span>Market: 1.73</span><span style="color:#ef4444">Edge: -0.4%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: D Express, Melissa Jones</div>
+          <div class="signal-notes">ATR Verdict: watch: Domination</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Sail On Sailor</span>
+            <span class="signal-meta">8:52 Epsom Downs</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 25.7%</span>
+            <span>Model: 3.88</span>
+            <span>Market: 3.25</span><span style="color:#ef4444">Edge: -0.2%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: Daily Star Sunday, Moorestyle</div>
+          <div class="signal-notes">ATR Verdict: watch: Living In Hope</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Storm Point</span>
+            <span class="signal-meta">7:27 Newbury</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 15.9%</span>
+            <span>Model: 6.31</span>
+            <span>Market: 4.33</span><span style="color:#ef4444">Edge: -0.3%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: The Star, Jason Heavey</div>
+          <div class="signal-notes">ATR Verdict: watch: Nakaaha</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Phenomenal Filly</span>
+            <span class="signal-meta">5:55 Leopardstown</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 38.1%</span>
+            <span>Model: 2.62</span>
+            <span>Market: 2.88</span><span style="color:#10b981">Edge: +0.1%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, NAP: Irish Daily Star, Brian Flanagan</div>
+          <div class="signal-notes">ATR Verdict: watch: Fingerpaint</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Lion Of Alba</span>
+            <span class="signal-meta">5:20 Newmarket</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 11.2%</span>
+            <span>Model: 8.91</span>
+            <span>Market: 4.50</span><span style="color:#ef4444">Edge: -0.5%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Daily Telegraph, Marlborough, NAP: Racing Post, The North</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Jamestown</span>
+            <span class="signal-meta">7:03 Leopardstown</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 12.2%</span>
+            <span>Model: 8.18</span>
+            <span>Market: 3.75</span><span style="color:#ef4444">Edge: -0.5%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Racing Post, Postdata, NAP: myracing.com, Adrian Wall</div>
+          
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Asmen Warrior</span>
+            <span class="signal-meta">5:20 Newmarket</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">MILD</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 8.5%</span>
+            <span>Model: 11.77</span>
+            <span>Market: 6.50</span><span style="color:#ef4444">Edge: -0.4%</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">NAP: Racing Post, The Punt, NAP: Racing TV, Dave Nevison</div>
+          
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. NAP Convergence Table — quick scan of newspaper tipster alignment -->
+  <section class="briefing-section">
+    <h2 class="section-title">NAP Convergence (2+ Newspaper NAPs)</h2>
+    <div class="nap-table-wrap">
+      <table class="nap-table">
+        <thead>
+          <tr>
+            <th>Horse</th><th>Time</th><th>Course</th><th>NAPs</th>
+            <th>Tipsters</th><th>Model R1</th><th>Agrees?</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td class="horse-name">Inner City Blues</td>
+          <td>14:25</td>
+          <td>NmkJ</td>
+          <td class="nap-count">4</td>
+          <td class="tipsters">Races Now, Stephen Darbyshire, Weekender, Sam Hardy, William Hill Racing, Steve Mullington, bettinggods.com</td>
+          <td>Adaay Of Scarlett</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Shipbourne</td>
+          <td>17:20</td>
+          <td>NmkJ</td>
+          <td class="nap-count">4</td>
+          <td class="tipsters">Sunday Mail, Rockavon, The Favourite, The Judge, The Times, Rob Wright, Yorkshire Evening Post, Lee Sobot</td>
+          <td>Shipbourne (GB)</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Red Spells Danger</td>
+          <td>15:00</td>
+          <td>NmkJ</td>
+          <td class="nap-count">4</td>
+          <td class="tipsters">East Anglian Daily Times, Dean Kilbryde, Liverpool Echo, Chris Wright, Scottish Sun, Jim Delahunt, Sunday Express</td>
+          <td>Thunder Call (GB)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Rebel's Romance</td>
+          <td>15:35</td>
+          <td>NmkJ</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">Jersey Evening Post, Rory Paddock, The Scotsman, Glendale, attheraces.com, Ratings Hub</td>
+          <td>Rebel's Romance (IRE)</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Pilu</td>
+          <td>15:00</td>
+          <td>NmkJ</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">The Guardian, The Irish Field, Rory Delargy, Yorkshire Post, The Duke</td>
+          <td>Thunder Call (GB)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Calico Blue</td>
+          <td>15:00</td>
+          <td>NmkJ</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">Daily Post, Mercury, Sheffield Star, Fortunatus, The Sun, Templegate</td>
+          <td>Thunder Call (GB)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Strike</td>
+          <td>18:52</td>
+          <td>Newb</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Morning Star, Farringdon, sportinglife.com</td>
+          <td>Strike (GB)</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Instant Bond</td>
+          <td>15:45</td>
+          <td>Carl</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Mirror, Newsboy, Irish Herald, Ian Gaughran</td>
+          <td>Instant Bond</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Spanish Voice</td>
+          <td>17:20</td>
+          <td>NmkJ</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Mail, Robin Goodfellow, punterslounge.com, The Brigadier</td>
+          <td>Shipbourne (GB)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Lion Of Alba</td>
+          <td>17:20</td>
+          <td>NmkJ</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Telegraph, Marlborough, Racing Post, The North</td>
+          <td>Shipbourne (GB)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Jamestown</td>
+          <td>19:03</td>
+          <td>Leop</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Post, Postdata, myracing.com, Adrian Wall</td>
+          <td>Diego El Queso</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Asmen Warrior</td>
+          <td>17:20</td>
+          <td>NmkJ</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Post, The Punt, Racing TV, Dave Nevison</td>
+          <td>Shipbourne (GB)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. Updated Convergences — new findings from judge sweep -->
+  
+  <!-- ── Updated Convergences (from judge sweep) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title">Updated Convergence Findings</h2>
+    <div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Galiyan</span>
+            <span class="signal-meta">13:50 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">2 sources</span>
+          </div>
+          <div class="signal-sources">Hugh Taylor, SL best bets</div>
+          <div class="signal-notes">Taylor 1pt win 9/1 + ante-post St Leger; smashed 9/1→3/1. Not in NAP table.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Pilu</span>
+            <span class="signal-meta">15:00 Newmarket</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">4 sources</span>
+          </div>
+          <div class="signal-sources">NAP x3, SL Verdict (Linfoot) e.w. 18/1, Value Bet headline 'Pil to pop up at a price' (unverified)</div>
+          <div class="signal-notes">Widest genuine convergence on a big-priced runner today.</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #ca8a04">
+          <div class="signal-header">
+            <span class="signal-horse">Count Bezukhov</span>
+            <span class="signal-meta">14:45 Doncaster</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">2 sources</span>
+          </div>
+          <div class="signal-sources">SL best bets, ATR watch</div>
+          <div class="signal-notes">Model R1 (27.6%). ATR Verdict went Shoof Baeed.</div>
+        </div></div>
+  </section>
+
+  <!-- 4. Expert-vs-Model Conflicts — where to be cautious -->
+  <section class="briefing-section">
+    <h2 class="section-title">Expert-vs-Model Conflicts (6)</h2>
+    <div>
+      
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>5:05 Doncaster</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
+          </div>
+          <div class="conflict-race">Betfred Play Fred's 5 Million Pound Handicap</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Alpha Capture</div>
+            <div><strong>Hugh Taylor:</strong> Return Of The Gods (weighted 3, model rank 2)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>1:50 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
+          </div>
+          <div class="conflict-race">Bahrain Trophy Stakes (Group 3)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Del Maro (GER)</div>
+            <div><strong>Hugh Taylor, SL best bets:</strong> Galiyan (weighted 4, model rank 3)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:00 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
+          </div>
+          <div class="conflict-race">Betway Handicap (Heritage Handicap)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Thunder Call (GB)</div>
+            <div><strong>SL Verdict (Ben Linfoot), NAP: The Guardian, NAP: The Irish Field, Rory Delargy, NAP: Yorkshire Post, The Duke:</strong> Pilu (weighted 4, model rank 8)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:00 Newmarket</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">Betway Handicap (Heritage Handicap)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Thunder Call (GB)</div>
+            <div><strong>ATR Verdict, NAP: East Anglian Daily Times, Dean Kilbryde, NAP: Liverpool Echo, Chris Wright, NAP: Scottish Sun, Jim Delahunt, NAP: Sunday Express:</strong> Red Spells Danger (weighted 5, model rank 7)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>5:20 Newmarket</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
+          </div>
+          <div class="conflict-race">Debenhams Handicap</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Shipbourne (GB)</div>
+            <div><strong>ATR Verdict, NAP: Daily Mail, Robin Goodfellow, NAP: punterslounge.com, The Brigadier:</strong> Spanish Voice (weighted 3, model rank 3)</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>7:03 Leopardstown</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span>
+          </div>
+          <div class="conflict-race">Double First Stables Irish EBF Nasrullah Handicap (Premier Handicap)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Diego El Queso</div>
+            <div><strong>Willie Mullins:</strong> Thread Of Gold (weighted 3, model rank 4)</div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 5. Respected Judges — full breakdown by source (collapsible) -->
+  
+  <!-- ── Respected Judges ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+      Respected Judges <span class="toggle-hint">(tap to expand/collapse)</span>
+    </h2>
+    <div class="collapsible"><div class="judge-card"><div class="judge-name">Hugh Taylor <span class="judge-source">(attheraces.com/tips/atr-tipsters/hugh-taylor)</span></div><div class="judge-spec">UK flat daily tips</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Galiyan</span>
+                  <span class="judge-meta">13:50 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">1pt win (tipped 9/1, now ~3/1 — heavily backed). Also speculative ante-post St Leger play. Expects Murphy to ride prominently; dour stayer angle.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Return Of The Gods</span>
+                  <span class="judge-meta">17:05 Doncaster</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">1pt win (tipped 9/1). Never-nearer 2nd at Nottingham; step to 7f suits.</span>
+                </div></div><div class="judge-card"><div class="judge-name">Willie Mullins <span class="judge-source">(wpmullins.com/race-previews/)</span></div><div class="judge-spec">Trainer — own runners</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Thread Of Gold</span>
+                  <span class="judge-meta">19:03 Leopardstown</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">STABLE CONFIDENCE: "first run in a handicap… longer trip will suit. We're expecting him to go close." NB: drifted 4.33→8.5 in ATR movers — market disagrees with the yard.</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sirius</span>
+                  <span class="judge-meta">20:13 Leopardstown</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">LUKEWARM: "this much quicker ground wouldn't be to his liking… hopefully he'll be competitive." Ground caveat from the yard — treat as a NEGATIVE for ATR's top tip.</span>
+                </div></div><div class="judge-card"><div class="judge-name">Atr Verdict <span class="judge-source">(attheraces.com race-by-race guides (6 UK/IRE courses))</span></div><div class="judge-spec">Per-race verdict</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Del Maro</span>
+                  <span class="judge-meta">13:50 Newmarket</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Point Of Law</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Adaay Of Scarlett</span>
+                  <span class="judge-meta">14:25 Newmarket</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Inner City Blues</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Red Spells Danger</span>
+                  <span class="judge-meta">15:00 Newmarket</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Thunder Call</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Convergent</span>
+                  <span class="judge-meta">15:35 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Rebel's Romance</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Peaceful Charm</span>
+                  <span class="judge-meta">16:10 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Scommessa Sicura</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Morris Dancer</span>
+                  <span class="judge-meta">16:45 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Shayem</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Spanish Voice</span>
+                  <span class="judge-meta">17:20 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: Shipbourne</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Amir Lehbab</span>
+                  <span class="judge-meta">14:10 Doncaster</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: Ottoman Chief</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Shoof Baeed</span>
+                  <span class="judge-meta">14:45 Doncaster</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: Count Bezukhov</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Golden Flame</span>
+                  <span class="judge-meta">15:20 Doncaster</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Tazaman</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Room Fourteen</span>
+                  <span class="judge-meta">15:55 Doncaster</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Domination</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Norcross Brow</span>
+                  <span class="judge-meta">16:30 Doncaster</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Okiru</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Highland Shah</span>
+                  <span class="judge-meta">17:05 Doncaster</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Return Of The Gods</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Lieutenant Sir</span>
+                  <span class="judge-meta">17:40 Doncaster</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Bayraat</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Celestarak</span>
+                  <span class="judge-meta">18:05 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Darkest Red</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Minnal</span>
+                  <span class="judge-meta">18:40 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Eabha</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jersey Maverick</span>
+                  <span class="judge-meta">19:15 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Panelli</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rage Of Thunder</span>
+                  <span class="judge-meta">19:50 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: King Of Chaos</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Play Me</span>
+                  <span class="judge-meta">20:22 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: Swiped</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sail On Sailor</span>
+                  <span class="judge-meta">20:52 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Living In Hope</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Angel Sense</span>
+                  <span class="judge-meta">17:13 Newbury</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Global Success</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sugar Yes Please</span>
+                  <span class="judge-meta">17:45 Newbury</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: My Normandie</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Desert Legend</span>
+                  <span class="judge-meta">18:17 Newbury</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Macau</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Black Endeavour</span>
+                  <span class="judge-meta">18:52 Newbury</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Strike</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Storm Point</span>
+                  <span class="judge-meta">19:27 Newbury</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Nakaaha</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Turtle Reef</span>
+                  <span class="judge-meta">20:02 Newbury</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Magician Of Riga</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">La Peregrina</span>
+                  <span class="judge-meta">20:37 Newbury</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Barrister</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Bella Angelina</span>
+                  <span class="judge-meta">14:00 Carlisle</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Star Of The Desert</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Mohaymenah</span>
+                  <span class="judge-meta">14:35 Carlisle</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Pequenita</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ottoman</span>
+                  <span class="judge-meta">15:10 Carlisle</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Is She Now</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Instant Bond</span>
+                  <span class="judge-meta">15:45 Carlisle</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Miss Rainbow</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Cotai Belle</span>
+                  <span class="judge-meta">16:20 Carlisle</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: D Flawless</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Homestrait</span>
+                  <span class="judge-meta">16:55 Carlisle</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Supreme Clarets</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Maire Rua</span>
+                  <span class="judge-meta">16:50 Leopardstown</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: Margot Mae</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Dark Leader</span>
+                  <span class="judge-meta">17:25 Leopardstown</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Zenford</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Phenomenal Filly</span>
+                  <span class="judge-meta">17:55 Leopardstown</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Fingerpaint</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Liberate</span>
+                  <span class="judge-meta">18:28 Leopardstown</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">watch: Zaraahmando</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Harana</span>
+                  <span class="judge-meta">19:03 Leopardstown</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">watch: Jamestown</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Yquem</span>
+                  <span class="judge-meta">19:38 Leopardstown</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">watch: Nibras Rainbow</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sirius</span>
+                  <span class="judge-meta">20:13 Leopardstown</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">watch: Delta</span>
+                </div></div><div class="judge-card"><div class="judge-name">Atr Expert View <span class="judge-source">(attheraces.com race-by-race guides)</span></div><div class="judge-spec">Per-race expert analysis</div><div class="judge-status">Guides carried a single combined Expert View/Verdict block today — no separately attributable Expert View pick; Top Tips recorded under ATR Verdict, 'watch out for' horses kept in its notes.</div></div><div class="judge-card"><div class="judge-name">Sl Verdict (Ben Linfoot) <span class="judge-source">(sportinglife.com — The Verdict)</span></div><div class="judge-spec">Major UK/IRE racedays</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sea Cookie</span>
+                  <span class="judge-meta">15:00 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">1pt win 8/1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Pilu</span>
+                  <span class="judge-meta">15:00 Newmarket</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">1pt e.w. 18/1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Almeric</span>
+                  <span class="judge-meta">15:35 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">1pt win 7/1 — taking on Rebel's Romance</span>
+                </div></div><div class="judge-card"><div class="judge-name">Sl Best Bets <span class="judge-source">(sportinglife.com — NAP of the day/best bets)</span></div><div class="judge-spec">Daily around the tracks</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Strike</span>
+                  <span class="judge-meta">18:52 Newbury</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">SL NAP — quick ground key, Tubb back on</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Galiyan</span>
+                  <span class="judge-meta">13:50 Newmarket</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Count Bezukhov</span>
+                  <span class="judge-meta">14:45 Doncaster</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rogue Attraction</span>
+                  <span class="judge-meta">16:20 Carlisle</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Zurna</span>
+                  <span class="judge-meta">18:05 Epsom Downs</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Rp Naps Table <span class="judge-source">(racingpost.com/horse-racing-tips/naps-table/ (via rp_naps, 60 naps))</span></div><div class="judge-spec">Paper-nap convergence</div><div class="judge-status">60 naps loaded from DB; 12 horses with 2+ papers — see nap_convergence</div></div><div class="judge-card"><div class="judge-name">Laurent Barbarin <span class="judge-source">(attheraces.com/tips/atr-tipsters/laurent-barbarin)</span></div><div class="judge-spec">French racing</div><div class="judge-status">No column today — latest is Sunday 5 July (Saint-Cloud). Scraper stored __NO_TIPS__ for 2026-07-09.</div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(sportinglife.com)</span></div><div class="judge-spec">Irish racing</div><div class="judge-status">No article found for 2026-07-09 (latest sportinglife pieces cover Cork/Fairyhouse earlier in July). Unavailable today despite Leopardstown card.</div></div><div class="judge-card"><div class="judge-name">Ruby Walsh <span class="judge-source">(news.paddypower.com/author/ruby-walsh/)</span></div><div class="judge-spec">NH + big flat days</div><div class="judge-status">No Thursday column — writes Saturday ITV fancies (latest 4 July). Unavailable today.</div></div><div class="judge-card"><div class="judge-name">Tom Collins (Tipping Tom) <span class="judge-source">(X / ITV / ATR)</span></div><div class="judge-spec">GB/IRE NH & flat</div><div class="judge-status">No web-accessible tips found for today; tips via X (@Tomptin)/broadcast only.</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Nick Luck Daily Podcast)</span></div><div class="judge-spec">Analysis</div><div class="judge-status">Daily podcast presumed published; no transcript accessible from sandbox.</div></div><div class="judge-card"><div class="judge-name">Paul Kealy <span class="judge-source">(racingpost.com)</span></div><div class="judge-spec">UK expert</div><div class="judge-status">Paywalled (RP+). No 9 July headline found in search.</div></div><div class="judge-card"><div class="judge-name">Tom Segal (Pricewise) <span class="judge-source">(racingpost.com)</span></div><div class="judge-spec">Value betting</div><div class="judge-status">Paywalled (RP+). Headlines: 'Charlie Appleby could win all four ITV races at Newmarket — spotted the best value one' + Pricewise Extra: improving Newmarket sprinter 'will be hard to catch'. Selections unknown.</div></div><div class="judge-card"><div class="judge-name">Johnny Dineen <span class="judge-source">(racingpost.com)</span></div><div class="judge-spec">Irish expert</div><div class="judge-status">Paywalled (RP+). Nothing surfaced for today.</div></div><div class="judge-card"><div class="judge-name">Dan Skelton <span class="judge-source">(ladbrokes.com)</span></div><div class="judge-spec">Own runners (NH)</div><div class="judge-status">No current blog (latest = March Cheltenham). All-flat card today — N/A for NH yard.</div></div><div class="judge-card"><div class="judge-name">Gavin Lynch <span class="judge-source">(gavinlynchracing.com)</span></div><div class="judge-spec">Irish NH</div><div class="judge-status">Irish NH specialist, Sep–Mar season — inactive on an all-flat July card.</div></div><div class="judge-card"><div class="judge-name">Matt Brocklebank (Value Bet) <span class="judge-source">(sportinglife.com)</span></div><div class="judge-spec">Value column</div><div class="judge-status">Paywalled (SL Plus). Headline 'Pil to pop up at a price' strongly suggests Pilu 15:00 Newmarket — NOT counted in convergence (unverified).</div></div></div>
+  </section>
+
+  <!-- 6. Trainer Intelligence — insider quotes -->
+  <section class="briefing-section">
+    <h2 class="section-title">Trainer Intelligence</h2>
+    <div>
+      
+            <div class="trainer-card">
+              <div class="trainer-name">Willie Mullins —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-name">Willie Mullins —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+    </div>
+  </section>
+
+  <!-- 7. Blind Spots — where model has least confidence -->
+  <section class="briefing-section">
+    <h2 class="section-title">Blind Spot Alerts</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
+      <div class="blind-category"><strong>  — :</strong> </div>
+    </div>
+  </section>
+
+  <!-- 7b. Skip Races — red-themed no-bet list (if present) -->
+  
+  <!-- ── Skip Races (No Bet) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" style="background:#7f1d1d;border-color:#991b1b;color:#fca5a5">Races to Skip (No Bet)</h2>
+    <div>
+      
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">5:05 Doncaster</span>
+            <span class="skip-race">Betfred Play Fred's 5 Million Pound Handicap</span>
+          </div>
+          <div class="skip-reason">3 expert sources all on different horses and model R1 (Alpha Capture) only 19%</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">6:17 Newbury</span>
+            <span class="skip-race">Juddmonte EBF Restricted Novice Stakes (GBB Race)</span>
+          </div>
+          <div class="skip-reason">19-runner handicap with no model+expert convergence on any runner</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 8. Full Text — raw briefing for reference (collapsed by default) -->
+  
+    <section class="briefing-section">
+      <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+        Full Text Briefing <span class="toggle-hint">(tap to expand/collapse)</span>
+      </h2>
+      <div class="collapsible collapsed">
+        <pre class="full-text">INTELLIGENCE BRIEFING — 2026-07-09 (generated 2026-07-09T10:37:11)
+======================================================================
+All-flat card — Newmarket July Festival day 1 is the headline meeting. No NH racing today.
+Venues: Carlisle, Doncaster, Epsom Downs, Leopardstown, Newbury, Newmarket, ParisLongchamp — 48 races, ALL FLAT (no NH section today)
+
+STRONGEST SIGNALS (FLAT)
+----------------------------------------------------------------------
+[Tier 3] Red Spells Danger — 3:00 Newmarket | model R7 p=0.073 fair=13.64 mkt=9.0 edge=-0.34  | weighted 5 (5 sources)
+   sources: ATR Verdict, NAP: East Anglian Daily Times, Dean Kilbryde, NAP: Liverpool Echo, Chris Wright, NAP: Scottish Sun, Jim Delahunt, NAP: Sunday Express
+[Tier 2] Shipbourne — 5:20 Newmarket | model R1 p=0.142 fair=7.03 mkt=3.75 edge=-0.467  | weighted 4 (4 sources)
+   sources: NAP: Sunday Mail, Rockavon, NAP: The Favourite, The Judge, NAP: The Times, Rob Wright, NAP: Yorkshire Evening Post, Lee Sobot
+[Tier 3] Galiyan — 1:50 Newmarket | model R3 p=0.165 fair=6.07 mkt=4.33 edge=-0.287  | weighted 4 (2 sources)
+   sources: Hugh Taylor, SL best bets
+[Tier 3] Pilu — 3:00 Newmarket | model R8 p=0.072 fair=13.91 mkt=10.0 edge=-0.281  | weighted 4 (4 sources)
+   sources: SL Verdict (Ben Linfoot), NAP: The Guardian, NAP: The Irish Field, Rory Delargy, NAP: Yorkshire Post, The Duke
+[Tier 3] Inner City Blues — 2:25 Newmarket | model R2 p=0.34 fair=2.94 mkt=1.91 edge=-0.35  | weighted 4 (4 sources)
+   sources: NAP: Races Now, Stephen Darbyshire, NAP: Weekender, Sam Hardy, NAP: William Hill Racing, Steve Mullington, NAP: bettinggods.com
+[Tier 2] Instant Bond — 3:45 Carlisle | model R1 p=0.272 fair=3.68 mkt=3.0 edge=-0.185  | weighted 3 (3 sources)
+   sources: ATR Verdict, NAP: Daily Mirror, Newsboy, NAP: Irish Herald, Ian Gaughran
+[Tier 2] Rebel's Romance — 3:35 Newmarket | model R1 p=0.579 fair=1.73 mkt=1.91 edge=0.104 VALUE | weighted 3 (3 sources)
+   sources: NAP: Jersey Evening Post, Rory Paddock, NAP: The Scotsman, Glendale, NAP: attheraces.com, Ratings Hub
+[Tier 3] Spanish Voice — 5:20 Newmarket | model R3 p=0.112 fair=8.92 mkt=7.0 edge=-0.215  | weighted 3 (3 sources)
+   sources: ATR Verdict, NAP: Daily Mail, Robin Goodfellow, NAP: punterslounge.com, The Brigadier
+[Tier 3] Calico Blue — 3:00 Newmarket | model R2 p=0.098 fair=10.21 mkt=8.0 edge=-0.216  | weighted 3 (3 sources)
+   sources: NAP: Daily Post, Mercury, NAP: Sheffield Star, Fortunatus, NAP: The Sun, Templegate
+[Tier 3] Sea Cookie — 3:00 Newmarket | model R3 p=0.094 fair=10.63 mkt=15.0 edge=0.411 VALUE | weighted 2 (2 sources)
+   sources: SL Verdict (Ben Linfoot), NAP: Daily Record, Garry Owen
+[Tier 3] Strike — 6:52 Newbury | model R1 p=0.184 fair=5.43 mkt=5.0 edge=-0.079  | weighted 2 (2 sources)
+   sources: SL best bets, NAP: Morning Star, Farringdon
+[Tier 3] Morris Dancer — 4:45 Newmarket | model R2 p=0.273 fair=3.67 mkt=2.38 edge=-0.351  | weighted 2 (2 sources)
+   sources: ATR Verdict, NAP: Racing Post, Spotlight
+[Tier 3] Golden Flame — 3:20 Doncaster | model R2 p=0.238 fair=4.19 mkt=2.88 edge=-0.313  | weighted 2 (2 sources)
+   sources: ATR Verdict, NAP: racing-daily.com
+[Tier 3] Room Fourteen — 3:55 Doncaster | model R1 p=0.354 fair=2.82 mkt=1.73 edge=-0.387  | weighted 2 (2 sources)
+   sources: ATR Verdict, NAP: D Express, Melissa Jones
+[Tier 3] Sail On Sailor — 8:52 Epsom Downs | model R1 p=0.257 fair=3.88 mkt=3.25 edge=-0.162  | weighted 2 (2 sources)
+   sources: ATR Verdict, NAP: Daily Star Sunday, Moorestyle
+[Tier 3] Storm Point — 7:27 Newbury | model R2 p=0.159 fair=6.31 mkt=4.33 edge=-0.314  | weighted 2 (2 sources)
+   sources: ATR Verdict, NAP: The Star, Jason Heavey
+[Tier 3] Phenomenal Filly — 5:55 Leopardstown | model R1 p=0.381 fair=2.62 mkt=2.88 edge=0.099 VALUE | weighted 2 (2 sources)
+   sources: ATR Verdict, NAP: Irish Daily Star, Brian Flanagan
+[Tier 3] Lion Of Alba — 5:20 Newmarket | model R2 p=0.112 fair=8.91 mkt=4.5 edge=-0.495  | weighted 2 (2 sources)
+   sources: NAP: Daily Telegraph, Marlborough, NAP: Racing Post, The North
+[Tier 3] Jamestown — 7:03 Leopardstown | model R2 p=0.122 fair=8.18 mkt=3.75 edge=-0.542  | weighted 2 (2 sources)
+   sources: NAP: Racing Post, Postdata, NAP: myracing.com, Adrian Wall
+[Tier 3] Asmen Warrior — 5:20 Newmarket | model R4 p=0.085 fair=11.77 mkt=6.5 edge=-0.448  | weighted 2 (2 sources)
+   sources: NAP: Racing Post, The Punt, NAP: Racing TV, Dave Nevison
+
+NAP CONVERGENCE (RP naps table, 60 naps)
+----------------------------------------------------------------------
+Inner City Blues — 14:25 NmkJ — 4 papers | model R1: Adaay Of Scarlett
+Shipbourne — 17:20 NmkJ — 4 papers | MODEL AGREES (R1)
+Red Spells Danger — 15:00 NmkJ — 4 papers | model R1: Thunder Call (GB)
+Rebel's Romance — 15:35 NmkJ — 3 papers | MODEL AGREES (R1)
+Pilu — 15:00 NmkJ — 3 papers | model R1: Thunder Call (GB)
+Calico Blue — 15:00 NmkJ — 3 papers | model R1: Thunder Call (GB)
+Strike — 18:52 Newb — 2 papers | MODEL AGREES (R1)
+Instant Bond — 15:45 Carl — 2 papers | MODEL AGREES (R1)
+Spanish Voice — 17:20 NmkJ — 2 papers | model R1: Shipbourne (GB)
+Lion Of Alba — 17:20 NmkJ — 2 papers | model R1: Shipbourne (GB)
+Jamestown — 19:03 Leop — 2 papers | model R1: Diego El Queso
+Asmen Warrior — 17:20 NmkJ — 2 papers | model R1: Shipbourne (GB)
+
+EXPERT vs MODEL CONFLICTS
+----------------------------------------------------------------------
+5:05 Doncaster (moderate): model R1 Alpha Capture (0.195) vs Return Of The Gods (weighted 3, model rank 2) [Hugh Taylor]
+1:50 Newmarket (moderate): model R1 Del Maro (GER) (0.469) vs Galiyan (weighted 4, model rank 3) [Hugh Taylor, SL best bets]
+3:00 Newmarket (moderate): model R1 Thunder Call (GB) (0.151) vs Pilu (weighted 4, model rank 8) [SL Verdict (Ben Linfoot), NAP: The Guardian, NAP: The Irish Field, Rory Delargy, NAP: Yorkshire Post, The Duke]
+3:00 Newmarket (high): model R1 Thunder Call (GB) (0.151) vs Red Spells Danger (weighted 5, model rank 7) [ATR Verdict, NAP: East Anglian Daily Times, Dean Kilbryde, NAP: Liverpool Echo, Chris Wright, NAP: Scottish Sun, Jim Delahunt, NAP: Sunday Express]
+5:20 Newmarket (moderate): model R1 Shipbourne (GB) (0.142) vs Spanish Voice (weighted 3, model rank 3) [ATR Verdict, NAP: Daily Mail, Robin Goodfellow, NAP: punterslounge.com, The Brigadier]
+7:03 Leopardstown (moderate): model R1 Diego El Queso (0.228) vs Thread Of Gold (weighted 3, model rank 4) [Willie Mullins]
+
+TRAINER INTELLIGENCE
+----------------------------------------------------------------------
+Willie Mullins — Thread Of Gold (19:03 Leopardstown): "First run in a handicap… should come on for Listowel run, longer trip will suit. We're expecting him to go close."
+   &gt;&gt; Strong yard confidence BUT drifted 4.33→8.5 (ATR movers) — market disagrees. Race also has Jamestown (2 NAPs) and model R1 Diego El Queso.
+Willie Mullins — Sirius (20:13 Leopardstown): "Much quicker ground wouldn't be to his liking… hopefully he'll be competitive."
+   &gt;&gt; NEGATIVE signal: ATR Verdict top-tipped Sirius but the yard flags the ground. Model R1 Delta (28.9%) a whisker ahead of Sirius (27.9%) — ground caveat tips the balance to Delta.
+
+SKIP LIST
+----------------------------------------------------------------------
+5:05 Doncaster — Betfred Play Fred's 5 Million Pound Handicap: 3 expert sources all on different horses and model R1 (Alpha Capture) only 19%
+6:17 Newbury — Juddmonte EBF Restricted Novice Stakes (GBB Race): 19-runner handicap with no model+expert convergence on any runner
+
+JUDGES CHECKED
+----------------------------------------------------------------------
+Hugh Taylor [w3]: Galiyan (13:50 Newm, model R3), Return Of The Gods (17:05 Donc, model R2)
+Willie Mullins [w3]: Thread Of Gold (19:03 Leop, model R4), Sirius (20:13 Leop, model R2)
+ATR Verdict [w1]: Del Maro (13:50 Newm, model R1), Adaay Of Scarlett (14:25 Newm, model R1), Red Spells Danger (15:00 Newm, model R7), Convergent (15:35 Newm, model R2), Peaceful Charm (16:10 Newm, model R2), Morris Dancer (16:45 Newm, model R2), Spanish Voice (17:20 Newm, model R3), Amir Lehbab (14:10 Donc, model R3) (+32 more)
+ATR Expert View: Guides carried a single combined Expert View/Verdict block today — no separately attributable Expert View pick; Top Tips recorded under ATR Verdict, 'watch out for' horses kept in its notes.
+SL Verdict (Ben Linfoot) [w1]: Sea Cookie (15:00 Newm, model R3), Pilu (15:00 Newm, model R8), Almeric (15:35 Newm, model R3)
+SL best bets [w1]: Strike (18:52 Newb, model R1), Galiyan (13:50 Newm, model R3), Count Bezukhov (14:45 Donc, model R1), Rogue Attraction (16:20 Carl, model R4), Zurna (18:05 Epso, model R2)
+RP NAPs Table: 60 naps loaded from DB; 12 horses with 2+ papers — see nap_convergence
+Laurent Barbarin: No column today — latest is Sunday 5 July (Saint-Cloud). Scraper stored __NO_TIPS__ for 2026-07-09.
+Tony Keenan: No article found for 2026-07-09 (latest sportinglife pieces cover Cork/Fairyhouse earlier in July). Unavailable today despite Leopardstown card.
+Ruby Walsh: No Thursday column — writes Saturday ITV fancies (latest 4 July). Unavailable today.
+Tom Collins (Tipping Tom): No web-accessible tips found for today; tips via X (@Tomptin)/broadcast only.
+Nick Luck: Daily podcast presumed published; no transcript accessible from sandbox.
+Paul Kealy: Paywalled (RP+). No 9 July headline found in search.
+Tom Segal (Pricewise): Paywalled (RP+). Headlines: 'Charlie Appleby could win all four ITV races at Newmarket — spotted the best value one' + Pricewise Extra: improving Newmarket sprinter 'will be hard to catch'. Selections unknown.
+Johnny Dineen: Paywalled (RP+). Nothing surfaced for today.
+Dan Skelton: No current blog (latest = March Cheltenham). All-flat card today — N/A for NH yard.
+Gavin Lynch: Irish NH specialist, Sep–Mar season — inactive on an all-flat July card.
+Matt Brocklebank (Value Bet): Paywalled (SL Plus). Headline 'Pil to pop up at a price' strongly suggests Pilu 15:00 Newmarket — NOT counted in convergence (unverified).
+
+BLIND SPOTS / CAVEATS
+----------------------------------------------------------------------
+intelligence_report_latest.json stale (2026-04-13); blindness metrics unavailable this run. ParisLongchamp (8 races) has zero expert coverage today (no Barbarin column, no ATR guide) — model-only territory, and FG-only runners carry known neutral-factor gaps (#40): treat French prices with extra caution.
+
+MARKET MOVERS (&gt;=100% drift or any steamer)
+----------------------------------------------------------------------
+DRIFTER: Sterling Knight 17:20 Newmarket 12.0→41.0 (+264%)
+DRIFTER: Priapos 17:20 Newmarket 9.5→29.0 (+229%)
+DRIFTER: Nevermindtherain 16:50 Leopardstown 3.25→7.5 (+189%)
+DRIFTER: Creative Queen 16:20 Carlisle 4.0→9.5 (+183%)
+DRIFTER: King Of Chaos 19:50 Epsom Downs 6.0→15.0 (+180%)
+DRIFTER: Magician of Riga 20:02 Newbury 7.0→17.0 (+167%)
+DRIFTER: Ottoman 15:10 Carlisle 3.75→8.0 (+155%)
+DRIFTER: Signcastle City 19:27 Newbury 7.5→17.0 (+146%)
+DRIFTER: Okiru 16:30 Doncaster 5.5→12.0 (+144%)
+DRIFTER: Final Night 17:20 Newmarket 10.0→23.0 (+144%)
+DRIFTER: Kakirra 20:37 Newbury 3.5→7.0 (+140%)
+DRIFTER: Balon D'or 19:50 Epsom Downs 9.5→21.0 (+135%)</pre>
+      </div>
+    </section>
+
+</main>
+
+</body>
+</html>
