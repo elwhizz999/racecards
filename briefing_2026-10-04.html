@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Intelligence Briefing — 2026-10-04</title>
+  <style>
+    :root {
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; }
+    header h1 { font-size: 1.15rem; color: var(--accent); }
+    header .sub { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+    main { padding: 16px; max-width: 900px; margin: 0 auto; }
+
+    .summary-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .summary-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; }
+    .summary-chip strong { color: var(--accent); }
+
+    .briefing-section { margin-bottom: 24px; }
+    .section-title { font-size: 1rem; color: var(--accent); padding: 10px 16px; background: var(--surface);
+                       border: 1px solid var(--border); border-radius: 8px 8px 0 0; cursor: pointer; user-select: none; }
+    .section-title .toggle-hint { color: var(--muted); font-size: 0.75rem; font-weight: 400; }
+
+    .collapsible { transition: max-height 0.3s ease; overflow: hidden; }
+    .collapsible.collapsed { max-height: 0 !important; }
+
+    /* ── Signals ── */
+    .signal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                     padding: 14px 16px; margin-bottom: 10px; }
+    .signal-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .signal-horse { font-size: 1.05rem; font-weight: 700; color: #f0f6fc; }
+    .signal-meta { color: var(--muted); font-size: 0.82rem; }
+    .sig-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .signal-stats { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+    .signal-sources { font-size: 0.78rem; color: #93c5fd; }
+    .signal-notes { font-size: 0.8rem; color: #c4b5fd; margin-top: 4px; font-style: italic; }
+
+    /* ── Convergence cards ── */
+    .convergence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                          padding: 12px 16px; margin-bottom: 10px; }
+
+    /* ── NAP Table ── */
+    .nap-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
+                        border-radius: 0 0 8px 8px; }
+    .nap-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .nap-table th { padding: 8px 10px; text-align: left; color: var(--muted); font-weight: 600;
+                      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+                      background: #0f172a; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .nap-table td { padding: 8px 10px; border-bottom: 1px solid #1e293b; }
+    .nap-table tr:last-child td { border-bottom: none; }
+    .nap-table tr:hover td { background: rgba(56,189,248,0.04); }
+    .nap-table .horse-name { font-weight: 700; color: #f0f6fc; white-space: nowrap; }
+    .nap-table .nap-count { font-weight: 700; font-size: 1rem; color: var(--accent); text-align: center; }
+    .nap-table .tipsters { font-size: 0.75rem; color: var(--muted); max-width: 220px; }
+
+    /* ── Conflicts ── */
+    .conflict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                       padding: 12px 16px; margin-bottom: 10px; }
+    .conflict-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-weight: 600; }
+    .conflict-race { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
+    .conflict-detail { font-size: 0.82rem; line-height: 1.7; }
+    .conflict-detail strong { color: var(--accent); }
+
+    /* ── Judges ── */
+    .judge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                    padding: 12px 16px; margin-bottom: 10px; }
+    .judge-name { font-weight: 700; color: #f0f6fc; font-size: 0.95rem; }
+    .judge-source { color: var(--muted); font-weight: 400; font-size: 0.82rem; }
+    .judge-spec { color: var(--accent); font-size: 0.78rem; margin-bottom: 6px; }
+    .judge-status { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 4px; }
+    .judge-pick { font-size: 0.82rem; margin-top: 3px; line-height: 1.5; }
+    .judge-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.82rem;
+                         padding: 4px 0; border-bottom: 1px solid rgba(51,65,85,0.5); }
+    .judge-selection:last-child { border-bottom: none; }
+    .judge-horse { font-weight: 700; color: #f0f6fc; }
+    .judge-meta { color: var(--muted); font-size: 0.78rem; }
+    .judge-notes { color: #c4b5fd; font-size: 0.78rem; font-style: italic; }
+
+    /* ── Trainer intel ── */
+    .trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+                      padding: 12px 16px; margin-bottom: 10px; }
+    .trainer-name { font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .quote-item { font-size: 0.82rem; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
+    .quote-item strong { color: #f0f6fc; }
+
+    /* ── Skip races (no bet) ── */
+    .skip-card { background: var(--surface); border-left: 3px solid #dc2626; border: 1px solid var(--border);
+                  border-left: 3px solid #dc2626; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+    .skip-header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .skip-meta { color: var(--muted); font-size: 0.82rem; }
+    .skip-race { font-weight: 700; color: #fecaca; font-size: 0.95rem; }
+    .skip-reason { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+    /* ── Confidence tier badges ── */
+    .tier-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+    .tier-1 { background: #f59e0b; color: #fff; }
+    .tier-2 { background: #94a3b8; color: #fff; }
+    .tier-3 { background: #6b7280; color: #fff; }
+
+    /* ── Judge accuracy ── */
+    .judge-accuracy { color: #93c5fd; font-size: 0.75rem; margin-top: 2px; }
+
+    /* ── Blind spots ── */
+    .blind-category { font-size: 0.82rem; margin-bottom: 6px; }
+    .blind-category ul { margin-left: 16px; color: var(--muted); }
+    .blind-category li { margin-bottom: 2px; }
+
+    /* ── Full text ── */
+    .full-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.72rem; line-height: 1.5;
+                   color: var(--muted); white-space: pre-wrap; word-break: break-word; padding: 12px 16px;
+                   background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      main { padding: 10px; }
+      .signal-card, .conflict-card, .trainer-card, .judge-card, .convergence-card, .skip-card { padding: 10px 12px; }
+      .nap-table { font-size: 0.75rem; }
+      .nap-table th, .nap-table td { padding: 6px 6px; }
+      .judge-selection { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .signal-header, .skip-header, .conflict-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<script>
+(function() {
+  var h = "9b36ddb03d0b4853ee17397a239ca4149aa6f2f3dc2fdaf4279691046db994ad";
+  if (localStorage.getItem("rc_auth") === h) return;
+  document.body.style.display = "none";
+  var p = prompt("Password:");
+  if (p) {
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(p)).then(function(buf) {
+      var hex = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+      if (hex === h) {
+        localStorage.setItem("rc_auth", h);
+        document.body.style.display = "";
+      } else {
+        document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Wrong password</h1>";
+        document.body.style.display = "";
+      }
+    });
+  } else {
+    document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Password required</h1>";
+    document.body.style.display = "";
+  }
+})();
+</script>
+
+<header>
+  <h1>Intelligence Briefing</h1>
+  <div class="sub">2026-10-04 · 39 races · NH: 21 · Flat: 18</div>
+</header>
+
+<main>
+
+  <div class="summary-bar">
+    <div class="summary-chip"><strong>NH:</strong> </div>
+    <div class="summary-chip"><strong>Flat:</strong> </div>
+    
+  </div>
+
+  <!-- 1. Strongest Signals — the most actionable info, always first -->
+  <section class="briefing-section">
+    <h2 class="section-title">Strongest Signals (42)</h2>
+    <div>
+      
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Loughrea (IRE)</span>
+            <span class="signal-meta">2:30 Curragh</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-1">TIER 1</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 29.0%</span>
+            <span>Model: 3.45</span>
+            <span>Market: 4.00</span><span style="color:#10b981">Value: 1.16×</span>
+            <span>Sources: 5w (5 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, Mark Milligan (Betfair), RP NAPs x2</div>
+          <div class="signal-notes">model R1 p=29%; weighted conv 5 (all sources weight 1 today — no weight-3 judge available) PRICE CAVEAT: market_odds is an article-quoted price (3 Oct), not live gg — verify before acting.</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Tuppence</span>
+            <span class="signal-meta">2:55 Kelso</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 65.8%</span>
+            <span>Model: 1.52</span>
+            <span>Market: 1.53</span><span style="color:#9ca3af">Value: 1.01×</span>
+            <span>Sources: 5w (5 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, Timeform (via Paddy Power), RP NAPs x2</div>
+          <div class="signal-notes">model R1 p=66%; weighted conv 5 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Daryz (FR)</span>
+            <span class="signal-meta">16:05 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 14.5%</span>
+            <span>Model: 6.9</span>
+            <span>Market: 2.80</span><span style="color:#ef4444">Value: 0.41×</span>
+            <span>Sources: 4w (4 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Charlie McCann (FreeBets.com), Jason Weaver (ITV), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">model R1 p=14%; weighted conv 4 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Pirate Anne Bonny</span>
+            <span class="signal-meta">1:20 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 21.6%</span>
+            <span>Model: 4.63</span>
+            <span>Market: 2.20</span><span style="color:#ef4444">Value: 0.48×</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, RP NAPs x1</div>
+          <div class="signal-notes">model R1 p=22%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Breaking Cover (IRE)</span>
+            <span class="signal-meta">3:30 Kelso</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 45.4%</span>
+            <span>Model: 2.2</span>
+            
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs x2</div>
+          <div class="signal-notes">model R1 p=45%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Samangan</span>
+            <span class="signal-meta">17:25 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 29.0%</span>
+            <span>Model: 3.45</span>
+            <span>Market: 2.20</span><span style="color:#ef4444">Value: 0.64×</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Alan Marron (Barone Racing), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">model R1 p=29%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Country Mile (IRE)</span>
+            <span class="signal-meta">12:51 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-2">TIER 2</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 73.3%</span>
+            <span>Model: 1.36</span>
+            
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs x2</div>
+          <div class="signal-notes">model R1 p=73%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Ice Jet</span>
+            <span class="signal-meta">3:30 Kelso</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 8.8%</span>
+            <span>Model: 11.41</span>
+            <span>Market: 3.00</span><span style="color:#ef4444">Value: 0.26×</span>
+            <span>Sources: 6w (6 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, Charlie McCann (FreeBets.com), Timeform (via Paddy Power), RP NAPs x3</div>
+          <div class="signal-notes">model R4 p=9%; weighted conv 6 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Avec Toi (USA)</span>
+            <span class="signal-meta">14:09 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">STRONG</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 17.6%</span>
+            <span>Model: 5.69</span>
+            <span>Market: 2.00</span><span style="color:#ef4444">Value: 0.35×</span>
+            <span>Sources: 5w (5 sources)</span>
+          </div>
+          <div class="signal-sources">Alan Marron (Barone Racing), Andy Clark (ITV), Jason Weaver (ITV), Mark Milligan (Betfair), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">model R2 p=18%; weighted conv 5 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Current Edition</span>
+            <span class="signal-meta">2:36 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 18.0%</span>
+            <span>Model: 5.57</span>
+            <span>Market: 4.00</span><span style="color:#ef4444">Value: 0.72×</span>
+            <span>Sources: 4w (4 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x4</div>
+          <div class="signal-notes">model R2 p=18%; weighted conv 4 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Green Empress</span>
+            <span class="signal-meta">13:31 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 11.2%</span>
+            <span>Model: 8.92</span>
+            <span>Market: 6.40</span><span style="color:#ef4444">Value: 0.72×</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Alan Marron (Barone Racing), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">model R3 p=11%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Governors Rock (IRE)</span>
+            <span class="signal-meta">2:01 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 13.2%</span>
+            <span>Model: 7.56</span>
+            
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, RP NAPs x1</div>
+          <div class="signal-notes">model R3 p=13%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Carla Ridge (IRE)</span>
+            <span class="signal-meta">3:40 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 9.2%</span>
+            <span>Model: 10.82</span>
+            
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs x2</div>
+          <div class="signal-notes">model R4 p=9%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Thundering On (GB)</span>
+            <span class="signal-meta">16:05 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R5</span>
+            <span>Prob: 6.7%</span>
+            <span>Model: 14.92</span>
+            <span>Market: 16.00</span><span style="color:#9ca3af">Value: 1.07×</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">Alan Marron (Barone Racing), Racing Post Spotlight (Steve Boow), Sporting Life (Asquith/Dudman)</div>
+          <div class="signal-notes">model R5 p=7%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Prettylady</span>
+            <span class="signal-meta">3:45 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R5</span>
+            <span>Prob: 10.1%</span>
+            <span>Model: 9.89</span>
+            <span>Market: 9.00</span><span style="color:#ef4444">Value: 0.91×</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, RP NAPs x1</div>
+          <div class="signal-notes">model R5 p=10%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Rumstar (GB)</span>
+            <span class="signal-meta">14:47 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MODERATE</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R8</span>
+            <span>Prob: 5.2%</span>
+            <span>Model: 19.13</span>
+            <span>Market: 12.00</span><span style="color:#ef4444">Value: 0.63×</span>
+            <span>Sources: 3w (3 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Alan Marron (Barone Racing), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">model R8 p=5%; weighted conv 3 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Fine Thing</span>
+            <span class="signal-meta">1:45 Kelso</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 52.6%</span>
+            <span>Model: 1.9</span>
+            <span>Market: 2.25</span><span style="color:#10b981">Value: 1.18×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R1 p=53%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Ballynoe Boy (IRE)</span>
+            <span class="signal-meta">2:20 Kelso</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 53.2%</span>
+            <span>Model: 1.88</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, TipMan Tips</div>
+          <div class="signal-notes">model R1 p=53%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Fairlawn Skipper (GB)</span>
+            <span class="signal-meta">4:05 Kelso</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 50.9%</span>
+            <span>Model: 1.97</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Timeform (via Paddy Power)</div>
+          <div class="signal-notes">model R1 p=51%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Luminaries (IRE)</span>
+            <span class="signal-meta">4:40 Kelso</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 63.3%</span>
+            <span>Model: 1.58</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R1 p=63%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Sytadel</span>
+            <span class="signal-meta">2:36 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 39.6%</span>
+            <span>Model: 2.52</span>
+            <span>Market: 2.50</span><span style="color:#ef4444">Value: 0.99×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R1 p=40%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Holy Legend</span>
+            <span class="signal-meta">4:20 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R1</span>
+            <span>Prob: 31.2%</span>
+            <span>Model: 3.21</span>
+            <span>Market: 4.50</span><span style="color:#10b981">Value: 1.40×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R1 p=31%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Chattering Classes</span>
+            <span class="signal-meta">1:20 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span> <span class="sig-badge" style="background:#10b981;color:#fff">VALUE</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 14.3%</span>
+            <span>Model: 7.0</span>
+            <span>Market: 9.00</span><span style="color:#10b981">Value: 1.29×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R2 p=14%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">King Cuan</span>
+            <span class="signal-meta">2:30 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 17.8%</span>
+            <span>Model: 5.61</span>
+            <span>Market: 4.00</span><span style="color:#ef4444">Value: 0.71×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R2 p=18%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Upfordebate</span>
+            <span class="signal-meta">4:05 Kelso</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 24.3%</span>
+            <span>Model: 4.12</span>
+            <span>Market: 2.75</span><span style="color:#ef4444">Value: 0.67×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, TipMan Tips</div>
+          <div class="signal-notes">model R2 p=24%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Kilbrin Rocco</span>
+            <span class="signal-meta">3:55 Killarney</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 19.8%</span>
+            <span>Model: 5.06</span>
+            <span>Market: 4.33</span><span style="color:#ef4444">Value: 0.86×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs x1</div>
+          <div class="signal-notes">model R2 p=20%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Gentle Ocean</span>
+            <span class="signal-meta">1:26 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 22.5%</span>
+            <span>Model: 4.44</span>
+            <span>Market: 2.88</span><span style="color:#ef4444">Value: 0.65×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, TipMan Tips</div>
+          <div class="signal-notes">model R2 p=23%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Ernest Gray</span>
+            <span class="signal-meta">3:15 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R2</span>
+            <span>Prob: 28.5%</span>
+            <span>Model: 3.51</span>
+            <span>Market: 3.50</span><span style="color:#ef4444">Value: 1.00×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs x1</div>
+          <div class="signal-notes">model R2 p=28%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Colin's Friend (IRE)</span>
+            <span class="signal-meta">2:10 Killarney</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 9.8%</span>
+            <span>Model: 10.22</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R3 p=10%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Hm Alchahine M.Ar. 6 A. (FR)</span>
+            <span class="signal-meta">15:25 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 11.7%</span>
+            <span>Model: 8.57</span>
+            <span>Market: 1.50</span><span style="color:#ef4444">Value: 0.18×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Andy Clark (ITV)</div>
+          <div class="signal-notes">model R3 p=12%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Aventure (Ire) (FR)</span>
+            <span class="signal-meta">16:50 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 18.3%</span>
+            <span>Model: 5.47</span>
+            <span>Market: 2.90</span><span style="color:#ef4444">Value: 0.53×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">model R3 p=18%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Better Off Alone</span>
+            <span class="signal-meta">4:56 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R3</span>
+            <span>Prob: 4.3%</span>
+            <span>Model: 23.31</span>
+            <span>Market: 3.00</span><span style="color:#ef4444">Value: 0.13×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R3 p=4%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Big Gossey</span>
+            <span class="signal-meta">2:30 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 7.4%</span>
+            <span>Model: 13.45</span>
+            <span>Market: 4.50</span><span style="color:#ef4444">Value: 0.33×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R4 p=7%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Johnny Soda</span>
+            <span class="signal-meta">3:05 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 11.3%</span>
+            <span>Model: 8.88</span>
+            <span>Market: 5.00</span><span style="color:#ef4444">Value: 0.56×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, RP NAPs x1</div>
+          <div class="signal-notes">model R4 p=11%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Rest Your Mind (IRE)</span>
+            <span class="signal-meta">4:50 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 10.5%</span>
+            <span>Model: 9.56</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R4 p=10%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Jubilant</span>
+            <span class="signal-meta">3:15 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R4</span>
+            <span>Prob: 8.7%</span>
+            <span>Model: 11.48</span>
+            <span>Market: 5.50</span><span style="color:#ef4444">Value: 0.48×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R4 p=9%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Heart Above</span>
+            <span class="signal-meta">2:20 Kelso</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R5</span>
+            <span>Prob: 4.7%</span>
+            <span>Model: 21.34</span>
+            <span>Market: 7.50</span><span style="color:#ef4444">Value: 0.35×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R5 p=5%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Larzac</span>
+            <span class="signal-meta">2:36 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R5</span>
+            <span>Prob: 6.9%</span>
+            <span>Model: 14.52</span>
+            <span>Market: 3.00</span><span style="color:#ef4444">Value: 0.21×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict</div>
+          <div class="signal-notes">model R5 p=7%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Roger Pol (IRE)</span>
+            <span class="signal-meta">3:15 Uttoxeter</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R5</span>
+            <span>Prob: 5.4%</span>
+            <span>Model: 18.4</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R5 p=5%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Time For Sandals (IRE)</span>
+            <span class="signal-meta">14:47 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R9</span>
+            <span>Prob: 4.6%</span>
+            <span>Model: 21.92</span>
+            <span>Market: 24.00</span><span style="color:#9ca3af">Value: 1.09×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">Andy Clark (ITV), Jason Weaver (ITV)</div>
+          <div class="signal-notes">model R9 p=5%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Venetian Star (IRE)</span>
+            <span class="signal-meta">4:15 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R15</span>
+            <span>Prob: 3.5%</span>
+            <span>Model: 28.42</span>
+            
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">RP NAPs x2</div>
+          <div class="signal-notes">model R15 p=4%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+        <div class="signal-card">
+          <div class="signal-header">
+            <span class="signal-horse">Jon Riggens</span>
+            <span class="signal-meta">4:15 Curragh</span>
+            <span class="sig-badge" style="background:#6b7280;color:#fff">WEAK</span> <span class="tier-badge tier-3">TIER 3</span>
+          </div>
+          <div class="signal-stats">
+            <span>R16</span>
+            <span>Prob: 3.4%</span>
+            <span>Model: 29.07</span>
+            <span>Market: 10.00</span><span style="color:#ef4444">Value: 0.34×</span>
+            <span>Sources: 2w (2 sources)</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, RP NAPs x1</div>
+          <div class="signal-notes">model R16 p=3%; weighted conv 2 (all sources weight 1 today — no weight-3 judge available)</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 2. NAP Convergence Table — quick scan of newspaper tipster alignment -->
+  <section class="briefing-section">
+    <h2 class="section-title">NAP Convergence (2+ Newspaper NAPs)</h2>
+    <div class="nap-table-wrap">
+      <table class="nap-table">
+        <thead>
+          <tr>
+            <th>Horse</th><th>Time</th><th>Course</th><th>NAPs</th>
+            <th>Tipsters</th><th>Model R1</th><th>Agrees?</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td class="horse-name">Current Edition</td>
+          <td>2:36</td>
+          <td>Uttoxeter</td>
+          <td class="nap-count">4</td>
+          <td class="tipsters">Daily Telegraph, Marlborough, Racing Post, West Country, Racing and Football Outlook, Andrew Mount, Sporting Times, Jeffrey Ross</td>
+          <td>Sytadel</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Ice Jet</td>
+          <td>3:30</td>
+          <td>Kelso</td>
+          <td class="nap-count">3</td>
+          <td class="tipsters">Daily Mirror, Newsboy, Racing Post, RP Ratings, The Scotsman, Glendale</td>
+          <td>Breaking Cover (IRE)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Sytadel</td>
+          <td>2:36</td>
+          <td>Uttoxeter</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Star Sunday, Moorestyle, The Times, Rob Wright</td>
+          <td>Sytadel</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Tuppence</td>
+          <td>2:55</td>
+          <td>Kelso</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">BGTips.co.uk, Sunday Telegraph, Whistler</td>
+          <td>Tuppence</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Venetian Star</td>
+          <td>4:15</td>
+          <td>Curragh</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Jersey Evening Post, Rory Paddock, The Irish Field, Rory Delargy</td>
+          <td>Cool Azul</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Roger Pol</td>
+          <td>3:15</td>
+          <td>Uttoxeter</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Wrexham Leader, Ross Shepherd, punterslounge.com, The Brigadier</td>
+          <td>Miss Goldfire</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">King Cuan</td>
+          <td>2:30</td>
+          <td>Curragh</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Post, The Punt, tipmantips.com, Tipman Tips</td>
+          <td>Loughrea (IRE)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Breaking Cover</td>
+          <td>3:30</td>
+          <td>Kelso</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Record, Garry Owen, Weekender, Sam Hardy</td>
+          <td>Breaking Cover (IRE)</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Loughrea</td>
+          <td>2:30</td>
+          <td>Curragh</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">East Anglian Daily Times, Dean Kilbryde, attheraces.com, Ratings Hub</td>
+          <td>Loughrea (IRE)</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Chattering Classes</td>
+          <td>1:20</td>
+          <td>Curragh</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Sheffield Star, Fortunatus, myracing.com, Adrian Wall</td>
+          <td>Pirate Anne Bonny</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Carla Ridge</td>
+          <td>3:40</td>
+          <td>Curragh</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Mirror Online, Yorkshire Evening Post, Lee Sobot</td>
+          <td>Space Bear</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Country Mile</td>
+          <td>12:51</td>
+          <td>Uttoxeter</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Daily Mail, Robin Goodfellow, sportinglife.com</td>
+          <td>Country Mile (IRE)</td>
+          <td><span class="sig-badge" style="background:#16a34a;color:#fff">MODEL AGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Jubilant</td>
+          <td>3:15</td>
+          <td>Uttoxeter</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">The Guardian, The Star, Jason Heavey</td>
+          <td>Miss Goldfire</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Big Gossey</td>
+          <td>2:30</td>
+          <td>Curragh</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Post, On The Nose, The Favourite, The Judge</td>
+          <td>Loughrea (IRE)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        <tr>
+          <td class="horse-name">Heart Above</td>
+          <td>2:20</td>
+          <td>Kelso</td>
+          <td class="nap-count">2</td>
+          <td class="tipsters">Racing Post, The North, The Sun, Templegate</td>
+          <td>Ballynoe Boy (IRE)</td>
+          <td><span class="sig-badge" style="background:#dc2626;color:#fff">MODEL DISAGREES</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. Updated Convergences — new findings from judge sweep -->
+  
+  <!-- ── Updated Convergences (from judge sweep) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title">Updated Convergence Findings</h2>
+    <div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Loughrea (IRE)</span>
+            <span class="signal-meta">2:30 Curragh</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">5 sources</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, Mark Milligan (Betfair), RP NAPs x2</div>
+          <div class="signal-notes">weighted 5, model rank 1</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Tuppence</span>
+            <span class="signal-meta">2:55 Kelso</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">5 sources</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, ATR Verdict, Timeform (via Paddy Power), RP NAPs x2</div>
+          <div class="signal-notes">weighted 5, model rank 1</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Daryz (FR)</span>
+            <span class="signal-meta">16:05 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">4 sources</span>
+          </div>
+          <div class="signal-sources">ATR Expert View, Charlie McCann (FreeBets.com), Jason Weaver (ITV), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">weighted 4, model rank 1</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Ice Jet</span>
+            <span class="signal-meta">3:30 Kelso</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">6 sources</span>
+          </div>
+          <div class="signal-sources">ATR Verdict, Charlie McCann (FreeBets.com), Timeform (via Paddy Power), RP NAPs x3</div>
+          <div class="signal-notes">weighted 6, model rank 4</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Avec Toi (USA)</span>
+            <span class="signal-meta">14:09 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">5 sources</span>
+          </div>
+          <div class="signal-sources">Alan Marron (Barone Racing), Andy Clark (ITV), Jason Weaver (ITV), Mark Milligan (Betfair), Steve Mullington (ITV/William Hill)</div>
+          <div class="signal-notes">weighted 5, model rank 2</div>
+        </div>
+        <div class="convergence-card" style="border-left: 3px solid #16a34a">
+          <div class="signal-header">
+            <span class="signal-horse">Current Edition</span>
+            <span class="signal-meta">2:36 Uttoxeter</span>
+            <span class="sig-badge" style="background:#16a34a;color:#fff">4 sources</span>
+          </div>
+          <div class="signal-sources">RP NAPs x4</div>
+          <div class="signal-notes">weighted 4, model rank 2</div>
+        </div></div>
+  </section>
+
+  <!-- 4. Expert-vs-Model Conflicts — where to be cautious -->
+  <section class="briefing-section">
+    <h2 class="section-title">Expert-vs-Model Conflicts (19)</h2>
+    <div>
+      
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>1:55 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Bermingham Cameras Irish EBF (C & G) Maiden</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Wo Wo Never (p=0.1173, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Hmas Perth · <strong>ATR Verdict:</strong> Hmas Perth</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:05 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">1xBet.ie Proud Supporters Of Irish Racing Handicap</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Majestic King (p=0.1411, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Johnny Soda · <strong>ATR Verdict:</strong> Cristal Clere · <strong>TipMan Tips:</strong> Majestic King · <strong>RP NAPs:</strong> Iamimmaculate, Johnny Soda, Truth Be Told</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:40 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Hailey Equine Irish EBF Brigid's Pastures Stakes (Listed)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Space Bear (p=0.1095, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Carla Ridge · <strong>ATR Verdict:</strong> Royal Bay Cen · <strong>Betfred Insights:</strong> Dancing Saxon · <strong>RP NAPs:</strong> Carla Ridge, Pivotal Attack</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>4:15 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Business Plus Handicap</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Cool Azul (p=0.1095, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Apothic Red · <strong>ATR Verdict:</strong> Jon Riggens · <strong>TipMan Tips:</strong> Contrary To Law · <strong>RP NAPs:</strong> Cool Azul, Jon Riggens, Tolebi, Venetian Star</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>4:50 Curragh</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Holden Plant Rentals Lady Riders Classic (Q.R.) Handicap</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Sinbad My Dad (IRE) (p=0.1292, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Rest Your Mind · <strong>ATR Verdict:</strong> Rest Your Mind</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:30 Kelso</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">Nspcc School Service Handicap Steeple Chase (Registered As The Simply Ned) (GBB Race)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Breaking Cover (IRE) (p=0.4541, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Breaking Cover · <strong>ATR Verdict:</strong> Ice Jet · <strong>Charlie McCann (FreeBets.com):</strong> Ice Jet · <strong>Timeform (via Paddy Power):</strong> Ice Jet · <strong>RP NAPs:</strong> Aeros Luck, Breaking Cover, Ice Jet, Primoz</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>2:10 Killarney</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Gortnavogue Ltd. T/A Seamus Weldon Handicap Hurdle</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Granlahan (p=0.1562, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Colin's Friend · <strong>ATR Verdict:</strong> Colin's Friend</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:55 Killarney</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Killarney Races Handicap Steeplechase</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Ballybrittas (IRE) (p=0.2833, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Kilbrin Rocco · <strong>ATR Verdict:</strong> Stoneyford Lady · <strong>RP NAPs:</strong> Kilbrin Rocco</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>13:31 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">QATAR PRIX MARCEL BOUSSAC - CRITERIUM DES POULICHES</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Miss Miniver (p=0.1449, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Green Empress · <strong>Steve Mullington (ITV/William Hill):</strong> Green Empress · <strong>Jason Weaver (ITV):</strong> Data · <strong>Alan Marron (Barone Racing):</strong> Green Empress · <strong>Mark Milligan (Betfair):</strong> Allela</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>14:09 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">QATAR PRIX JEAN-LUC LAGARDERE</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Folsom Blues (p=0.2302, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Folsom Blues · <strong>Steve Mullington (ITV/William Hill):</strong> Avec Toi · <strong>Andy Clark (ITV):</strong> Avec Toi · <strong>Jason Weaver (ITV):</strong> Avec Toi · <strong>Alan Marron (Barone Racing):</strong> Avec Toi · <strong>Mark Milligan (Betfair):</strong> Avec Toi</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>14:47 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">PRIX DE L'ABBAYE DE LONGCHAMP LONGINES</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Corolla Point (IRE) (p=0.1367, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Rumstar · <strong>Steve Mullington (ITV/William Hill):</strong> Rumstar · <strong>Andy Clark (ITV):</strong> Time For Sandals · <strong>Jason Weaver (ITV):</strong> Time For Sandals · <strong>Alan Marron (Barone Racing):</strong> Rumstar</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>15:25 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">QATAR ARABIAN WORLD CUP</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Rb Kingmaker Usa M.Ar. 7 A. (FR) (p=0.1420, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> HM Alchahine · <strong>Andy Clark (ITV):</strong> HM Alchahine</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>16:50 ParisLongchamp</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">PRIX DE L'OPERA LONGINES</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Precise (IRE) (p=0.1959, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Aventure · <strong>Steve Mullington (ITV/William Hill):</strong> Aventure · <strong>Alan Marron (Barone Racing):</strong> Pink Panthera · <strong>Charlie McCann (FreeBets.com):</strong> Precise</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>1:26 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Chloe Mediumship Novices' Hurdle Race (gbb Race)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> In The Trenches (p=0.2805, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Gentle Ocean · <strong>ATR Verdict:</strong> Time In A Bottle · <strong>TipMan Tips:</strong> Gentle Ocean</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>2:01 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">F Ball 140th Anniversary Maiden Hurdle Race (Div I) (GBB Race)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Shah (p=0.3307, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Governors Rock · <strong>ATR Verdict:</strong> Governors Rock · <strong>RP NAPs:</strong> Governors Rock</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>2:36 Uttoxeter</span>
+            <span class="sig-badge" style="background:#dc2626;color:#fff">HIGH</span>
+          </div>
+          <div class="conflict-race">F Ball 140th Anniversary Maiden Hurdle Race (Div II) (GBB Race)</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Sytadel (p=0.3960, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Larzac · <strong>ATR Verdict:</strong> Larzac · <strong>RP NAPs:</strong> Current Edition, Sytadel</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:15 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">F Ball Established 1886 Handicap Hurdle Race</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Miss Goldfire (p=0.3918, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Ernest Gray · <strong>ATR Verdict:</strong> Miss Goldfire · <strong>RP NAPs:</strong> Ernest Gray, Jubilant, Roger Pol</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>3:45 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">F Ball Yellow Bucket Handicap Hurdle Race</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Lucky Sevens (p=0.2523, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Prettylady · <strong>ATR Verdict:</strong> Prettylady · <strong>RP NAPs:</strong> Arcon, Berry Edge, Chico Magnifica, Prettylady, Promethean</div>
+          </div>
+        </div>
+        <div class="conflict-card">
+          <div class="conflict-header">
+            <span>4:56 Uttoxeter</span>
+            <span class="sig-badge" style="background:#ca8a04;color:#fff">MEDIUM</span>
+          </div>
+          <div class="conflict-race">Quinnbet Handicap Steeple Chase</div>
+          <div class="conflict-detail">
+            <div><strong>Model R1:</strong> Jo Arengeot Bey AA (p=0.7778, rank 1)</div>
+            <div><strong>ATR Expert View:</strong> Better Off Alone · <strong>ATR Verdict:</strong> Better Off Alone · <strong>RP NAPs:</strong> Fane Court</div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 5. Respected Judges — full breakdown by source (collapsible) -->
+  
+  <!-- ── Respected Judges ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+      Respected Judges <span class="toggle-hint">(tap to expand/collapse)</span>
+    </h2>
+    <div class="collapsible"><div class="judge-card"><div class="judge-name">Atr Expert View <span class="judge-source">(At The Races race-by-race guides ('Top Tip'))</span></div><div class="judge-spec">Every UK/IRE/FR race — supplementary, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fine Thing</span>
+                  <span class="judge-meta">1:45 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Starlyte</span>
+                  <span class="judge-meta">2:20 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Ballynoe Boy (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tuppence</span>
+                  <span class="judge-meta">2:55 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Breaking Cover</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fairlawn Skipper</span>
+                  <span class="judge-meta">4:05 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Luminaries</span>
+                  <span class="judge-meta">4:40 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Country Mile</span>
+                  <span class="judge-meta">12:51 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Gentle Ocean</span>
+                  <span class="judge-meta">1:26 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">Top Tip; model R1 is In The Trenches</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Governors Rock</span>
+                  <span class="judge-meta">2:01 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Shah</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Larzac</span>
+                  <span class="judge-meta">2:36 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Sytadel</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ernest Gray</span>
+                  <span class="judge-meta">3:15 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">Top Tip; model R1 is Miss Goldfire</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Prettylady</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Lucky Sevens</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Holy Legend</span>
+                  <span class="judge-meta">4:20 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Better Off Alone</span>
+                  <span class="judge-meta">4:56 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Jo Arengeot Bey AA</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Astelia</span>
+                  <span class="judge-meta">1:35 Killarney</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Unquite Dreams (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Colin's Friend</span>
+                  <span class="judge-meta">2:10 Killarney</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Granlahan</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Firebrand</span>
+                  <span class="judge-meta">2:45 Killarney</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Lips Freedom</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Coolboy Christy</span>
+                  <span class="judge-meta">3:20 Killarney</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is James The Brave</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Kilbrin Rocco</span>
+                  <span class="judge-meta">3:55 Killarney</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">Top Tip; model R1 is Ballybrittas (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Time Is A Thief</span>
+                  <span class="judge-meta">4:30 Killarney</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">Top Tip; model R1 is Stede Bonnet</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Cullenwaine</span>
+                  <span class="judge-meta">5:05 Killarney</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Pirate Anne Bonny</span>
+                  <span class="judge-meta">1:20 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Hmas Perth</span>
+                  <span class="judge-meta">1:55 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Loughrea</span>
+                  <span class="judge-meta">2:30 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Johnny Soda</span>
+                  <span class="judge-meta">3:05 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Majestic King</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Carla Ridge</span>
+                  <span class="judge-meta">3:40 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Space Bear</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Apothic Red</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Cool Azul</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rest Your Mind</span>
+                  <span class="judge-meta">4:50 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Sinbad My Dad (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Lady Mary Heath</span>
+                  <span class="judge-meta">5:25 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Highbury See See</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Green Empress</span>
+                  <span class="judge-meta">13:31 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Miss Miniver</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Folsom Blues</span>
+                  <span class="judge-meta">14:09 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rumstar</span>
+                  <span class="judge-meta">14:47 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Corolla Point (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">HM Alchahine</span>
+                  <span class="judge-meta">15:25 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Rb Kingmaker Usa M.Ar. 7 A. (FR)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Daryz</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Aventure</span>
+                  <span class="judge-meta">16:50 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Top Tip; model R1 is Precise (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Samangan</span>
+                  <span class="judge-meta">17:25 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Skylight Brochard</span>
+                  <span class="judge-meta">18:00 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Purple Lion (Ire) (FR)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rozarion</span>
+                  <span class="judge-meta">18:35 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Top Tip</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Big Log</span>
+                  <span class="judge-meta">19:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Top Tip; model R1 is Orandi</span>
+                </div></div><div class="judge-card"><div class="judge-name">Atr Verdict <span class="judge-source">(At The Races race-by-race guides (Verdict tab, first of 1-2-3))</span></div><div class="judge-spec">Every UK/IRE race — supplementary, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fine Thing</span>
+                  <span class="judge-meta">1:45 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ballynoe Boy</span>
+                  <span class="judge-meta">2:20 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tuppence</span>
+                  <span class="judge-meta">2:55 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ice Jet</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Breaking Cover (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Upfordebate</span>
+                  <span class="judge-meta">4:05 Kelso</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Fairlawn Skipper (GB)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Luminaries</span>
+                  <span class="judge-meta">4:40 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">O'Moore Park</span>
+                  <span class="judge-meta">12:51 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Country Mile (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Time In A Bottle</span>
+                  <span class="judge-meta">1:26 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is In The Trenches</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Governors Rock</span>
+                  <span class="judge-meta">2:01 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Shah</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Larzac</span>
+                  <span class="judge-meta">2:36 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Sytadel</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Miss Goldfire</span>
+                  <span class="judge-meta">3:15 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Prettylady</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Lucky Sevens</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Holy Legend</span>
+                  <span class="judge-meta">4:20 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Better Off Alone</span>
+                  <span class="judge-meta">4:56 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Jo Arengeot Bey AA</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Unquite Dreams</span>
+                  <span class="judge-meta">1:35 Killarney</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Colin's Friend</span>
+                  <span class="judge-meta">2:10 Killarney</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Granlahan</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Belladaball</span>
+                  <span class="judge-meta">2:45 Killarney</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Lips Freedom</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Monntie</span>
+                  <span class="judge-meta">3:20 Killarney</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is James The Brave</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Stoneyford Lady</span>
+                  <span class="judge-meta">3:55 Killarney</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Ballybrittas (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Stede Bonnet</span>
+                  <span class="judge-meta">4:30 Killarney</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">True Harmony</span>
+                  <span class="judge-meta">5:05 Killarney</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Cullenwaine (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Pirate Anne Bonny</span>
+                  <span class="judge-meta">1:20 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Hmas Perth</span>
+                  <span class="judge-meta">1:55 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Loughrea</span>
+                  <span class="judge-meta">2:30 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">Verdict #1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Cristal Clere</span>
+                  <span class="judge-meta">3:05 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Majestic King</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Royal Bay Cen</span>
+                  <span class="judge-meta">3:40 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Space Bear</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jon Riggens</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Cool Azul</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rest Your Mind</span>
+                  <span class="judge-meta">4:50 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Sinbad My Dad (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Cherry Hill Girl</span>
+                  <span class="judge-meta">5:25 Curragh</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">Verdict #1; model R1 is Highbury See See</span>
+                </div></div><div class="judge-card"><div class="judge-name">Steve Mullington (Itv/William Hill) <span class="judge-source">(William Hill news (ITV Racing tipster))</span></div><div class="judge-spec">Arc-day Longchamp, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Green Empress</span>
+                  <span class="judge-meta">13:31 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">model R1 is Miss Miniver</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Avec Toi</span>
+                  <span class="judge-meta">14:09 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">NAP; model R1 is Folsom Blues</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rumstar</span>
+                  <span class="judge-meta">14:47 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">each-way; model R1 is Corolla Point (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Daryz</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">NB</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Aventure</span>
+                  <span class="judge-meta">16:50 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">model R1 is Precise (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Samangan</span>
+                  <span class="judge-meta">17:25 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Andy Clark (Itv) <span class="judge-source">(ITV Racing tips roundup (thatsagoal.com))</span></div><div class="judge-spec">Longchamp, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Avec Toi</span>
+                  <span class="judge-meta">14:09 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">NAP; model R1 is Folsom Blues</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Time For Sandals</span>
+                  <span class="judge-meta">14:47 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Corolla Point (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">HM Alchahine</span>
+                  <span class="judge-meta">15:25 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">model R1 is Rb Kingmaker Usa M.Ar. 7 A. (FR)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Minnie Hauk</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">each-way; model R1 is Daryz (FR)</span>
+                </div></div><div class="judge-card"><div class="judge-name">Jason Weaver (Itv) <span class="judge-source">(Paddy Power news (ITV Racing shouts))</span></div><div class="judge-spec">Longchamp, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Data</span>
+                  <span class="judge-meta">13:31 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Miss Miniver</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Avec Toi</span>
+                  <span class="judge-meta">14:09 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">model R1 is Folsom Blues</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Time For Sandals</span>
+                  <span class="judge-meta">14:47 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Corolla Point (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Daryz</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Marvelman</span>
+                  <span class="judge-meta">17:25 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Samangan</span>
+                </div></div><div class="judge-card"><div class="judge-name">Alan Marron (Barone Racing) <span class="judge-source">(bettingnews.baroneracing.com)</span></div><div class="judge-spec">Arc-day Longchamp, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Green Empress</span>
+                  <span class="judge-meta">13:31 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">model R1 is Miss Miniver</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Avec Toi</span>
+                  <span class="judge-meta">14:09 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">model R1 is Folsom Blues</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Rumstar</span>
+                  <span class="judge-meta">14:47 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Corolla Point (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Thundering On</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Daryz (FR)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Pink Panthera</span>
+                  <span class="judge-meta">16:50 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Precise (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Samangan</span>
+                  <span class="judge-meta">17:25 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div></div><div class="judge-card"><div class="judge-name">Mark Milligan (Betfair) <span class="judge-source">(Betfair blog)</span></div><div class="judge-spec">Daily best bets, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Allela</span>
+                  <span class="judge-meta">13:31 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">3/1; model R1 is Miss Miniver</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Avec Toi</span>
+                  <span class="judge-meta">14:09 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">5/2; model R1 is Folsom Blues</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Loughrea</span>
+                  <span class="judge-meta">2:30 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">3/1</span>
+                </div></div><div class="judge-card"><div class="judge-name">Charlie Mccann (Freebets.Com) <span class="judge-source">(freebets.com)</span></div><div class="judge-spec">Daily tips, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Daryz</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">15/8</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Precise</span>
+                  <span class="judge-meta">16:50 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">4/1</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ghasham</span>
+                  <span class="judge-meta">4:20 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">11/2; model R1 is Holy Legend</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ice Jet</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">NAP 2/1; model R1 is Breaking Cover (IRE)</span>
+                </div></div><div class="judge-card"><div class="judge-name">Timeform (Via Paddy Power) <span class="judge-source">(Paddy Power news — Timeform Kelso plays)</span></div><div class="judge-spec">Kelso only, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jentobello</span>
+                  <span class="judge-meta">1:45 Kelso</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">model R1 is Fine Thing</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Evaluation</span>
+                  <span class="judge-meta">2:20 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Ballynoe Boy (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tuppence</span>
+                  <span class="judge-meta">2:55 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ice Jet</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Breaking Cover (IRE)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fairlawn Skipper</span>
+                  <span class="judge-meta">4:05 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">My My My Delilah</span>
+                  <span class="judge-meta">4:40 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Luminaries (IRE)</span>
+                </div></div><div class="judge-card"><div class="judge-name">Betfred Insights <span class="judge-source">(insights.betfred.com NAP of the Day)</span></div><div class="judge-spec">NAP of the day, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Dancing Saxon</span>
+                  <span class="judge-meta">3:40 Curragh</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">NAP 4/1; model R1 is Space Bear</span>
+                </div></div><div class="judge-card"><div class="judge-name">Tipman Tips <span class="judge-source">(tipmantips.com)</span></div><div class="judge-spec">Daily free tips, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Upfordebate</span>
+                  <span class="judge-meta">4:05 Kelso</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">NAP 6/4; model R1 is Fairlawn Skipper (GB)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Contrary To Law</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Dark Horse 12/1; model R1 is Cool Azul</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Gentle Ocean</span>
+                  <span class="judge-meta">1:26 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">model R1 is In The Trenches</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ballynoe Boy</span>
+                  <span class="judge-meta">2:20 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Majestic King</span>
+                  <span class="judge-meta">3:05 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ask A Sainte</span>
+                  <span class="judge-meta">4:20 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">model R1 is Holy Legend</span>
+                </div></div><div class="judge-card"><div class="judge-name">Sporting Life (Asquith/Dudman) <span class="judge-source">(Sporting Life Arc preview)</span></div><div class="judge-spec">Arc only, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Thundering On</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Andrew Asquith (Sporting Life) 8/1; model R1 is Daryz (FR)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Varandir</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Alan Dudman 10/1 (top pick); model R1 is Daryz (FR)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Diamond Necklace</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Alan Dudman 14/1 EW; model R1 is Daryz (FR)</span>
+                </div></div><div class="judge-card"><div class="judge-name">Racing Post Spotlight (Steve Boow) <span class="judge-source">(racingpost.com Arc verdict)</span></div><div class="judge-spec">Arc only, weight 1</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Thundering On</span>
+                  <span class="judge-meta">16:05 ParisLongchamp</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">Verdict; model R1 is Daryz (FR)</span>
+                </div></div><div class="judge-card"><div class="judge-name">Newspaper Naps <span class="judge-source">(Racing Post naps table (DB rp_naps))</span></div><div class="judge-spec">Newspaper naps, weight 1 per paper</div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Arcon</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Berry Edge</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Chico Magnifica</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Prettylady</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Promethean</span>
+                  <span class="judge-meta">3:45 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Current Edition</span>
+                  <span class="judge-meta">2:36 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Sytadel</span>
+                  <span class="judge-meta">2:36 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Cool Azul</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jon Riggens</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tolebi</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Venetian Star</span>
+                  <span class="judge-meta">4:15 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Carla Ridge</span>
+                  <span class="judge-meta">3:40 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Pivotal Attack</span>
+                  <span class="judge-meta">3:40 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tuppence</span>
+                  <span class="judge-meta">2:55 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ernest Gray</span>
+                  <span class="judge-meta">3:15 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Jubilant</span>
+                  <span class="judge-meta">3:15 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Roger Pol</span>
+                  <span class="judge-meta">3:15 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Big Gossey</span>
+                  <span class="judge-meta">2:30 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">King Cuan</span>
+                  <span class="judge-meta">2:30 Curragh</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Loughrea</span>
+                  <span class="judge-meta">2:30 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Aeros Luck</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Breaking Cover</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Ice Jet</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Primoz</span>
+                  <span class="judge-meta">3:30 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Chattering Classes</span>
+                  <span class="judge-meta">1:20 Curragh</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Pirate Anne Bonny</span>
+                  <span class="judge-meta">1:20 Curragh</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Iamimmaculate</span>
+                  <span class="judge-meta">3:05 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Johnny Soda</span>
+                  <span class="judge-meta">3:05 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Truth Be Told</span>
+                  <span class="judge-meta">3:05 Curragh</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Country Mile</span>
+                  <span class="judge-meta">12:51 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#16a34a;color:#fff">MODEL R1 ✓</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">The Gray Ghost</span>
+                  <span class="judge-meta">12:51 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Fane Court</span>
+                  <span class="judge-meta">4:56 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Dalileo</span>
+                  <span class="judge-meta">2:20 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Heart Above</span>
+                  <span class="judge-meta">2:20 Kelso</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Spacebound</span>
+                  <span class="judge-meta">5:25 Curragh</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Tropical Talent</span>
+                  <span class="judge-meta">4:20 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#dc2626;color:#fff">CONFLICT</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Governors Rock</span>
+                  <span class="judge-meta">2:01 Uttoxeter</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R3</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div>
+                <div class="judge-selection">
+                  <span class="judge-horse">Kilbrin Rocco</span>
+                  <span class="judge-meta">3:55 Killarney</span>
+                  <span class="sig-badge" style="background:#ca8a04;color:#fff">Model R2</span>
+                  <span class="judge-notes">0 paper(s)</span>
+                </div></div><div class="judge-card"><div class="judge-name">Hugh Taylor <span class="judge-source">(At The Races (free))</span></div><div class="judge-spec">UK flat daily tips (Mon-Fri)</div><div class="judge-status">No tips for today — atr_tipster_picks has __NO_TIPS__ for Hugh Taylor (Sunday; he does not publish weekends).</div></div><div class="judge-card"><div class="judge-name">Laurent Barbarin <span class="judge-source">(At The Races (free))</span></div><div class="judge-spec">French racing column</div><div class="judge-status">UNAVAILABLE for today — atr_tipster_picks has __NO_TIPS__ (scraped 07:15 UTC); likely not yet published at that time. Not re-checked live; worth a look before Arc.</div></div><div class="judge-card"><div class="judge-name">Tony Keenan <span class="judge-source">(Sporting Life (free))</span></div><div class="judge-spec">Irish racing specialist, weight 3</div><div class="judge-status">UNAVAILABLE: web search surfaced only older Keenan columns (no Oct 2026 Curragh/Killarney piece located).</div></div><div class="judge-card"><div class="judge-name">Ruby Walsh <span class="judge-source">(Paddy Power news)</span></div><div class="judge-spec">NH/ITV specialist, weight 3</div><div class="judge-status">UNAVAILABLE: no Oct 4 2026 column surfaced (latest located: Galway, 28 Jul).</div></div><div class="judge-card"><div class="judge-name">Tom Collins <span class="judge-source">(X @Tomptin / ITV)</span></div><div class="judge-spec">ITV Opening Show, weight 3</div><div class="judge-status">UNAVAILABLE: tips shared on X/ITV broadcast; X not fetchable. Likely broadcast-only.</div></div><div class="judge-card"><div class="judge-name">Nick Luck <span class="judge-source">(Nick Luck Daily Podcast)</span></div><div class="judge-spec">Podcast, weight 3</div><div class="judge-status">Podcast exists (eps 1627 "Arc Angels", 1628 "More than the draw for Moore" found) — audio only, cannot transcribe.</div></div><div class="judge-card"><div class="judge-name">Paul Kealy <span class="judge-source">(Racing Post (paywalled))</span></div><div class="judge-spec">RP tipster, weight 3</div><div class="judge-status">PAYWALLED: RP "Arc preview and tipping show" video with Segal & Kealy exists — selections not accessible.</div></div><div class="judge-card"><div class="judge-name">Tom Segal <span class="judge-source">(Racing Post Pricewise (paywalled))</span></div><div class="judge-spec">Pricewise, weight 3</div><div class="judge-status">PAYWALLED: see Kealy; Pricewise content not accessible.</div></div><div class="judge-card"><div class="judge-name">Johnny Dineen <span class="judge-source">(Racing Post (paywalled))</span></div><div class="judge-spec">Irish RP expert, weight 3</div><div class="judge-status">PAYWALLED / nothing located for today.</div></div><div class="judge-card"><div class="judge-name">Gavin Lynch <span class="judge-source">(racingtv.com columnist)</span></div><div class="judge-spec">Irish NH specialist, weight 3</div><div class="judge-status">UNAVAILABLE: no dated-today column located; racingtv.com pages need JavaScript (WebFetch returns empty shell).</div></div><div class="judge-card"><div class="judge-name">Willie Mullins <span class="judge-source">(wpmullins.com)</span></div><div class="judge-spec">Trainer previews, weight 3</div><div class="judge-status">UNAVAILABLE: wpmullins.com/race-previews returned HTTP 403.</div></div><div class="judge-card"><div class="judge-name">Dan Skelton <span class="judge-source">(Ladbrokes news blog)</span></div><div class="judge-spec">Trainer blog, weight 3</div><div class="judge-status">UNAVAILABLE: no Oct 2026 Skelton blog located (only Jan-Mar 2026 posts); Saturday-runners blog, none for Sunday.</div></div><div class="judge-card"><div class="judge-name">Racing Tv (Johnny Ward / Five-To-Follow) <span class="judge-source">(racingtv.com)</span></div><div class="judge-spec">Sunday tips</div><div class="judge-status">UNAVAILABLE: page is JavaScript-only; WebFetch returns an empty shell (not scraped).</div></div></div>
+  </section>
+
+  <!-- 6. Trainer Intelligence — insider quotes -->
+  <section class="briefing-section">
+    <h2 class="section-title">Trainer Intelligence</h2>
+    <div>
+      
+            <div class="trainer-card">
+              <div class="trainer-name">FH. Graffard —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-name">Jennie Candlish —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-name">Christophe Head —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+            <div class="trainer-card">
+              <div class="trainer-name">Jockey Christophe Soumillon —  confidence</div>
+              <div class="quote-item"><strong>:</strong> "" <em>()</em></div>
+            </div>
+    </div>
+  </section>
+
+  <!-- 7. Blind Spots — where model has least confidence -->
+  <section class="briefing-section">
+    <h2 class="section-title">Blind Spot Alerts</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:12px 16px;">
+      <p style="color:var(--muted)">No alerts.</p>
+    </div>
+  </section>
+
+  <!-- 7b. Skip Races — red-themed no-bet list (if present) -->
+  
+  <!-- ── Skip Races (No Bet) ── -->
+  <section class="briefing-section">
+    <h2 class="section-title" style="background:#7f1d1d;border-color:#991b1b;color:#fca5a5">Races to Skip (No Bet)</h2>
+    <div>
+      
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">1:55 Curragh</span>
+            <span class="skip-race">Bermingham Cameras Irish EBF (C & G) Maiden</span>
+          </div>
+          <div class="skip-reason">Model R1 only 12% and all expert picks outside model top 3</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">4:50 Curragh</span>
+            <span class="skip-race">Holden Plant Rentals Lady Riders Classic (Q.R.) Handicap</span>
+          </div>
+          <div class="skip-reason">Model R1 only 13% and all expert picks outside model top 3</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">5:25 Curragh</span>
+            <span class="skip-race">1xBet.ie Proud Partners Of Irish Sport Apprentice Handicap</span>
+          </div>
+          <div class="skip-reason">Split experts (3 sources, 3 different horses) and model R1 only 13%</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">14:47 ParisLongchamp</span>
+            <span class="skip-race">PRIX DE L'ABBAYE DE LONGCHAMP LONGINES</span>
+          </div>
+          <div class="skip-reason">Model R1 only 14% and all expert picks outside model top 3</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">18:00 ParisLongchamp</span>
+            <span class="skip-race">QATAR GRAND HANDICAP DES FLYERS PRESENTE PAR RMC</span>
+          </div>
+          <div class="skip-reason">Large field (16) with no model+expert convergence</div>
+        </div>
+        <div class="skip-card">
+          <div class="skip-header">
+            <span class="skip-meta">19:05 ParisLongchamp</span>
+            <span class="skip-race">QATAR PRIX DE LA PLACE DE L'ETOILE</span>
+          </div>
+          <div class="skip-reason">Large field (18) with no model+expert convergence</div>
+        </div>
+    </div>
+  </section>
+
+  <!-- 8. Full Text — raw briefing for reference (collapsed by default) -->
+  
+
+</main>
+
+</body>
+</html>
