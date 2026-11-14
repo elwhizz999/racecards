@@ -1,0 +1,2429 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<title>Racing Briefing — 2026-11-14</title>
+<style>
+:root { --bg:#0b1220; --card:#131c2e; --card2:#18233a; --line:#26334d; --text:#e6ecf5;
+  --muted:#8b9ab3; --accent:#5cc8ff; --good:#3ddc97; --warn:#f5b84b; --bad:#ff6b6b;
+  --chip:#1f2b44; --gold:#ffd166;
+  --model:#8b8cff; --market:#f2a65a; --respect:#2ec4b6; }
+@media (prefers-color-scheme: light) { :root { --bg:#f4f6fa; --card:#ffffff; --card2:#f0f3f8;
+  --line:#dde3ec; --text:#152033; --muted:#5f6d84; --accent:#0a7cc2; --good:#0f9d63;
+  --warn:#b77400; --bad:#d63a3a; --chip:#eaf0f7; --gold:#b98900;
+  --model:#5b5bd6; --market:#d9822b; --respect:#0e9384; } }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--text); font:15px/1.55 -apple-system, system-ui, "Segoe UI", sans-serif; }
+a { color:var(--accent); text-decoration:none; }
+.top { position:sticky; top:0; z-index:5; background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+.top-in, main { max-width:860px; margin:0 auto; padding:0 16px; }
+.top-in { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:10px; padding-bottom:10px; flex-wrap:wrap; }
+.brand { font-weight:700; letter-spacing:.2px; }
+.brand small { color:var(--muted); font-weight:500; margin-left:6px; }
+nav a { color:var(--muted); font-size:.85rem; margin-left:14px; }
+nav a:hover { color:var(--text); }
+h2 { scroll-margin-top:64px; font-size:.8rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--muted);
+  margin:30px 0 12px; display:flex; align-items:baseline; gap:8px; }
+h2 .count { color:var(--text); }
+.intro { margin-top:20px; color:var(--muted); }
+.intro b { color:var(--text); font-weight:600; }
+.banner { margin-top:14px; padding:10px 14px; border-radius:10px; background:color-mix(in srgb, var(--warn) 15%, transparent);
+  border:1px solid color-mix(in srgb, var(--warn) 40%, transparent); color:var(--warn); font-size:.9rem; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:14px; }
+/* picks */
+.pick { padding:18px; margin-bottom:12px; position:relative; overflow:hidden; }
+.pick::before { content:""; position:absolute; inset:0 auto 0 0; width:4px; background:var(--gold); }
+.pick .race { color:var(--muted); font-size:.85rem; }
+.pick .name { font-size:1.45rem; font-weight:750; margin:2px 0 10px; letter-spacing:-.2px; }
+.stats { display:flex; flex-wrap:wrap; gap:8px 18px; font-size:.88rem; }
+.stat b { display:block; font-size:1.05rem; font-variant-numeric:tabular-nums; }
+.stat span { color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.6px; }
+.backers { margin-top:12px; display:flex; flex-wrap:wrap; gap:6px; }
+.quote { color:var(--muted); font-style:italic; font-size:.88rem; margin-top:8px; border-left:2px solid var(--line); padding-left:10px; }
+.pricenote { color:var(--muted); font-size:.78rem; margin-top:8px; }
+.empty { padding:18px; color:var(--muted); }
+/* chips */
+.chip { display:inline-flex; align-items:center; gap:4px; font-size:.75rem; padding:2px 9px; border-radius:999px;
+  background:var(--chip); border:1px solid transparent; white-space:nowrap; }
+.chip.ctx { background:transparent; border-color:var(--line); color:var(--muted); }
+.chip.trainer { background:transparent; border:1px dashed var(--muted); color:var(--text); }
+.chip.trainer em { color:var(--muted); font-style:normal; }
+.jake-notes { border-top:1px dashed var(--line); padding:8px 16px 12px; }
+.chip.jn-chip { background:transparent; border:1px dashed var(--muted); color:var(--text); }
+.jn-head { display:flex; align-items:center; gap:8px; }
+.jn-meta { color:var(--muted); font-size:.82rem; margin-top:4px; }
+.jn { margin-top:8px; }
+.jn-sum { font-size:.88rem; margin-top:4px; }
+.jn a { color:inherit; }
+.chip.star { background:color-mix(in srgb, var(--gold) 22%, transparent); color:var(--gold); font-weight:600; }
+.tag { font-size:.68rem; font-weight:700; letter-spacing:.6px; text-transform:uppercase; padding:2px 7px; border-radius:6px; }
+.tag.pick { background:var(--gold); color:#1b1400; }
+.tag.respect { background:color-mix(in srgb, var(--respect) 20%, transparent); color:var(--respect); }
+.tag.skip { background:color-mix(in srgb, var(--bad) 18%, transparent); color:var(--bad); }
+.tag.conflict { background:color-mix(in srgb, var(--warn) 20%, transparent); color:var(--warn); }
+.tag.consensus { background:color-mix(in srgb, var(--good) 18%, transparent); color:var(--good); }
+.tier { font-size:.7rem; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:1px 6px; }
+/* respected */
+.wl { padding:4px 0; }
+.wl-row { display:grid; grid-template-columns:34px 1fr auto; gap:10px; align-items:center; padding:10px 16px; border-top:1px solid var(--line); }
+.wl-row:first-child { border-top:0; }
+.wl-row .h { font-weight:600; }
+.wl-row .m { color:var(--muted); font-size:.8rem; }
+.wl-row .p { text-align:right; font-variant-numeric:tabular-nums; font-size:.85rem; }
+.wl-row .why { color:var(--respect); font-size:.78rem; }
+/* rank badge */
+.rk { width:30px; height:30px; border-radius:8px; display:grid; place-items:center; font-size:.78rem; font-weight:700;
+  background:var(--card2); color:var(--muted); border:1px solid var(--line); }
+.rk.r1 { background:var(--text); color:var(--bg); border-color:var(--text); }
+/* filters */
+.filters { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.filters button { font:inherit; font-size:.8rem; padding:5px 12px; border-radius:999px; border:1px solid var(--line);
+  background:transparent; color:var(--muted); cursor:pointer; }
+.filters button.on { background:var(--text); color:var(--bg); border-color:var(--text); }
+.filters .sep { flex-basis:100%; height:0; }
+/* race cards */
+.race-card { margin-bottom:12px; overflow:hidden; }
+.rc-head { padding:12px 16px 10px; display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; }
+.rc-time { font-weight:750; font-size:1.05rem; font-variant-numeric:tabular-nums; }
+.rc-course { font-weight:600; }
+.rc-name { color:var(--muted); font-size:.82rem; flex-basis:100%; }
+.rc-flags { display:flex; gap:6px; flex-wrap:wrap; margin-left:auto; }
+.rc-note { padding:0 16px 10px; color:var(--muted); font-size:.82rem; }
+.hz { display:grid; grid-template-columns:34px 1fr; gap:10px; padding:10px 16px; border-top:1px solid var(--line); }
+.hz-top { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+.hz-name { font-weight:600; }
+.bars { display:grid; grid-template-columns:52px 1fr 92px; align-items:center; gap:3px 8px; margin-top:6px; max-width:520px; }
+.bars .lbl { font-size:.7rem; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); }
+.bars .track { height:7px; border-radius:7px; background:var(--card2); overflow:hidden; }
+.bars .track i { display:block; height:100%; border-radius:7px; }
+.bars .model i { background:var(--model); } .bars .market i { background:var(--market); }
+.bars .lbl.model { color:var(--model); } .bars .lbl.market { color:var(--market); }
+.bars .num { font-size:.78rem; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.hz-value { font-size:.8rem; color:var(--muted); margin-left:auto; }
+.hz-num { color:var(--muted); font-size:.8rem; font-variant-numeric:tabular-nums; }
+.hz-num .v { font-weight:600; }
+.v.good { color:var(--good); } .v.poor { color:var(--muted); }
+.hz-tips { margin-top:6px; display:flex; flex-wrap:wrap; gap:5px; }
+.hz-quotes .quote { margin-top:6px; }
+.race-card.untipped .hz { display:none; }
+.race-card.untipped .rc-head { padding-bottom:12px; }
+.untipped-note { color:var(--muted); font-size:.78rem; }
+/* records */
+table { width:100%; border-collapse:collapse; font-size:.86rem; font-variant-numeric:tabular-nums; }
+th, td { padding:9px 12px; text-align:right; border-top:1px solid var(--line); }
+th:first-child, td:first-child { text-align:left; }
+th { color:var(--muted); font-weight:500; font-size:.75rem; text-transform:uppercase; letter-spacing:.6px; border-top:0; }
+td.small { color:var(--muted); }
+.neg { color:var(--bad); } .pos { color:var(--good); }
+.note { color:var(--muted); font-size:.8rem; padding:10px 14px; }
+.trainer { padding:14px 16px; margin-bottom:10px; }
+.trainer .who { font-weight:600; }
+.trainer .who small { color:var(--muted); font-weight:400; }
+.legend { padding:14px 16px; color:var(--muted); font-size:.85rem; }
+.legend li { margin:4px 0 4px 18px; }
+footer { color:var(--muted); font-size:.75rem; text-align:center; padding:30px 0 40px; }
+@media (max-width:520px) { nav { display:none; } .pick .name { font-size:1.25rem; } }
+</style></head>
+<body>
+<script>
+(function() {
+  var h = "9b36ddb03d0b4853ee17397a239ca4149aa6f2f3dc2fdaf4279691046db994ad";
+  if (localStorage.getItem("rc_auth") === h) return;
+  document.body.style.display = "none";
+  var p = prompt("Password:");
+  if (p) {
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(p)).then(function(buf) {
+      var hex = Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+      if (hex === h) {
+        localStorage.setItem("rc_auth", h);
+        document.body.style.display = "";
+      } else {
+        document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Wrong password</h1>";
+        document.body.style.display = "";
+      }
+    });
+  } else {
+    document.body.innerHTML = "<h1 style=\'color:#f87171;text-align:center;margin-top:40vh\'>Password required</h1>";
+    document.body.style.display = "";
+  }
+})();
+</script>
+<header class="top"><div class="top-in">
+  <div class="brand">Racing Briefing<small>Saturday 14 November 2026</small></div>
+  <nav><a href="#picks">Picks</a><a href="#respected">Respected</a><a href="#races">Races</a><a href="#records">Records</a></nav>
+</div></header>
+<main>
+  <p class="intro">36 races — <b>Cheltenham, Navan, Uttoxeter, Wetherby, Windsor</b> over jumps.
+    Tips found in 36 (ATR Expert View, ATR Watch Out For, Andy Newton, Andy Robson, Harry Cobden, Jon Vine, Matt Chapman, Paul Callaghan, RP NAPs, Rory Delargy, Ruby Walsh, Thats A Goal ITV tips, Timeform);
+    <b>24</b> with backing that counts.</p>
+  
+
+  <h2 id="picks">Picks <span class="count">3</span></h2>
+  
+    <article class="card pick">
+      <div class="race">3:30 · Cheltenham · Paddy Power Intermediate Handicap Hurdle Race</div>
+      <div class="name">Daylatedollarshort <span class="tier">Tier 1</span></div>
+      <div class="stats">
+        <div class="stat"><span>Model</span><b>R1 · 40%</b></div>
+        <div class="stat"><span>Fair price</span><b>2.50</b></div>
+        <div class="stat"><span>Best price</span><b>3.50</b></div>
+        <div class="stat"><span>Value</span><b><span class="v good">1.40×</span></b></div>
+      </div>
+      <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">40% · fair 2.50</span><span class="lbl market">Market</span><span class="track market"><i style="width:71%"></i></span><span class="num">29% · best 3.50</span></div>
+      <div class="backers"><span class="chip ctx">ATR Watch Out For</span><span class="chip">Andy Newton</span><span class="chip star">★ Matt Chapman</span><span class="chip">Thats A Goal ITV tips</span></div>
+      <div class="quote">“Next Best” — Thats A Goal ITV tips</div>
+      <div class="pricenote">Price: corroborated</div>
+    </article>
+    <article class="card pick">
+      <div class="race">1:10 · Cheltenham · JCB Triumph Trial Juvenile Hurdle Race (Registered As The Prestbury Juvenile Hurdle Race) (Grade 2) (GBB Race)</div>
+      <div class="name">Mix Match <span class="tier">Tier 3</span></div>
+      <div class="stats">
+        <div class="stat"><span>Model</span><b>R2 · 25%</b></div>
+        <div class="stat"><span>Fair price</span><b>3.94</b></div>
+        <div class="stat"><span>Best price</span><b>13.00</b></div>
+        <div class="stat"><span>Value</span><b><span class="v good">3.30×</span></b></div>
+      </div>
+      <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">25% · fair 3.94</span><span class="lbl market">Market</span><span class="track market"><i style="width:30%"></i></span><span class="num">8% · best 13.00</span></div>
+      <div class="backers"><span class="chip">Jon Vine</span></div>
+      
+      <div class="pricenote">Price: corroborated</div>
+    </article>
+    <article class="card pick">
+      <div class="race">3:10 · Windsor · Cutler And Gross Handicap Hurdle Race</div>
+      <div class="name">Misterdoc <span class="tier">Tier 3</span></div>
+      <div class="stats">
+        <div class="stat"><span>Model</span><b>R1 · 26%</b></div>
+        <div class="stat"><span>Fair price</span><b>3.79</b></div>
+        <div class="stat"><span>Best price</span><b>10.00</b></div>
+        <div class="stat"><span>Value</span><b><span class="v good">2.64×</span></b></div>
+      </div>
+      <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">26% · fair 3.79</span><span class="lbl market">Market</span><span class="track market"><i style="width:37%"></i></span><span class="num">10% · best 10.00</span></div>
+      <div class="backers"><span class="chip">Andy Robson</span></div>
+      
+      <div class="pricenote">Price: corroborated</div>
+    </article>
+
+  <h2 id="respected">Respected <span class="count">8</span></h2>
+  <div class="card wl">
+      <div class="wl-row">
+        <div class="rk">R3</div>
+        <div><div class="h">Atomic City</div>
+          <div class="m">1:10 Cheltenham · 5 papers · Matt Chapman, Ruby Walsh</div>
+          <div class="why">another pick in this race</div></div>
+        <div class="p">2.88<br><span class="v poor">0.63×</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk r1">R1</div>
+        <div><div class="h">Old Park Star</div>
+          <div class="m">1:45 Cheltenham · Andy Newton, Matt Chapman, Thats A Goal ITV tips, Timeform</div>
+          <div class="why">no price yet</div></div>
+        <div class="p">—<br><span class="v poor">—</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk">R2</div>
+        <div><div class="h">Kabral Du Mathan</div>
+          <div class="m">1:45 Cheltenham · Harry Cobden, Jon Vine, Rory Delargy, Ruby Walsh</div>
+          <div class="why">no price yet</div></div>
+        <div class="p">—<br><span class="v poor">—</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk">R4</div>
+        <div><div class="h">Moneygarrow</div>
+          <div class="m">3:30 Cheltenham · Andy Robson, Rory Delargy, Ruby Walsh, Timeform</div>
+          <div class="why">another pick in this race</div></div>
+        <div class="p">—<br><span class="v poor">—</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk r1">R1</div>
+        <div><div class="h">Blueking d&#x27;Oroux</div>
+          <div class="m">2:20 Cheltenham · 3 papers · Ruby Walsh, Timeform</div>
+          <div class="why">no value at 6.00 (fair 6.72)</div></div>
+        <div class="p">6.00<br><span class="v poor">0.89×</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk r1">R1</div>
+        <div><div class="h">Elegantemente</div>
+          <div class="m">4:00 Cheltenham · Ruby Walsh, Thats A Goal ITV tips, Timeform</div>
+          <div class="why">no value at 3.00 (fair 4.29)</div></div>
+        <div class="p">3.00<br><span class="v poor">0.70×</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk">R6</div>
+        <div><div class="h">Secret Squirrel</div>
+          <div class="m">3:10 Windsor · Jon Vine, Matt Chapman, Thats A Goal ITV tips</div>
+          <div class="why">another pick in this race</div></div>
+        <div class="p">4.00<br><span class="v poor">0.20×</span></div>
+      </div>
+      <div class="wl-row">
+        <div class="rk">R11</div>
+        <div><div class="h">July Flower</div>
+          <div class="m">2:20 Cheltenham · 5 papers · Rory Delargy, Ruby Walsh</div>
+          <div class="why">model ranks it 11th</div></div>
+        <div class="p">7.00<br><span class="v poor">0.17×</span></div>
+      </div></div>
+
+  <h2 id="races">Races <span class="count" id="race-count">36</span></h2>
+  <div class="filters"><button data-course-btn="all" class="on">All meetings</button><button data-course-btn="Uttoxeter">Uttoxeter</button><button data-course-btn="Wetherby">Wetherby</button><button data-course-btn="Windsor">Windsor</button><button data-course-btn="Navan">Navan</button><button data-course-btn="Cheltenham">Cheltenham</button><span class="sep"></span><button id="tipped-toggle" class="on">Races with backing</button></div>
+  
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">12:07</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 8 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">QuinnBet Conditional Jockeys&#x27; Handicap Hurdle Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Spartan Times</span>
+            <span class="hz-value">value <span class="v good">1.66×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">37% · fair 2.71</span><span class="lbl market">Market</span><span class="track market"><i style="width:60%"></i></span><span class="num">22% · best 4.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Lunar Orbit</span>
+            <span class="hz-value">value <span class="v good">1.65×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:68%"></i></span><span class="num">25% · fair 3.93</span><span class="lbl market">Market</span><span class="track market"><i style="width:41%"></i></span><span class="num">15% · best 6.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Back In The Bay</span>
+            <span class="hz-value">value <span class="v good">2.11×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:27%"></i></span><span class="num">10% · fair 9.95</span><span class="lbl market">Market</span><span class="track market"><i style="width:12%"></i></span><span class="num">5% · best 21.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Tao Enki</span>
+            <span class="hz-value">value <span class="v poor">0.26×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:13%"></i></span><span class="num">5% · fair 20.85</span><span class="lbl market">Market</span><span class="track market"><i style="width:49%"></i></span><span class="num">18% · best 5.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">12:13</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 3 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Boyle Sports Novices&#x27; Hurdle Race (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Loriko</span>
+            <span class="hz-value">value <span class="v ">0.97×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:97%"></i></span><span class="num">68% · fair 1.48</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">69% · best 1.44</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Combs</span>
+            <span class="hz-value">value <span class="v poor">0.79×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:35%"></i></span><span class="num">24% · fair 4.11</span><span class="lbl market">Market</span><span class="track market"><i style="width:44%"></i></span><span class="num">31% · best 3.25</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Some Good Men Gone</span>
+            <span class="hz-value">value <span class="v good">1.70×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:11%"></i></span><span class="num">8% · fair 12.37</span><span class="lbl market">Market</span><span class="track market"><i style="width:6%"></i></span><span class="num">5% · best 21.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">12:20</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 16 ran</span>
+        <span class="rc-flags"><span class="tag consensus">Consensus: Ti&#x27;mamzel</span></span>
+        <span class="rc-name">A1R Services Ltd Mares&#x27; Maiden Hurdle Race (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Ti&#x27;mamzel</span>
+            <span class="hz-value">value <span class="v poor">0.46×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:45%"></i></span><span class="num">27% · fair 3.67</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">60% · best 1.67</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">RP NAPs ×2</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Mirror Online · Sunday Telegraph, Whistler</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Jem&#x27;s Lilly</span>
+            <span class="hz-value">value <span class="v poor">0.47×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:22%"></i></span><span class="num">13% · fair 7.51</span><span class="lbl market">Market</span><span class="track market"><i style="width:47%"></i></span><span class="num">29% · best 3.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Magika Bella</span>
+            <span class="hz-value">value <span class="v poor">0.91×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:21%"></i></span><span class="num">13% · fair 7.70</span><span class="lbl market">Market</span><span class="track market"><i style="width:23%"></i></span><span class="num">14% · best 7.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Jem&#x27;s Lilly</b></div>
+          <div class="jn-meta">Stable tour · 8 Nov</div>
+          <div class="jn-sum">Well treated off 109; 2m4f on decent ground; Newbury final aim.</div><div class="jn-meta">Target: Mares&#x27; novice hurdle final, Newbury (spring)</div><div class="quote">“I think two and a half miles on decent ground will suit her and I wouldn&#x27;t mind getting her qualified for the mares&#x27; novice hurdle final at Newbury in the spring.” — Harry Derham</div>
+          <div class="pricenote">Mark Howard’s One Jump Ahead · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">12:27</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 12 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Lisadell Equine Hospital 110 Series Final Handicap Hurdle</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Miners Bridge</span>
+            <span class="hz-value">value <span class="v ">0.98×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:97%"></i></span><span class="num">20% · fair 5.12</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">20% · best 5.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Beckistine</span>
+            <span class="hz-value">value <span class="v good">1.18×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:90%"></i></span><span class="num">18% · fair 5.50</span><span class="lbl market">Market</span><span class="track market"><i style="width:76%"></i></span><span class="num">15% · best 6.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Private Policy</span>
+            <span class="hz-value">value <span class="v good">2.95×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:86%"></i></span><span class="num">17% · fair 5.77</span><span class="lbl market">Market</span><span class="track market"><i style="width:29%"></i></span><span class="num">6% · best 17.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Mount Shenshan</span>
+            <span class="hz-value">value <span class="v poor">0.72×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:35%"></i></span><span class="num">7% · fair 13.98</span><span class="lbl market">Market</span><span class="track market"><i style="width:50%"></i></span><span class="num">10% · best 10.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R10</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Macshadow Des Crai</span>
+            <span class="hz-value">value <span class="v poor">0.18×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:16%"></i></span><span class="num">3% · fair 30.46</span><span class="lbl market">Market</span><span class="track market"><i style="width:90%"></i></span><span class="num">18% · best 5.50</span></div>
+          <div class="hz-tips"><span class="chip">Paul Callaghan</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R11</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Jacko Star</span>
+            <span class="hz-value">value <span class="v poor">0.14×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:9%"></i></span><span class="num">2% · fair 52.53</span><span class="lbl market">Market</span><span class="track market"><i style="width:66%"></i></span><span class="num">13% · best 7.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by The Irish Sun</div></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">12:35</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 12 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span><span class="tag consensus">Consensus: Little Ledgend</span></span>
+        <span class="rc-name">Citipost Amateur Jockeys&#x27; Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Little Ledgend</span>
+            <span class="hz-value">value <span class="v good">1.61×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">40% · fair 2.48</span><span class="lbl market">Market</span><span class="track market"><i style="width:61%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip">Thats A Goal ITV tips</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Herakles Westwood</span>
+            <span class="hz-value">value <span class="v good">1.12×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:39%"></i></span><span class="num">16% · fair 6.25</span><span class="lbl market">Market</span><span class="track market"><i style="width:35%"></i></span><span class="num">14% · best 7.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Dinoland</span>
+            <span class="hz-value">value <span class="v poor">0.77×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:22%"></i></span><span class="num">9% · fair 11.11</span><span class="lbl market">Market</span><span class="track market"><i style="width:29%"></i></span><span class="num">12% · best 8.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Ladies Well</span>
+            <span class="hz-value">value <span class="v poor">0.71×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:20%"></i></span><span class="num">8% · fair 12.05</span><span class="lbl market">Market</span><span class="track market"><i style="width:29%"></i></span><span class="num">12% · best 8.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span><span class="chip star">★ Ruby Walsh</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Ipswich Star, Matt Polley</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Our Soldier</span>
+            <span class="hz-value">value <span class="v poor">0.57×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:18%"></i></span><span class="num">8% · fair 13.22</span><span class="lbl market">Market</span><span class="track market"><i style="width:33%"></i></span><span class="num">13% · best 7.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Ladies Well</b></div>
+          <div class="jn-meta">Stable tour · 7 Nov</div>
+          <div class="jn-sum">Good jumper; dislikes soft ground; excused by omitted fences.</div><div class="quote">“She doesn&#x27;t like it too soft, so we&#x27;ll see what the ground does now, but she will run again in the next two or three weeks if the ground stays okay for her.” — Andy Slattery</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/andy-slattery-stable-tour-2026-27-national-hunt-season/235277" rel="noopener" target="_blank">sportinglife.com · Andy Slattery Stable Tour 2026-27 National Hunt season</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">12:42</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 9 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Somersby Novices&#x27; Hurdle Race (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Spanish Darling</span>
+            <span class="hz-value">value <span class="v poor">0.63×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:63%"></i></span><span class="num">52% · fair 1.93</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">82% · best 1.22</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">For Her Glory</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:11%"></i></span><span class="num">10% · fair 10.21</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Ocean View</span>
+            <span class="hz-value">value <span class="v good">7.80×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:11%"></i></span><span class="num">10% · fair 10.38</span><span class="lbl market">Market</span><span class="track market"><i style="width:1%"></i></span><span class="num">1% · best 81.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">12:48</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 6 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Boyle Sports Back Yourself Handicap Hurdle Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">The Kalooki Kid</span>
+            <span class="hz-value">value <span class="v poor">0.82×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:81%"></i></span><span class="num">31% · fair 3.21</span><span class="lbl market">Market</span><span class="track market"><i style="width:99%"></i></span><span class="num">38% · best 2.63</span></div>
+          <div class="hz-tips"><span class="chip">RP NAPs ×2</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Post, The North · Scottish Sun, Jim Delahunt</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Jericoacoara</span>
+            <span class="hz-value">value <span class="v good">1.17×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:76%"></i></span><span class="num">29% · fair 3.43</span><span class="lbl market">Market</span><span class="track market"><i style="width:65%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Fine Thing</span>
+            <span class="hz-value">value <span class="v good">7.67×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:59%"></i></span><span class="num">23% · fair 4.43</span><span class="lbl market">Market</span><span class="track market"><i style="width:7%"></i></span><span class="num">3% · best 34.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Who&#x27;s Going</span>
+            <span class="hz-value">value <span class="v poor">0.15×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:7%"></i></span><span class="num">3% · fair 33.44</span><span class="lbl market">Market</span><span class="track market"><i style="width:52%"></i></span><span class="num">20% · best 5.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">12:55</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 6 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Freight Movement Same Day Novices&#x27; Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Admiral Stewart</span>
+            <span class="hz-value">value <span class="v good">1.97×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:94%"></i></span><span class="num">33% · fair 3.05</span><span class="lbl market">Market</span><span class="track market"><i style="width:47%"></i></span><span class="num">17% · best 6.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Scavengers Reign</span>
+            <span class="hz-value">value <span class="v poor">0.94×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:93%"></i></span><span class="num">33% · fair 3.07</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">35% · best 2.88</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Le Tiep&#x27;s Sacre</span>
+            <span class="hz-value">value <span class="v ">0.97×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:69%"></i></span><span class="num">24% · fair 4.14</span><span class="lbl market">Market</span><span class="track market"><i style="width:72%"></i></span><span class="num">25% · best 4.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Piping Rock</span>
+            <span class="hz-value">value <span class="v poor">0.43×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:19%"></i></span><span class="num">7% · fair 14.95</span><span class="lbl market">Market</span><span class="track market"><i style="width:44%"></i></span><span class="num">15% · best 6.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">1:02</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 16 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Hotel Park St. Johann In Tirol Austria Handicap Hurdle</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Simply Natural</span>
+            <span class="hz-value">value <span class="v good">1.79×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">33% · fair 3.07</span><span class="lbl market">Market</span><span class="track market"><i style="width:55%"></i></span><span class="num">18% · best 5.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Paul Callaghan</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Radiator Springs</span>
+            <span class="hz-value">value <span class="v poor">0.84×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:46%"></i></span><span class="num">15% · fair 6.56</span><span class="lbl market">Market</span><span class="track market"><i style="width:55%"></i></span><span class="num">18% · best 5.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Catchabird</span>
+            <span class="hz-value">value <span class="v good">2.01×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:32%"></i></span><span class="num">11% · fair 9.43</span><span class="lbl market">Market</span><span class="track market"><i style="width:16%"></i></span><span class="num">5% · best 19.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Rightfolksplease</span>
+            <span class="hz-value">value <span class="v poor">0.51×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:22%"></i></span><span class="num">7% · fair 13.80</span><span class="lbl market">Market</span><span class="track market"><i style="width:43%"></i></span><span class="num">14% · best 7.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">1:10</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 9 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span><span class="tag consensus">Consensus: Charles Darnay</span></span>
+        <span class="rc-name">JCB Triumph Trial Juvenile Hurdle Race (Registered As The Prestbury Juvenile Hurdle Race) (Grade 2) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Charles Darnay</span>
+            <span class="hz-value">value <span class="v ">1.00×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:95%"></i></span><span class="num">33% · fair 3.01</span><span class="lbl market">Market</span><span class="track market"><i style="width:95%"></i></span><span class="num">33% · best 3.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip">Andy Newton</span><span class="chip">Harry Cobden</span><span class="chip ctx">RP NAPs ×1</span><span class="chip">Thats A Goal ITV tips</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"><div class="quote">“NAP” — Thats A Goal ITV tips</div><div class="quote">Napped by Weekender, Sam Hardy</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Mix Match</span><span class="tag pick">Pick</span>
+            <span class="hz-value">value <span class="v good">3.30×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:73%"></i></span><span class="num">25% · fair 3.94</span><span class="lbl market">Market</span><span class="track market"><i style="width:22%"></i></span><span class="num">8% · best 13.00</span></div>
+          <div class="hz-tips"><span class="chip">Jon Vine</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Atomic City</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">0.63×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:62%"></i></span><span class="num">22% · fair 4.59</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">35% · best 2.88</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip star">★ Matt Chapman</span><span class="chip">RP NAPs ×5</span><span class="chip star">★ Ruby Walsh</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by D Express, Melissa Jones · Daily Telegraph, Marlborough · Races Now, Stephen Darbyshire · The Racing App, Computeform · attheraces.com, Ratings Hub</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Admiral Will Brown</span>
+            <span class="hz-value">value <span class="v poor">0.32×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:15%"></i></span><span class="num">5% · fair 18.52</span><span class="lbl market">Market</span><span class="track market"><i style="width:47%"></i></span><span class="num">17% · best 6.00</span></div>
+          <div class="hz-tips"><span class="chip">Rory Delargy</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Charles Darnay</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Won Wetherby Listed on hurdling debut; trainer says he can run another big race in the JCB Triumph Trial.</div><div class="jn-meta">Target: JCB Triumph Trial, Cheltenham</div><div class="quote">“He was a nice, progressive Flat horse and I thought he was good at Wetherby to win the Listed race on hurdling debut.” — James Owen</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/owen-has-eyes-on-another-triumph-trial-with-charles-darnay-and-magnetude/268602" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Magnetude</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Trainer says his jumping has improved since Wetherby and expects a more polished run.</div><div class="jn-meta">Target: JCB Triumph Trial, Cheltenham</div><div class="quote">“I think he has improved with his jumping since then and I think he will put in a bit more of a polished display this time.” — James Owen</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/owen-has-eyes-on-another-triumph-trial-with-charles-darnay-and-magnetude/268602" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">1:15</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 7 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Carlsberg EBF Mares&#x27; &#x27;National Hunt&#x27; Maiden Hurdle Race (EBF Mares&#x27; NH Novices&#x27; Hurdle Series Qualifier) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Boombox</span>
+            <span class="hz-value">value <span class="v poor">0.77×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:76%"></i></span><span class="num">28% · fair 3.58</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">36% · best 2.75</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Post, Topspeed</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Port And Brandy</span>
+            <span class="hz-value">value <span class="v ">1.02×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:55%"></i></span><span class="num">20% · fair 4.91</span><span class="lbl market">Market</span><span class="track market"><i style="width:55%"></i></span><span class="num">20% · best 5.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Kentford Legacy</span>
+            <span class="hz-value">value <span class="v good">1.80×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:55%"></i></span><span class="num">20% · fair 5.00</span><span class="lbl market">Market</span><span class="track market"><i style="width:30%"></i></span><span class="num">11% · best 9.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Malina Road</span>
+            <span class="hz-value">value <span class="v poor">0.50×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:45%"></i></span><span class="num">17% · fair 5.99</span><span class="lbl market">Market</span><span class="track market"><i style="width:91%"></i></span><span class="num">33% · best 3.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip">RP NAPs ×2</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Daily Post, Mercury · Racing Post, On The Nose</div></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Boombox</b></div>
+          <div class="jn-meta">Stable tour · 8 Nov</div>
+          <div class="jn-sum">Chaser in the making; capable of winning a mares&#x27; novice hurdle at 2m-2m4f.</div><div class="quote">“We will aim her at mares&#x27; novice hurdles over two and two and a half miles this season.” — Harry Derham</div>
+          <div class="pricenote">Mark Howard’s One Jump Ahead · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">1:20</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 4 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Sebden Steel Celebrating 30 Years In Business Novices&#x27; Limited Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Spadestep</span>
+            <span class="hz-value">value <span class="v good">2.27×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">76% · fair 1.32</span><span class="lbl market">Market</span><span class="track market"><i style="width:43%"></i></span><span class="num">33% · best 3.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Florida Dreams</span>
+            <span class="hz-value">value <span class="v poor">0.42×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:16%"></i></span><span class="num">13% · fair 7.76</span><span class="lbl market">Market</span><span class="track market"><i style="width:40%"></i></span><span class="num">31% · best 3.25</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Le Beau Madrik</span>
+            <span class="hz-value">value <span class="v poor">0.40×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:11%"></i></span><span class="num">9% · fair 11.28</span><span class="lbl market">Market</span><span class="track market"><i style="width:29%"></i></span><span class="num">22% · best 4.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">1:25</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 15 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span></span>
+        <span class="rc-name">Fitzdares Telephone &amp; Text Betting Handicap Hurdle Race (Challenger Stayers&#x27; Hurdle Series Qualifier)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Kildinan Prince</span>
+            <span class="hz-value">value <span class="v ">0.95×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:94%"></i></span><span class="num">21% · fair 4.75</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">22% · best 4.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Doctor On Call</span>
+            <span class="hz-value">value <span class="v poor">0.88×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:88%"></i></span><span class="num">20% · fair 5.11</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">22% · best 4.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Wrexham Leader, Ross Shepherd</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Inoui Machin</span>
+            <span class="hz-value">value <span class="v good">3.32×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:57%"></i></span><span class="num">13% · fair 7.82</span><span class="lbl market">Market</span><span class="track market"><i style="width:17%"></i></span><span class="num">4% · best 26.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Mount Anglesby</span>
+            <span class="hz-value">value <span class="v ">1.06×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:43%"></i></span><span class="num">10% · fair 10.34</span><span class="lbl market">Market</span><span class="track market"><i style="width:40%"></i></span><span class="num">9% · best 11.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Surrey Lord</span>
+            <span class="hz-value">value <span class="v poor">0.53×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:26%"></i></span><span class="num">6% · fair 17.04</span><span class="lbl market">Market</span><span class="track market"><i style="width:50%"></i></span><span class="num">11% · best 9.00</span></div>
+          <div class="hz-tips"><span class="chip">Jon Vine</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R8</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Tzarmix</span>
+            <span class="hz-value">value <span class="v poor">0.61×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:22%"></i></span><span class="num">5% · fair 19.76</span><span class="lbl market">Market</span><span class="track market"><i style="width:37%"></i></span><span class="num">8% · best 12.00</span></div>
+          <div class="hz-tips"><span class="chip star">★ Matt Chapman</span></div>
+          <div class="hz-quotes"><div class="quote">“each-way” — Matt Chapman</div></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Crack Ops</b></div>
+          <div class="jn-meta">Stable tour · 10 Nov</div>
+          <div class="jn-sum">Handles any ground, improves with trip; runs Cheltenham conditionals&#x27; race.</div><div class="quote">“He&#x27;s tough, stays well and goes on any ground.” — Josh Guerriero</div>
+          <div class="pricenote">&#x27;We&#x27;ve got our strongest ever team&#x27; - including a stable star primed for his best chance at winning a Grade 1  Racing Post · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">1:35</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 8 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">BAR 1 Betting &#x27;Download Our App&#x27; For Auction Novice Hurdle (Grade 3)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">City Of Cork</span>
+            <span class="hz-value">value <span class="v good">1.34×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">33% · fair 2.99</span><span class="lbl market">Market</span><span class="track market"><i style="width:74%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Paul Callaghan</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Fiveandahalf</span>
+            <span class="hz-value">value <span class="v good">1.96×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:69%"></i></span><span class="num">23% · fair 4.33</span><span class="lbl market">Market</span><span class="track market"><i style="width:35%"></i></span><span class="num">12% · best 8.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Game Point</span>
+            <span class="hz-value">value <span class="v good">2.33×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:53%"></i></span><span class="num">18% · fair 5.57</span><span class="lbl market">Market</span><span class="track market"><i style="width:23%"></i></span><span class="num">8% · best 13.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Thinkitdontjinxit</span>
+            <span class="hz-value">value <span class="v poor">0.30×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:25%"></i></span><span class="num">8% · fair 11.84</span><span class="lbl market">Market</span><span class="track market"><i style="width:85%"></i></span><span class="num">29% · best 3.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>The Captain&#x27;s Word</b></div>
+          <div class="jn-meta">Stable tour · 9 Nov</div>
+          <div class="jn-sum">For Auction Hurdle at Navan.</div><div class="jn-meta">Target: For Auction Hurdle, Navan, Sat 14 Nov</div><div class="quote">“He&#x27;s a nice horse, so he&#x27;ll step up in grade now, he&#x27;ll go for the Grade 3 For Auction Hurdle at Navan next Saturday.” — Henry de Bromhead</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/henry-de-bromhead-stable-tour-including-the-big-westerner-air-of-entitlement-heart-wood-and-koktail-divin/235308" rel="noopener" target="_blank">sportinglife.com · Henry De Bromhead Stable Tour including The Big Westerner, Air Of Entitlement, H</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">1:45</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 7 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span></span>
+        <span class="rc-name">Paddy Power Arkle Challenge Trophy Trial Novices&#x27; Steeple Chase (Grade 2) (Registered As The November) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Old Park Star</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:90%"></i></span><span class="num">40% · fair 2.49</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Andy Newton</span><span class="chip star">★ Matt Chapman</span><span class="chip ctx">RP NAPs ×1</span><span class="chip">Thats A Goal ITV tips</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Norwich Evening News, John Arnold</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Kabral Du Mathan</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:80%"></i></span><span class="num">36% · fair 2.80</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip">Harry Cobden</span><span class="chip">Jon Vine</span><span class="chip">Rory Delargy</span><span class="chip star">★ Ruby Walsh</span></div>
+          <div class="hz-quotes"><div class="quote">“has a run over fences under his belt” — Ruby Walsh</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Passing Diamond</span>
+            <span class="hz-value">value <span class="v poor">0.57×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:19%"></i></span><span class="num">9% · fair 11.36</span><span class="lbl market">Market</span><span class="track market"><i style="width:34%"></i></span><span class="num">15% · best 6.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Workahead</span>
+            <span class="hz-value">value <span class="v poor">0.10×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:10%"></i></span><span class="num">5% · fair 21.92</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">44% · best 2.25</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Old Park Star</b></div>
+          <div class="jn-meta">Pre-race · 8 days ago</div>
+          <div class="jn-sum">Chasing debut likely at Ffos Las or Cheltenham, depending on ground, before Sandown&#x27;s Henry VIII next month.</div><div class="jn-meta">Target: Henry VIII Chase, Sandown (next month)</div><div class="quote">“Old Park Star was entered at Carlisle on Monday, but he won&#x27;t go there, and I&#x27;m looking at Ffos Las (which they have rescheduled from Exeter) for the same race Lulamba won last year.” — Nicky Henderson</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/cheltenham-november-meeting-preview-old-park-star-could-join-nicky-henderson-team/235269" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Old Park Star</b></div>
+          <div class="jn-meta">Pre-race · 3 days ago</div>
+          <div class="jn-sum">Henderson happy with work at home ahead of chasing debut; Arkle trial entry but Ffos Las back-up depends on ground.</div><div class="jn-meta">Target: Paddy Power Arkle Challenge Trophy Trial Novices&#x27; Chase, Cheltenham, Sat 25 Oct (alternative: Ffos Las novice chase, Wed)</div><div class="quote">“We&#x27;ve been very happy. He&#x27;s had a racecourse gallop and his schooling has been very good.” — Nicky Henderson</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/old-park-star-ready-to-go-on-chasing-debut-at-cheltenham-november-meeting-but-not-certain-to-line-up/235357" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Old Park Star</b></div>
+          <div class="jn-meta">Season · 13 Nov</div>
+          <div class="jn-sum">Henderson is steering Old Park Star over fences, not the Champion Hurdle; his Cheltenham Arkle trial start depends on the ground.</div><div class="jn-meta">Target: Paddy Power Arkle Challenge Trophy Trial, Cheltenham (date not given)</div><div class="quote">“Nicky Henderson has shunned a Champion Hurdle campaign with Old Park Star, who he believes has all the attributes to make it to the top over fences.” — Nicky Henderson</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/kabral-du-mathan-taken-out-of-saturday-engagement-due-to-ground-conditions/268606" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Workahead</b></div>
+          <div class="jn-meta">Stable tour · 9 Nov</div>
+          <div class="jn-sum">Arkle Trial or Craddockstown.</div><div class="jn-meta">Target: Arkle Trial, Cheltenham, Sat 14 Nov; Craddockstown Chase, Punchestown</div><div class="quote">“We&#x27;re aiming at the Arkle Trial at Cheltenham&#x27;s November meeting next Saturday, or the Craddockstown Chase at Punchestown the following weekend.” — Henry de Bromhead</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/henry-de-bromhead-stable-tour-including-the-big-westerner-air-of-entitlement-heart-wood-and-koktail-divin/235308" rel="noopener" target="_blank">sportinglife.com · Henry De Bromhead Stable Tour including The Big Westerner, Air Of Entitlement, H</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">1:50</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 12 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Karina&#x27;s 60th Birthday Celebration Novices&#x27; Limited Handicap Hurdle Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Arcon</span>
+            <span class="hz-value">value <span class="v ">0.96×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:95%"></i></span><span class="num">26% · fair 3.91</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">27% · best 3.75</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Pink &#x27;n Purple</span>
+            <span class="hz-value">value <span class="v good">2.84×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:62%"></i></span><span class="num">17% · fair 5.98</span><span class="lbl market">Market</span><span class="track market"><i style="width:22%"></i></span><span class="num">6% · best 17.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Chambers</span>
+            <span class="hz-value">value <span class="v poor">0.61×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:56%"></i></span><span class="num">15% · fair 6.59</span><span class="lbl market">Market</span><span class="track market"><i style="width:93%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">1:55</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 4 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Boyle Sports Now Open In Wetherby &#x27;Introductory&#x27; Hurdle Race (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Velvet Outlaw</span>
+            <span class="hz-value">value <span class="v good">1.13×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">70% · fair 1.43</span><span class="lbl market">Market</span><span class="track market"><i style="width:88%"></i></span><span class="num">62% · best 1.62</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by BGTips.co.uk</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Recobella</span>
+            <span class="hz-value">value <span class="v good">2.62×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:28%"></i></span><span class="num">20% · fair 4.97</span><span class="lbl market">Market</span><span class="track market"><i style="width:10%"></i></span><span class="num">8% · best 13.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Static Charm</span>
+            <span class="hz-value">value <span class="v poor">0.29×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:9%"></i></span><span class="num">6% · fair 15.65</span><span class="lbl market">Market</span><span class="track market"><i style="width:31%"></i></span><span class="num">22% · best 4.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Yashin</span>
+            <span class="hz-value">value <span class="v poor">0.20×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:4%"></i></span><span class="num">3% · fair 29.55</span><span class="lbl market">Market</span><span class="track market"><i style="width:23%"></i></span><span class="num">17% · best 6.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">2:00</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 13 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Listen Live To Track Radio Mares&#x27; Handicap Hurdle Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Independent Lady</span>
+            <span class="hz-value">value <span class="v good">1.13×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">41% · fair 2.44</span><span class="lbl market">Market</span><span class="track market"><i style="width:88%"></i></span><span class="num">36% · best 2.75</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip ctx">RP NAPs ×1</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Post, Lambourn</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Mavis Pike</span>
+            <span class="hz-value">value <span class="v good">1.56×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:39%"></i></span><span class="num">16% · fair 6.09</span><span class="lbl market">Market</span><span class="track market"><i style="width:25%"></i></span><span class="num">11% · best 9.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Kenny&#x27;s Jewel</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:22%"></i></span><span class="num">9% · fair 10.75</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Barafundle Bay</span>
+            <span class="hz-value">value <span class="v poor">0.48×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:19%"></i></span><span class="num">8% · fair 12.60</span><span class="lbl market">Market</span><span class="track market"><i style="width:40%"></i></span><span class="num">17% · best 6.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">2:07</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 8 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Railway Bar Lismullen Hurdle (Grade 2)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Home By The Lee</span>
+            <span class="hz-value">value <span class="v good">3.28×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">36% · fair 2.74</span><span class="lbl market">Market</span><span class="track market"><i style="width:30%"></i></span><span class="num">11% · best 9.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Slade Steel</span>
+            <span class="hz-value">value <span class="v ">0.98×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:62%"></i></span><span class="num">23% · fair 4.40</span><span class="lbl market">Market</span><span class="track market"><i style="width:63%"></i></span><span class="num">23% · best 4.33</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Feet Of A Dancer</span>
+            <span class="hz-value">value <span class="v good">1.75×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:60%"></i></span><span class="num">22% · fair 4.57</span><span class="lbl market">Market</span><span class="track market"><i style="width:34%"></i></span><span class="num">12% · best 8.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">I&#x27;ll Sort That</span>
+            <span class="hz-value">value <span class="v poor">0.35×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:18%"></i></span><span class="num">7% · fair 14.46</span><span class="lbl market">Market</span><span class="track market"><i style="width:54%"></i></span><span class="num">20% · best 5.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">The Yellow Clay</span>
+            <span class="hz-value">value <span class="v poor">0.22×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:15%"></i></span><span class="num">5% · fair 18.26</span><span class="lbl market">Market</span><span class="track market"><i style="width:68%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip">Paul Callaghan</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Slade Steel</b></div>
+          <div class="jn-meta">Stable tour · 9 Nov</div>
+          <div class="jn-sum">Back over hurdles; Long Walk or Christmas Hurdle.</div><div class="jn-meta">Target: Navan (mid-Nov); Long Walk Hurdle; Christmas Hurdle, Leopardstown</div><div class="quote">“He&#x27;ll probably start off at Navan next weekend and, after that, we&#x27;ll look at either the Long Walk Hurdle at Ascot just before Christmas or the Christmas Hurdle at Leopardstown.” — Henry de Bromhead</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/henry-de-bromhead-stable-tour-including-the-big-westerner-air-of-entitlement-heart-wood-and-koktail-divin/235308" rel="noopener" target="_blank">sportinglife.com · Henry De Bromhead Stable Tour including The Big Westerner, Air Of Entitlement, H</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Home By The Lee</b></div>
+          <div class="jn-meta">Pre-race · 3 days ago</div>
+          <div class="jn-sum">Jockey JJ Slevin says he is fresh and well for his seasonal debut in the Lismullen Hurdle at Navan; trainer is bringing him along steadier this year.</div><div class="jn-meta">Target: Railway Bar Lismullen Hurdle, Navan, Sat (date not given)</div><div class="quote">“He&#x27;s in really good shape, he&#x27;s fresh and really well.” — JJ Slevin</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/lee-in-fine-form-ahead-of-navan-return/268549" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Feet Of A Dancer</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Set to start at Lismullen this weekend, with Yorkshire Rose Hurdle at Doncaster on 30 January as the main aim.</div><div class="jn-meta">Target: Lismullen Hurdle; Yorkshire Rose Hurdle, Doncaster, 30 Jan</div><div class="quote">“We would start her off there and look to end up back in Doncaster again (Yorkshire Rose on January 30).” — Paul Nolan</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/thedeviluno-pencilled-in-for-chasing-debut-this-month-after-injury/268571" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">2:20</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 15 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span></span>
+        <span class="rc-name">Paddy Power Gold Cup Handicap Steeple Chase (Premier Handicap) (Registered As The William Holman) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Blueking d&#x27;Oroux</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">0.89×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:55%"></i></span><span class="num">15% · fair 6.72</span><span class="lbl market">Market</span><span class="track market"><i style="width:62%"></i></span><span class="num">17% · best 6.00</span></div>
+          <div class="hz-tips"><span class="chip">RP NAPs ×3</span><span class="chip star">★ Ruby Walsh</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"><div class="quote">“one of three against Meetmebythesea” — Ruby Walsh</div><div class="quote">“4lb clear on Timeform ratings” — Timeform</div><div class="quote">Napped by Daily Record, Garry Owen · Irish Daily Star, Brian Flanagan · The Guardian</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Riskintheground</span>
+            <span class="hz-value">value <span class="v good">3.74×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:53%"></i></span><span class="num">14% · fair 6.95</span><span class="lbl market">Market</span><span class="track market"><i style="width:14%"></i></span><span class="num">4% · best 26.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Madara</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:52%"></i></span><span class="num">14% · fair 7.16</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip">Andy Robson</span></div>
+          <div class="hz-quotes"><div class="quote">“each-way (ATR guide says ruled out on ground)” — Andy Robson</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Meetmebythesea</span>
+            <span class="hz-value">value <span class="v poor">0.37×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:37%"></i></span><span class="num">10% · fair 10.02</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">27% · best 3.75</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Harry Cobden</span><span class="chip">RP NAPs ×2</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by The Favourite, The Judge · Yorkshire Evening Post, Lee Sobot</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R7</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Norn Iron</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:25%"></i></span><span class="num">7% · fair 14.77</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip star">★ Ruby Walsh</span></div>
+          <div class="hz-quotes"><div class="quote">“one of three against Meetmebythesea” — Ruby Walsh</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R8</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Quebecois</span>
+            <span class="hz-value">value <span class="v poor">0.34×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:17%"></i></span><span class="num">5% · fair 21.76</span><span class="lbl market">Market</span><span class="track market"><i style="width:50%"></i></span><span class="num">13% · best 7.50</span></div>
+          <div class="hz-tips"><span class="chip">Andy Newton</span><span class="chip">RP NAPs ×3</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Daily Mail, Robin Goodfellow · Racing Post, Spotlight · Sunday Express</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R9</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">O&#x27;Moore Park</span>
+            <span class="hz-value">value <span class="v poor">0.49×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:12%"></i></span><span class="num">3% · fair 30.56</span><span class="lbl market">Market</span><span class="track market"><i style="width:25%"></i></span><span class="num">7% · best 15.00</span></div>
+          <div class="hz-tips"><span class="chip star">★ Matt Chapman</span></div>
+          <div class="hz-quotes"><div class="quote">“each-way; this place brings him to life” — Matt Chapman</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R10</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Zurich</span>
+            <span class="hz-value">value <span class="v poor">0.26×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:10%"></i></span><span class="num">3% · fair 37.22</span><span class="lbl market">Market</span><span class="track market"><i style="width:39%"></i></span><span class="num">11% · best 9.50</span></div>
+          <div class="hz-tips"><span class="chip">RP NAPs ×2</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Irish Herald, Ian Gaughran · Jersey Evening Post, Rory Paddock</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R11</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">July Flower</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">0.17×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:9%"></i></span><span class="num">2% · fair 40.55</span><span class="lbl market">Market</span><span class="track market"><i style="width:53%"></i></span><span class="num">14% · best 7.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip">RP NAPs ×5</span><span class="chip">Rory Delargy</span><span class="chip star">★ Ruby Walsh</span></div>
+          <div class="hz-quotes"><div class="quote">“one of three against Meetmebythesea” — Ruby Walsh</div><div class="quote">Napped by The Irish Field, Rory Delargy · The Times, Rob Wright · Yorkshire Post, The Duke · racing-daily.com · talkSPORT, talkSPORT</div></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Norn Iron</b></div>
+          <div class="jn-meta">Stable tour · 8 Nov</div>
+          <div class="jn-sum">Improving 2m4f handicap chaser; Paddy Power Gold Cup then Topham; handles either way.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Cheltenham (14 Nov); Topham Chase</div><div class="quote">“his first target is likely to be the Paddy Power Gold Cup at Cheltenham (14th November), although I am not 100% convinced the old course will bring out the best in him.” — Harry Derham</div>
+          <div class="pricenote">Mark Howard’s One Jump Ahead · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Meetmebythesea</b></div>
+          <div class="jn-meta">Pre-race · 5 days ago</div>
+          <div class="jn-sum">Pauling is keen and says he&#x27;s been prepared fully for the Paddy Power Gold Cup, the stated aim.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“He’s done plenty of work for the race because we can’t go there half-fit, especially off a mark like that so he should be fit and well” — Ben Pauling</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-latest-ben-pauling-happy-with-meetmebythesea/235311" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>July Flower</b></div>
+          <div class="jn-meta">Stable tour · 9 Nov</div>
+          <div class="jn-sum">Paddy Power Gold Cup target.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Cheltenham, Sat 14 Nov</div><div class="quote">“She&#x27;s in good form at home and she&#x27;ll go for the Paddy Power Gold Cup at Cheltenham next Saturday, all going well.” — Henry de Bromhead</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/henry-de-bromhead-stable-tour-including-the-big-westerner-air-of-entitlement-heart-wood-and-koktail-divin/235308" rel="noopener" target="_blank">sportinglife.com · Henry De Bromhead Stable Tour including The Big Westerner, Air Of Entitlement, H</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>July Flower</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Mare runs well fresh; this race is her target and she is well prepared at home.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“She is a mare that runs well fresh, and, like most of the others in the race, this has been her target.” — Darragh O&#x27;Keefe</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-what-connections-say-including-ben-pauling-dan-skelton-and-paul-nicholls/235375" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Zurich</b></div>
+          <div class="jn-meta">Stable tour · 9 Nov</div>
+          <div class="jn-sum">May need run; better left-handed; Paddy Power Gold Cup.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Cheltenham</div><div class="quote">“It may be that he is better going left-handed than he is going right, and he won over the course and distance of the Paddy Power Gold Cup at Cheltenham&#x27;s October meeting last year.” — Henry de Bromhead</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/henry-de-bromhead-stable-tour-including-the-big-westerner-air-of-entitlement-heart-wood-and-koktail-divin/235308" rel="noopener" target="_blank">sportinglife.com · Henry De Bromhead Stable Tour including The Big Westerner, Air Of Entitlement, H</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Zurich</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Likes this course, distance and good ground; Limerick run should bring him on.</div><div class="quote">“He has run well around that course and distance before, and he will like this nice ground.” — Darragh O&#x27;Keefe</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-what-connections-say-including-ben-pauling-dan-skelton-and-paul-nicholls/235375" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Madara</b></div>
+          <div class="jn-meta">Pre-race · 5 days ago</div>
+          <div class="jn-sum">Owner worried the ground may be too fast for Madara in the Gold Cup; a risk factor for his chance.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Sat 14 Nov</div><div class="quote">“owner has expressed concerns about the ground being too fast” — Owner</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-handicap-chase-at-cheltenham-horse-by-horse-guide/235329" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Madara</b></div>
+          <div class="jn-meta">Pre-race · 4 days ago</div>
+          <div class="jn-sum">Owner has said Madara may not run if the ground is too quick, so the going at Cheltenham matters.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“I know the owner has come out and said he might not run if the ground is too quick” — Owner</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-tips-sporting-life-experts-have-their-say/235337" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Madara</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Doubtful for the Paddy Power Gold Cup after a leg injury; owner will only run if fully satisfied on Friday.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Cheltenham, Sat (date not given); December Gold Cup, Cheltenham (date not given)</div><div class="quote">“having come back from a leg injury last season, I won&#x27;t be taking any risks with him and if there&#x27;s any doubts I won&#x27;t run.” — Bryan Drew</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/ground-concerns-raised-for-madara-in-paddy-power-gold-cup/268579" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Quebecois</b></div>
+          <div class="jn-meta">Pre-race · 5 days ago</div>
+          <div class="jn-sum">Trainer confident the Gold Cup&#x27;s test suits Quebecois, though the 141 mark leaves little margin.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Sat 14 Nov</div><div class="quote">“Trainer is convinced that the demands of this race will suit” — Paul Nicholls</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-handicap-chase-at-cheltenham-horse-by-horse-guide/235329" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Quebecois</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Good preparation; wants decent ground, Scottish National run excused by heavy ground.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“You can put a line through his Scottish Grand National effort as the ground was too heavy for him, and he wants decent ground.” — Paul Nicholls</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-what-connections-say-including-ben-pauling-dan-skelton-and-paul-nicholls/235375" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Release The Beast</b></div>
+          <div class="jn-meta">Pre-race · 4 days ago</div>
+          <div class="jn-sum">Nolan is aiming Release The Beast at the Paddy Power Gold Cup at Cheltenham, stepping up in trip and running fresh.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Cheltenham (date not given)</div><div class="quote">“Release The Beast put in a cracking run in the Grand Annual and we are hoping that the step up in trip will suit,” — Paul Nolan</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/nolan-ready-to-release-the-beast-in-paddy-power-gold-cup/268536" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Blueking d&#x27;Oroux</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Unexposed in handicaps with improving form; cheekpieces kept on; ground fine.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“He has not been exposed in handicaps, and his form looked to be improving all the time last season.” — Dan Skelton</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-what-connections-say-including-ben-pauling-dan-skelton-and-paul-nicholls/235375" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Riskintheground</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Skelton tips him as a big-price chance; thinks 2m4f+ trip is his sort of distance.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“I don&#x27;t think I will run many better 50/1 chances than Riskintheground.” — Dan Skelton</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-what-connections-say-including-ben-pauling-dan-skelton-and-paul-nicholls/235375" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Riskintheground</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Third in the Charlie Hall; yard expects the ground to suit and sees him as an each-way player.</div><div class="quote">“He ran a very good race to finish third in the Charlie Hall Chase and should appreciate the ground here.” — Yard</div>
+          <div class="pricenote"><a href="https://www.starsportsbet.co.uk/harry-skelton-cheltenham-saturday-5/" rel="noopener" target="_blank">Star Sports · Harry Skelton</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Torneo</b></div>
+          <div class="jn-meta">Pre-race · 2 days ago</div>
+          <div class="jn-sum">Stepped up in trip; unexposed over this trip and won&#x27;t mind the ground.</div><div class="jn-meta">Target: Paddy Power Gold Cup</div><div class="quote">“Towards the end of last season he was staying on well in his races so we stepped him back up in trip on his return at Ffos Las.” — Jamie Snowden</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paddy-power-gold-cup-what-connections-say-including-ben-pauling-dan-skelton-and-paul-nicholls/235375" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Matata</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Joint trainer says Matata has been prepared specifically for the Paddy Power and has been working well, despite top weight.</div><div class="jn-meta">Target: Paddy Power Gold Cup, Cheltenham (date not given)</div><div class="quote">“He&#x27;s been training for this race specifically, he had a lovely little away day last week where it went very well.” — Willy Twiston-Davies</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/pauling-has-meetmebythesea-in-tiptop-shape-for-paddy-power-gold-cup/268604" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>O&#x27;Moore Park</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Trainer expects improvement from the last run, says the ground suits and the horse loves Cheltenham; a live chance.</div><div class="quote">“He should come on from that last run, the ground will be perfect and obviously loves it here.” — Martin Keighley</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/pauling-has-meetmebythesea-in-tiptop-shape-for-paddy-power-gold-cup/268604" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">2:25</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 4 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Eaton Hall Shooting Ground Mares&#x27; Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Lady Tadita</span>
+            <span class="hz-value">value <span class="v good">2.38×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:99%"></i></span><span class="num">68% · fair 1.47</span><span class="lbl market">Market</span><span class="track market"><i style="width:41%"></i></span><span class="num">29% · best 3.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Irish Chorus</span>
+            <span class="hz-value">value <span class="v poor">0.72×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:30%"></i></span><span class="num">21% · fair 4.85</span><span class="lbl market">Market</span><span class="track market"><i style="width:41%"></i></span><span class="num">29% · best 3.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Pismo Beach</span>
+            <span class="hz-value">value <span class="v poor">0.29×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:13%"></i></span><span class="num">9% · fair 11.17</span><span class="lbl market">Market</span><span class="track market"><i style="width:45%"></i></span><span class="num">31% · best 3.25</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Lau And Shaz</span>
+            <span class="hz-value">value <span class="v poor">0.11×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:3%"></i></span><span class="num">2% · fair 45.66</span><span class="lbl market">Market</span><span class="track market"><i style="width:29%"></i></span><span class="num">20% · best 5.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">2:30</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 5 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Boyle Sports Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Palamon</span>
+            <span class="hz-value">value <span class="v good">1.15×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:99%"></i></span><span class="num">38% · fair 2.62</span><span class="lbl market">Market</span><span class="track market"><i style="width:87%"></i></span><span class="num">33% · best 3.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Post, RP Ratings</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Tommy&#x27;s Oscar</span>
+            <span class="hz-value">value <span class="v good">1.30×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:97%"></i></span><span class="num">37% · fair 2.70</span><span class="lbl market">Market</span><span class="track market"><i style="width:74%"></i></span><span class="num">29% · best 3.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">The Bluesman</span>
+            <span class="hz-value">value <span class="v poor">0.51×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:46%"></i></span><span class="num">18% · fair 5.69</span><span class="lbl market">Market</span><span class="track market"><i style="width:90%"></i></span><span class="num">35% · best 2.88</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing and Football Outlook, Andrew Mount</div></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">2:35</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 8 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Join Fitzdares For A Personal Service Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Jet Smart</span>
+            <span class="hz-value">value <span class="v good">3.92×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">49% · fair 2.04</span><span class="lbl market">Market</span><span class="track market"><i style="width:25%"></i></span><span class="num">12% · best 8.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">King Califet</span>
+            <span class="hz-value">value <span class="v poor">0.72×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:58%"></i></span><span class="num">29% · fair 3.46</span><span class="lbl market">Market</span><span class="track market"><i style="width:81%"></i></span><span class="num">40% · best 2.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Dangerous Touch</span>
+            <span class="hz-value">value <span class="v poor">0.58×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:13%"></i></span><span class="num">7% · fair 14.58</span><span class="lbl market">Market</span><span class="track market"><i style="width:23%"></i></span><span class="num">12% · best 8.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">2:43</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 7 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">BAR 1 Betting Fortria Steeplechase (Grade 2)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Majborough</span>
+            <span class="hz-value">value <span class="v poor">0.72×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:71%"></i></span><span class="num">27% · fair 3.66</span><span class="lbl market">Market</span><span class="track market"><i style="width:99%"></i></span><span class="num">38% · best 2.63</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by myracing.com, Adrian Wall</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Only By Night</span>
+            <span class="hz-value">value <span class="v good">1.12×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:58%"></i></span><span class="num">22% · fair 4.47</span><span class="lbl market">Market</span><span class="track market"><i style="width:52%"></i></span><span class="num">20% · best 5.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Solness</span>
+            <span class="hz-value">value <span class="v good">1.22×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:58%"></i></span><span class="num">22% · fair 4.49</span><span class="lbl market">Market</span><span class="track market"><i style="width:47%"></i></span><span class="num">18% · best 5.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Found A Fifty</span>
+            <span class="hz-value">value <span class="v poor">0.83×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:36%"></i></span><span class="num">14% · fair 7.23</span><span class="lbl market">Market</span><span class="track market"><i style="width:43%"></i></span><span class="num">17% · best 6.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Paul Callaghan</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Majborough</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Seasonal debut; stable says he is fit and should be in contention.</div><div class="quote">“He’s in good order, and we’ll be disappointed if he’s not in the shake-up.” — Willie Mullins</div>
+          <div class="pricenote"><a href="https://wpmullins.com/navan13th-november/" rel="noopener" target="_blank">Willie Mullins (runners)</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Majborough</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Connections would prefer softer ground for his Navan comeback; a reminder of his chasing form, not a sure bet.</div><div class="quote">“In an ideal world we would like a bit more rain, but he&#x27;s declared and we&#x27;ll see how we go.” — Frank Berry</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/majborough-on-comeback-mission-at-navan/268597" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">2:55</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 16 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span><span class="tag consensus">Consensus: Ifiwerearichman</span></span>
+        <span class="rc-name">From The Horses Mouth Podcast Handicap Hurdle Race (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Aimeric</span>
+            <span class="hz-value">value <span class="v good">1.46×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:81%"></i></span><span class="num">18% · fair 5.49</span><span class="lbl market">Market</span><span class="track market"><i style="width:56%"></i></span><span class="num">12% · best 8.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">William Yeats</span>
+            <span class="hz-value">value <span class="v poor">0.78×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:78%"></i></span><span class="num">17% · fair 5.74</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">22% · best 4.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by The Star, Jason Heavey</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Wonderful Eagle</span>
+            <span class="hz-value">value <span class="v good">2.23×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:59%"></i></span><span class="num">13% · fair 7.62</span><span class="lbl market">Market</span><span class="track market"><i style="width:26%"></i></span><span class="num">6% · best 17.00</span></div>
+          <div class="hz-tips"><span class="chip">Andy Newton</span></div>
+          <div class="hz-quotes"><div class="quote">“each-way” — Andy Newton</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Ace Of Spades</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:43%"></i></span><span class="num">10% · fair 10.30</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip">Andy Robson</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R7</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Geezer Rockstar</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:25%"></i></span><span class="num">6% · fair 17.82</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R8</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Gold For Alec</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:20%"></i></span><span class="num">5% · fair 22.11</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip star">★ Matt Chapman</span><span class="chip ctx">RP NAPs ×1</span><span class="chip">Rory Delargy</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by RaceiQ, The Data Detective</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R9</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Ifiwerearichman</span>
+            <span class="hz-value">value <span class="v poor">0.25×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:17%"></i></span><span class="num">4% · fair 25.80</span><span class="lbl market">Market</span><span class="track market"><i style="width:69%"></i></span><span class="num">15% · best 6.50</span></div>
+          <div class="hz-tips"><span class="chip">Jon Vine</span><span class="chip">RP NAPs ×2</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Daily Mirror, Newsboy · Racing TV, Dave Nevison</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R10</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Rambo T</span>
+            <span class="hz-value">value <span class="v poor">0.32×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:17%"></i></span><span class="num">4% · fair 26.24</span><span class="lbl market">Market</span><span class="track market"><i style="width:52%"></i></span><span class="num">12% · best 8.50</span></div>
+          <div class="hz-tips"><span class="chip">Harry Cobden</span><span class="chip star">★ Ruby Walsh</span></div>
+          <div class="hz-quotes"><div class="quote">“could be well handicapped in a trappy contest” — Ruby Walsh</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R13</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Moon Mission</span>
+            <span class="hz-value">value <span class="v poor">0.18×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:6%"></i></span><span class="num">1% · fair 73.94</span><span class="lbl market">Market</span><span class="track market"><i style="width:34%"></i></span><span class="num">8% · best 13.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Morning Star, Farringdon</div></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">3:00</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 8 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Hobgoblin Handicap Steeple Chase (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Seven Kites</span>
+            <span class="hz-value">value <span class="v good">1.64×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">41% · fair 2.44</span><span class="lbl market">Market</span><span class="track market"><i style="width:60%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Orderoftheday</span>
+            <span class="hz-value">value <span class="v good">1.44×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:78%"></i></span><span class="num">32% · fair 3.12</span><span class="lbl market">Market</span><span class="track market"><i style="width:54%"></i></span><span class="num">22% · best 4.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Stone&#x27;s Throw</span>
+            <span class="hz-value">value <span class="v poor">0.74×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:19%"></i></span><span class="num">8% · fair 12.76</span><span class="lbl market">Market</span><span class="track market"><i style="width:25%"></i></span><span class="num">11% · best 9.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Kahavari</span>
+            <span class="hz-value">value <span class="v poor">0.63×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:17%"></i></span><span class="num">7% · fair 14.30</span><span class="lbl market">Market</span><span class="track market"><i style="width:27%"></i></span><span class="num">11% · best 9.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Daily Star Sunday, Moorestyle</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Warriors Destiny</span>
+            <span class="hz-value">value <span class="v poor">0.42×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:9%"></i></span><span class="num">4% · fair 26.45</span><span class="lbl market">Market</span><span class="track market"><i style="width:22%"></i></span><span class="num">9% · best 11.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Kahavari</b></div>
+          <div class="jn-meta">Stable tour · 10 Nov</div>
+          <div class="jn-sum">Wants 3m and decent ground; break then Sandown in spring.</div><div class="jn-meta">Target: Sandown (April)</div><div class="quote">“He&#x27;ll keep running before the ground goes and then we&#x27;ll put him away for the spring.” — Josh Guerriero</div>
+          <div class="pricenote">&#x27;We&#x27;ve got our strongest ever team&#x27; - including a stable star primed for his best chance at winning a Grade 1  Racing Post · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">3:05</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 5 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Colin Baldwin Memorial Handicap Hurdle Race (Challenger Two Mile Hurdle Series Qualifier)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Centurion&#x27;s Sister</span>
+            <span class="hz-value">value <span class="v poor">0.87×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:86%"></i></span><span class="num">39% · fair 2.59</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">44% · best 2.25</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Filibustering</span>
+            <span class="hz-value">value <span class="v good">1.15×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:79%"></i></span><span class="num">36% · fair 2.82</span><span class="lbl market">Market</span><span class="track market"><i style="width:69%"></i></span><span class="num">31% · best 3.25</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Roarin&#x27; Success</span>
+            <span class="hz-value">value <span class="v good">1.15×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:39%"></i></span><span class="num">18% · fair 5.66</span><span class="lbl market">Market</span><span class="track market"><i style="width:34%"></i></span><span class="num">15% · best 6.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Filibustering</b></div>
+          <div class="jn-meta">Stable tour · 8 Nov</div>
+          <div class="jn-sum">Tongue tie helped; likes strongly run 2m; Welsh Champion Hurdle target.</div><div class="jn-meta">Target: Welsh Champion Hurdle, Chepstow (11 Oct)</div><div class="quote">“We are toying with the idea of aiming him at the Welsh Champion Hurdle at Chepstow (11th October).” — Harry Derham</div>
+          <div class="pricenote">Mark Howard’s One Jump Ahead · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">3:10</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 11 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span><span class="tag consensus">Consensus: Secret Squirrel</span></span>
+        <span class="rc-name">Cutler And Gross Handicap Hurdle Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Misterdoc</span><span class="tag pick">Pick</span>
+            <span class="hz-value">value <span class="v good">2.64×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:92%"></i></span><span class="num">26% · fair 3.79</span><span class="lbl market">Market</span><span class="track market"><i style="width:35%"></i></span><span class="num">10% · best 10.00</span></div>
+          <div class="hz-tips"><span class="chip">Andy Robson</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Zarakerjack</span>
+            <span class="hz-value">value <span class="v poor">0.83×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:82%"></i></span><span class="num">24% · fair 4.23</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">29% · best 3.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Watamu</span>
+            <span class="hz-value">value <span class="v good">1.34×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:66%"></i></span><span class="num">19% · fair 5.22</span><span class="lbl market">Market</span><span class="track market"><i style="width:50%"></i></span><span class="num">14% · best 7.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip">RP NAPs ×2</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Post, Postdata · Racing Post, The Punt</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Anniversary</span>
+            <span class="hz-value">value <span class="v poor">0.71×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:20%"></i></span><span class="num">6% · fair 16.96</span><span class="lbl market">Market</span><span class="track market"><i style="width:29%"></i></span><span class="num">8% · best 12.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by punterslounge.com, The Brigadier</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Secret Squirrel</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">0.20×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:17%"></i></span><span class="num">5% · fair 19.73</span><span class="lbl market">Market</span><span class="track market"><i style="width:87%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Jon Vine</span><span class="chip star">★ Matt Chapman</span><span class="chip ctx">RP NAPs ×1</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by sportinglife.com</div></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Fasol</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Loves flat tracks and decent ground; Windsor run comes soon after Ascot; worked well.</div><div class="jn-meta">Target: Windsor, 15:10 (date not given)</div><div class="quote">“He&#x27;s probably a bit frustrating but he always runs well, he loves a flat track and he loves decent ground.” — Paul Nicholls</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/paul-nicholls-on-caldwell-potter-no-drama-this-end-and-cheltenham-hopes-for-november-meeting/235392" rel="noopener" target="_blank">Sporting Life</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">3:18</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 11 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Jimmy &amp; Sheila Owens Irish EBF Beginners Steeplechase</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Largy Star</span>
+            <span class="hz-value">value <span class="v good">3.11×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:47%"></i></span><span class="num">24% · fair 4.18</span><span class="lbl market">Market</span><span class="track market"><i style="width:15%"></i></span><span class="num">8% · best 13.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Wingmen</span>
+            <span class="hz-value">value <span class="v good">1.80×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:36%"></i></span><span class="num">18% · fair 5.55</span><span class="lbl market">Market</span><span class="track market"><i style="width:20%"></i></span><span class="num">10% · best 10.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Powerful</span>
+            <span class="hz-value">value <span class="v good">2.28×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:21%"></i></span><span class="num">11% · fair 9.21</span><span class="lbl market">Market</span><span class="track market"><i style="width:9%"></i></span><span class="num">5% · best 21.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Mighty Park</span>
+            <span class="hz-value">value <span class="v poor">0.20×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:19%"></i></span><span class="num">10% · fair 10.15</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">50% · best 2.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Jet To Monte Carlo</span>
+            <span class="hz-value">value <span class="v good">2.39×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:14%"></i></span><span class="num">7% · fair 14.23</span><span class="lbl market">Market</span><span class="track market"><i style="width:5%"></i></span><span class="num">3% · best 34.00</span></div>
+          <div class="hz-tips"><span class="chip">Paul Callaghan</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R8</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Saint Baco</span>
+            <span class="hz-value">value <span class="v poor">0.23×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:12%"></i></span><span class="num">6% · fair 16.31</span><span class="lbl market">Market</span><span class="track market"><i style="width:53%"></i></span><span class="num">27% · best 3.75</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Mighty Park</b></div>
+          <div class="jn-meta">Season · 11 Nov</div>
+          <div class="jn-sum">Needs good, safe ground; Mullins doesn&#x27;t think he&#x27;ll need it very soft. Novice chasing planned.</div><div class="quote">“I want good, safe ground, but I think with the way he moves and the way he glides across the ground he won&#x27;t have to have it very soft.” — Willie Mullins</div>
+          <div class="pricenote"><a href="https://www.irishracing.com/news/five-to-look-out-for-from-the-closutton-battalion/268567" rel="noopener" target="_blank">Irish Racing</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">3:30</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 13 ran</span>
+        <span class="rc-flags"><span class="tag conflict">Experts vs model</span><span class="tag consensus">Consensus: Moneygarrow</span></span>
+        <span class="rc-name">Paddy Power Intermediate Handicap Hurdle Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Daylatedollarshort</span><span class="tag pick">Pick</span>
+            <span class="hz-value">value <span class="v good">1.40×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">40% · fair 2.50</span><span class="lbl market">Market</span><span class="track market"><i style="width:71%"></i></span><span class="num">29% · best 3.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip">Andy Newton</span><span class="chip star">★ Matt Chapman</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"><div class="quote">“Next Best” — Thats A Goal ITV tips</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">A King Of Magic</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:26%"></i></span><span class="num">10% · fair 9.54</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Seamoon Story</span>
+            <span class="hz-value">value <span class="v good">1.34×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:25%"></i></span><span class="num">10% · fair 9.72</span><span class="lbl market">Market</span><span class="track market"><i style="width:19%"></i></span><span class="num">8% · best 13.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R4</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Moneygarrow</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:20%"></i></span><span class="num">8% · fair 12.16</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip">Andy Robson</span><span class="chip">Rory Delargy</span><span class="chip star">★ Ruby Walsh</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"><div class="quote">“NAP” — Andy Robson</div><div class="quote">“Best Bet: definitely the correct favourite” — Ruby Walsh</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R6</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Hillberry Hill</span>
+            <span class="hz-value">value <span class="v poor">0.28×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:13%"></i></span><span class="num">6% · fair 18.07</span><span class="lbl market">Market</span><span class="track market"><i style="width:50%"></i></span><span class="num">20% · best 5.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Jon Vine</span><span class="chip">RP NAPs ×3</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Ahead, Ben Morgan · Sunday Mail, Rockavon · tipmantips.com, Tipman Tips</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R7</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Caspari</span>
+            <span class="hz-value">value <span class="v poor">—</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:13%"></i></span><span class="num">5% · fair 19.13</span><span class="lbl market">Market</span><span class="track market"><i style="width:0%"></i></span><span class="num">— · best —</span></div>
+          <div class="hz-tips"><span class="chip">Harry Cobden</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Uttoxeter" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">3:35</span><span class="rc-course">Uttoxeter</span>
+        <span class="tier">NH · 12 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">1664 Biere Open National Hunt Flat Race (Category 1 Elimination) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Bateleur</span>
+            <span class="hz-value">value <span class="v good">1.67×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:71%"></i></span><span class="num">24% · fair 4.20</span><span class="lbl market">Market</span><span class="track market"><i style="width:42%"></i></span><span class="num">14% · best 7.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Lady Coco</span>
+            <span class="hz-value">value <span class="v good">1.47×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:68%"></i></span><span class="num">23% · fair 4.41</span><span class="lbl market">Market</span><span class="track market"><i style="width:46%"></i></span><span class="num">15% · best 6.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Ma Wang Des Bois</span>
+            <span class="hz-value">value <span class="v poor">0.26×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:26%"></i></span><span class="num">9% · fair 11.39</span><span class="lbl market">Market</span><span class="track market"><i style="width:99%"></i></span><span class="num">33% · best 3.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Sporting Times, Jeffrey Ross</div></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Wetherby" data-tipped="0">
+      <div class="rc-head">
+        <span class="rc-time">3:40</span><span class="rc-course">Wetherby</span>
+        <span class="tier">NH · 6 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Boyle Sports Conditional Jockeys&#x27; Handicap Steeple Chase (Go North Red Rum Series Qualifier) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Slaney Opera</span>
+            <span class="hz-value">value <span class="v good">5.47×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:100%"></i></span><span class="num">78% · fair 1.28</span><span class="lbl market">Market</span><span class="track market"><i style="width:18%"></i></span><span class="num">14% · best 7.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Safe Destination</span>
+            <span class="hz-value">value <span class="v poor">0.32×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:8%"></i></span><span class="num">6% · fair 15.52</span><span class="lbl market">Market</span><span class="track market"><i style="width:25%"></i></span><span class="num">20% · best 5.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Camarrate</span>
+            <span class="hz-value">value <span class="v poor">0.27×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:7%"></i></span><span class="num">6% · fair 16.93</span><span class="lbl market">Market</span><span class="track market"><i style="width:28%"></i></span><span class="num">22% · best 4.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Peckforton Hills</b></div>
+          <div class="jn-meta">Stable tour · 10 Nov</div>
+          <div class="jn-sum">Wasn&#x27;t right last season; back better than ever.</div><div class="quote">“He&#x27;s come back better than ever and we&#x27;ll be disappointed if he can&#x27;t win off his mark.” — Josh Guerriero</div>
+          <div class="pricenote">&#x27;We&#x27;ve got our strongest ever team&#x27; - including a stable star primed for his best chance at winning a Grade 1  Racing Post · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Windsor" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">3:45</span><span class="rc-course">Windsor</span>
+        <span class="tier">NH · 9 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Download The Fitzdares App &quot;Junior&quot; National Hunt Flat Race (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Hosiery</span>
+            <span class="hz-value">value <span class="v good">2.05×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:96%"></i></span><span class="num">24% · fair 4.14</span><span class="lbl market">Market</span><span class="track market"><i style="width:47%"></i></span><span class="num">12% · best 8.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Racing Post, West Country</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Waverley</span>
+            <span class="hz-value">value <span class="v poor">0.60×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:60%"></i></span><span class="num">15% · fair 6.65</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">25% · best 4.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span><span class="chip">Thats A Goal ITV tips</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">New Addington Boy</span>
+            <span class="hz-value">value <span class="v poor">0.66×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:52%"></i></span><span class="num">13% · fair 7.62</span><span class="lbl market">Market</span><span class="track market"><i style="width:80%"></i></span><span class="num">20% · best 5.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R5</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">James Dean</span>
+            <span class="hz-value">value <span class="v good">1.93×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:45%"></i></span><span class="num">11% · fair 8.83</span><span class="lbl market">Market</span><span class="track market"><i style="width:23%"></i></span><span class="num">6% · best 17.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">3:53</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 10 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">BAR 1 Betting Best Odds Guaranteed Overnight (Pro/Am) Flat Race</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Kanzler</span>
+            <span class="hz-value">value <span class="v ">1.09×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:47%"></i></span><span class="num">20% · fair 5.06</span><span class="lbl market">Market</span><span class="track market"><i style="width:43%"></i></span><span class="num">18% · best 5.50</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Uncle Pad</span>
+            <span class="hz-value">value <span class="v poor">0.40×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:40%"></i></span><span class="num">17% · fair 5.92</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">42% · best 2.38</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Paul Callaghan</span><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Sheffield Star, Fortunatus</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Sir Vinny</span>
+            <span class="hz-value">value <span class="v ">1.01×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:39%"></i></span><span class="num">17% · fair 5.96</span><span class="lbl market">Market</span><span class="track market"><i style="width:39%"></i></span><span class="num">17% · best 6.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Kanzler</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Has had training setbacks; stable expects improvement from this bumper run.</div><div class="quote">“However, he’s had a few training setbacks and will improve from this run.” — Willie Mullins</div>
+          <div class="pricenote"><a href="https://wpmullins.com/navan13th-november/" rel="noopener" target="_blank">Willie Mullins (runners)</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Cheltenham" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">4:00</span><span class="rc-course">Cheltenham</span>
+        <span class="tier">NH · 15 ran</span>
+        <span class="rc-flags"><span class="tag consensus">Consensus: Elegantemente</span></span>
+        <span class="rc-name">Karndean Designflooring Mares&#x27; Open National Hunt Flat Race(listed Race) (Registered As The Dorothy Paget) (GBB Race)</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Elegantemente</span><span class="tag respect">Respect</span>
+            <span class="hz-value">value <span class="v poor">0.70×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:69%"></i></span><span class="num">23% · fair 4.29</span><span class="lbl market">Market</span><span class="track market"><i style="width:99%"></i></span><span class="num">33% · best 3.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip ctx">RP NAPs ×1</span><span class="chip star">★ Ruby Walsh</span><span class="chip">Thats A Goal ITV tips</span><span class="chip">Timeform</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by The Sun, Templegate</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Gypsy Sky</span>
+            <span class="hz-value">value <span class="v good">1.37×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:37%"></i></span><span class="num">12% · fair 8.04</span><span class="lbl market">Market</span><span class="track market"><i style="width:27%"></i></span><span class="num">9% · best 11.00</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Eastern Whisper</span>
+            <span class="hz-value">value <span class="v poor">0.59×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:29%"></i></span><span class="num">10% · fair 10.22</span><span class="lbl market">Market</span><span class="track market"><i style="width:49%"></i></span><span class="num">17% · best 6.00</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Elegantemente</b></div>
+          <div class="jn-meta">Stable tour · 9 Nov</div>
+          <div class="jn-sum">Cheltenham mares&#x27; bumper entry.</div><div class="jn-meta">Target: Cheltenham mares&#x27; bumper (Nov meeting)</div><div class="quote">“She&#x27;ll get an entry in the mares&#x27; bumper at Cheltenham next weekend.” — Henry de Bromhead</div>
+          <div class="pricenote"><a href="https://www.sportinglife.com/racing/news/henry-de-bromhead-stable-tour-including-the-big-westerner-air-of-entitlement-heart-wood-and-koktail-divin/235308" rel="noopener" target="_blank">sportinglife.com · Henry De Bromhead Stable Tour including The Big Westerner, Air Of Entitlement, H</a> · via Jake's dashboard</div>
+        </div>
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>Soleretta</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Working well at home and yard is happy; bumper debut with a solid chance.</div><div class="quote">“We&#x27;ve been really happy with her at home, she&#x27;s been doing everything right and, if she can translate that form to the track, I think she&#x27;ll have a solid chance.” — Harry Skelton</div>
+          <div class="pricenote"><a href="https://www.starsportsbet.co.uk/harry-skelton-cheltenham-saturday-5/" rel="noopener" target="_blank">Star Sports · Harry Skelton</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+    <article class="card race-card" data-course="Navan" data-tipped="1">
+      <div class="rc-head">
+        <span class="rc-time">11:52</span><span class="rc-course">Navan</span>
+        <span class="tier">NH · 22 ran</span>
+        <span class="rc-flags"></span>
+        <span class="rc-name">Kilberry Pub &amp; Kitchen Maiden Hurdle</span>
+      </div>
+      
+      <div class="hz">
+        <div class="rk r1">R1</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Charismatic Kid</span>
+            <span class="hz-value">value <span class="v poor">0.37×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:36%"></i></span><span class="num">22% · fair 4.52</span><span class="lbl market">Market</span><span class="track market"><i style="width:100%"></i></span><span class="num">60% · best 1.67</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Expert View</span><span class="chip">Paul Callaghan</span><span class="chip ctx">RP NAPs ×1</span></div>
+          <div class="hz-quotes"><div class="quote">Napped by Cambridge Evening News, Luke Tucker</div></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R2</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">Outofafrika</span>
+            <span class="hz-value">value <span class="v poor">0.63×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:19%"></i></span><span class="num">12% · fair 8.68</span><span class="lbl market">Market</span><span class="track market"><i style="width:30%"></i></span><span class="num">18% · best 5.50</span></div>
+          
+          <div class="hz-quotes"></div>
+        </div>
+      </div>
+      <div class="hz">
+        <div class="rk">R3</div>
+        <div>
+          <div class="hz-top"><span class="hz-name">The Irish Avatar</span>
+            <span class="hz-value">value <span class="v poor">0.28×</span></span></div>
+          <div class="bars"><span class="lbl model">Model</span><span class="track model"><i style="width:14%"></i></span><span class="num">8% · fair 11.78</span><span class="lbl market">Market</span><span class="track market"><i style="width:51%"></i></span><span class="num">31% · best 3.25</span></div>
+          <div class="hz-tips"><span class="chip ctx">ATR Watch Out For</span></div>
+          <div class="hz-quotes"></div>
+        </div>
+      </div><div class="jake-notes">
+        <div class="jn">
+          <div class="jn-head"><span class="chip jn-chip">Stable note</span> <b>The Irish Avatar</b></div>
+          <div class="jn-meta">Pre-race · yesterday</div>
+          <div class="jn-sum">Hurdling debut with point-to-point jumping experience; stable expects a big run.</div><div class="quote">“His point-to-point jumping experience will stand to him, and we’re expecting a big run.” — Willie Mullins</div>
+          <div class="pricenote"><a href="https://wpmullins.com/navan13th-november/" rel="noopener" target="_blank">Willie Mullins (runners)</a> · via Jake's dashboard</div>
+        </div></div>
+    </article>
+
+  
+
+  <h2 id="records">Source records</h2>
+    <div class="card"><table>
+      <thead><tr><th>Source</th><th>Picks</th><th>Won</th><th>ROI · SP</th><th>ROI · BSP</th></tr></thead>
+      <tbody><tr><td>ATR Expert View</td><td class='small'>1252</td><td>26%</td><td class="neg">-22%</td><td class="neg">-8%</td></tr><tr><td>ATR Verdict</td><td class='small'>726</td><td>28%</td><td class="neg">-9%</td><td class="pos">+9%</td></tr><tr><td>RP NAPs</td><td class='small'>514</td><td>24%</td><td class="neg">-9%</td><td class="pos">+2%</td></tr><tr><td>ATR Watch Out For</td><td class='small'>308</td><td>17%</td><td class="neg">-28%</td><td class="neg">-10%</td></tr><tr><td>Hugh Taylor</td><td class='small'>111</td><td>18%</td><td class="neg">-43%</td><td class="neg">-5%</td></tr><tr><td>Ruby Walsh</td><td class='small'>103</td><td>21%</td><td class="neg">-19%</td><td class="neg">-24%</td></tr><tr><td>Neil Morrice</td><td class='small'>55</td><td>24%</td><td class="neg">-25%</td><td class="neg">-19%</td></tr><tr><td>Timeform</td><td class='small'>50</td><td>44%</td><td class="pos">+69%</td><td class="pos">+113%</td></tr><tr><td>Matt Chapman</td><td class='small'>23</td><td>22%</td><td class="neg">-15%</td><td class="neg">-22%</td></tr><tr><td>Laurent Barbarin</td><td class='small'>20</td><td>20%</td><td class="neg">-36%</td><td class="small">—</td></tr><tr><td>Betfred Insights</td><td class='small'>15</td><td>13%</td><td class="neg">-75%</td><td class="neg">-73%</td></tr><tr><td>Steve Mullington</td><td class='small'>15</td><td>33%</td><td class="pos">+10%</td><td class="pos">+21%</td></tr><tr><td>Alan Marron</td><td class='small'>12</td><td>33%</td><td class="neg">-10%</td><td class="small">—</td></tr><tr><td>Charlie McCann</td><td class='small'>12</td><td>33%</td><td class="neg">-17%</td><td class="neg">-45%</td></tr><tr><td>William Hill</td><td class='small'>12</td><td>33%</td><td class="neg">-13%</td><td class="neg">-31%</td></tr></tbody></table>
+      <div class="note">Level-stake win bets on every settled pick since April 2026. Under ~100 picks these swing wildly — read as colour, not proof.</div>
+    </div>
+
+  <h2>How to read this</h2>
+  <div class="card legend"><ul>
+    <li><b>Picks</b>: the model ranks it 1st or 2nd, the best price is at least 10% over the model's fair price, and someone who counts backs it. At most 3, one per race.</li>
+    <li><span class="chip">Solid chips</span> count as backing. <span class="chip ctx">Outlined chips</span> are shown for reading only. ATR's race-by-race guides tip almost every race and track the favourite, and one paper's nap on its own is weak. <span class="chip star">★ Gold</span> marks a trusted judge.</li>
+    <li><b>Respected</b>: backed by people who count and rated by the model, but not a pick. The reason is shown under each one, usually that the price is too short.</li>
+    <li><span style="color:var(--model)">■</span> <b>Model</b> vs <span style="color:var(--market)">■</span> <b>Market</b>: the model's win chance against the chance implied by the best price, on one scale per race. Model longer than market means value.</li>
+    <li><span class="chip trainer">Trainer</span> notes are the trainer talking about their own runner: worth reading for tone, never counted as a tip.</li>
+    <li><span class="chip jn-chip">Stable note</span> comes from Jake's dashboard (stable tours, trainer and stewards' comments), credited to the original source. Reading only, never counted.</li>
+    <li><b>Value</b> = best price ÷ model fair price. Green is 1.10× or better.</li>
+    <li><b>Skip</b>: the tipsters are split and the model is unsure, or it's a big field with no agreement.</li>
+  </ul></div>
+  <footer>Generated 2026-11-14T08:37:37.520205Z · advisory only, never feeds the model</footer>
+</main>
+<script>
+(function(){
+  var course = 'all', tippedOnly = true;
+  function apply(){
+    document.querySelectorAll('.race-card').forEach(function(c){
+      var ok = (course === 'all' || c.dataset.course === course) && (!tippedOnly || c.dataset.tipped === '1');
+      c.style.display = ok ? '' : 'none';
+    });
+    var shown = document.querySelectorAll('.race-card:not([style*="none"])').length;
+    var n = document.getElementById('race-count'); if (n) n.textContent = shown;
+  }
+  document.querySelectorAll('[data-course-btn]').forEach(function(b){
+    b.addEventListener('click', function(){
+      course = b.dataset.courseBtn;
+      document.querySelectorAll('[data-course-btn]').forEach(function(x){ x.classList.toggle('on', x === b); });
+      apply();
+    });
+  });
+  var t = document.getElementById('tipped-toggle');
+  if (t) t.addEventListener('click', function(){ tippedOnly = !tippedOnly; t.classList.toggle('on', tippedOnly);
+    t.textContent = tippedOnly ? 'Races with backing' : 'All races'; apply(); });
+  apply();
+})();
+</script>
+</body></html>
